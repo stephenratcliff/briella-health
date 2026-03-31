@@ -1,13 +1,10 @@
 'use client';
 
-import { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useScrollReveal } from '@/hooks/useScrollReveal';
-
-// Metadata cannot be used in 'use client' components, so we'll define it separately if needed
 
 const biomarkersData = [
   { id: 'apoB', name: 'ApoB (Apolipoprotein B)', cat: 'cardiovascular', short: 'The most accurate count of atherogenic particles — a better predictor of cardiac risk than LDL cholesterol alone.', why: 'Unlike LDL-C, which measures cholesterol mass, ApoB directly counts every particle capable of depositing plaque. High ApoB predicts cardiovascular events even when standard LDL appears normal. Many cardiologists now consider it the primary lipid target.', std: 'Rarely included in standard panels', opt: '< 80 mg/dL (< 60 if high risk)', unit: 'mg/dL' },

@@ -10,9 +10,9 @@ export default function Footer() {
       { label: 'Membership', href: '/membership' },
     ],
     company: [
-      { label: 'About', href: '/about' },
+      { label: 'About', href: '/#about' },
       { label: 'For Wellness Partners', href: '/for-providers' },
-      { label: 'Contact', href: '/contact' },
+      { label: 'Contact', href: 'mailto:hello@briella.health' },
     ],
     legal: [
       { label: 'Privacy Policy', href: '/privacy' },

@@ -3,9 +3,29 @@ import "./globals.css";
 import PasswordGate from "@/components/PasswordGate";
 
 export const metadata: Metadata = {
-  title: "Briella Health — Functional Medicine Lab Intelligence",
+  title: "Briella Health — Comprehensive Biomarker Testing",
   description:
-    "Comprehensive biomarker panels with functional medicine reference ranges, personalized recommendations, and a Wellness Score — for patients and providers.",
+    "100+ biomarkers tested annually. Physician-reviewed results. Less than $1/day. No insurance needed. HSA/FSA eligible. Available through Quest Diagnostics.",
+  metadataBase: new URL("https://briella.health"),
+  openGraph: {
+    title: "Briella Health — Comprehensive Biomarker Testing",
+    description:
+      "100+ biomarkers. Physician-reviewed. $365/year. Know every number that matters.",
+    url: "https://briella.health",
+    siteName: "Briella Health",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Briella Health — Comprehensive Biomarker Testing",
+    description:
+      "100+ biomarkers. Physician-reviewed. $365/year. Know every number that matters.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

@@ -1,15 +1,9 @@
 'use client';
 
-import { Metadata } from 'next';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
-
-// export const metadata: Metadata = {
-//   title: 'How It Works — Briella Health',
-//   description: 'See exactly how Briella Health works — from joining to your first comprehensive lab panel and physician-reviewed results.',
-// };
 
 export default function HowItWorks() {
   useScrollReveal();

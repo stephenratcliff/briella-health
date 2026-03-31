@@ -37,7 +37,7 @@ export default function Nav() {
     { label: 'Advanced Markers', desc: 'Immune, inflammation, nutrients & cancer screening', href: '/what-we-test#advanced-markers' },
     { label: 'Organ Systems', desc: 'Liver, kidney, blood & hematology', href: '/what-we-test#organ-systems' },
     { label: 'For Providers', desc: 'Partner program for clinics & practices', href: '/for-providers' },
-    { label: 'Contact Us', desc: 'hello@briellahealth.com', href: 'mailto:hello@briellahealth.com' },
+    { label: 'Contact Us', desc: 'hello@briella.health', href: 'mailto:hello@briella.health' },
   ];
 
   // Quick Links column
