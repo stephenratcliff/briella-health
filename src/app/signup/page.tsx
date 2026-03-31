@@ -77,6 +77,19 @@ export default function SignupPage() {
     existing.push(account);
     localStorage.setItem('briella-accounts', JSON.stringify(existing));
     setSignupSuccess(true);
+
+    // Send welcome email (fire and forget — don't block signup)
+    fetch('/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: account.email,
+        firstName: account.firstName,
+        lastName: account.lastName,
+        memberId: account.memberId,
+      }),
+    }).catch(() => {}); // Silently fail — email is nice-to-have, not critical
+
     // Auto-redirect to login after 3 seconds
     setTimeout(() => router.push('/login'), 3000);
   };
