@@ -517,7 +517,7 @@ export default function WhatWeTest() {
             {biomarkersData.length}+ biomarkers. One membership.
           </h2>
           <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-md mx-auto">
-            $365/year — no add-ons, no à la carte pricing. All 50 states through Quest Diagnostics.
+            $365/year for the complete panel. All 50 states through Quest Diagnostics.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
