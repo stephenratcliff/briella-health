@@ -123,7 +123,43 @@ export default function WhatWeTest() {
     setExpandedCards(newExpanded);
   };
 
+  // Panel groupings
+  const panelGroups = [
+    {
+      id: 'core-panels',
+      title: 'Core Panels',
+      description: 'The foundational tests that define your cardiovascular, hormonal, metabolic, and thyroid health.',
+      categories: ['cardiovascular', 'hormones', 'metabolic', 'thyroid'],
+    },
+    {
+      id: 'advanced-markers',
+      title: 'Advanced Markers',
+      description: 'Deep-dive testing most annual physicals never include — immune function, nutrient status, and early cancer screening.',
+      categories: ['immune', 'nutrients', 'cancer'],
+    },
+    {
+      id: 'organ-systems',
+      title: 'Organ Systems',
+      description: 'Comprehensive organ function assessment — liver, kidney, and hematology panels with optimal reference ranges.',
+      categories: ['liver', 'kidney', 'blood'],
+    },
+  ];
+
   const allCategories = ['all', ...Object.keys(categoryLabels)];
+
+  // Get biomarkers for a group of categories
+  const getBiomarkersForGroup = (categories: string[]) => {
+    let markers = biomarkersData.filter(b => categories.includes(b.cat));
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      markers = markers.filter(b =>
+        b.name.toLowerCase().includes(q) ||
+        b.short.toLowerCase().includes(q) ||
+        b.why.toLowerCase().includes(q)
+      );
+    }
+    return markers;
+  };
 
   return (
     <div className="bg-bg-dark">
@@ -138,7 +174,7 @@ export default function WhatWeTest() {
               What we test — <span style={{ fontStyle: 'normal', color: 'var(--teal-light)' }}>and why it matters.</span>
             </h1>
             <p className="text-gray-400 text-base leading-relaxed" style={{ maxWidth: '580px', marginBottom: 0 }}>
-              Standard physicals check 10–20 markers. Every Briella Health membership includes 100+ tests — organized by system, explained in plain language, with optimal ranges your doctor probably won't share.
+              Standard physicals check 10–20 markers. Every Briella Health membership includes 100+ tests — organized by system, explained in plain language, with optimal ranges your doctor probably won&apos;t share.
             </p>
             <div className="flex flex-wrap gap-3 mt-7">
               <div className="inline-flex items-center gap-2 px-[18px] py-2 rounded-full bg-white bg-opacity-5 border border-white border-opacity-[0.08] text-gray-300 text-sm font-medium">
@@ -158,124 +194,166 @@ export default function WhatWeTest() {
         </div>
       </section>
 
-      {/* Biomarkers Library Section */}
-      <section className="px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-6xl">
-
-          {/* Category Tabs */}
-          <div className="flex gap-2 overflow-x-auto pb-1.5 mb-8 scrollbar-hide">
-            {allCategories.map(cat => {
-              const label = cat === 'all' ? 'All Tests' : categoryLabels[cat];
-              const emoji = cat === 'all' ? '⬡' : categoryEmojis[cat];
-              const count = cat === 'all' ? biomarkersData.length : (catCounts[cat] || 0);
-
-              return (
-                <button
-                  key={cat}
-                  onClick={() => {
-                    setActiveFilter(cat);
-                    setSearchQuery('');
-                  }}
-                  className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-body text-sm font-semibold whitespace-nowrap border transition-all ${
-                    activeFilter === cat
-                      ? 'bg-teal-dim border-teal text-teal-light shadow-[0_0_0_1px_var(--teal)]'
-                      : 'bg-bg-card border-border text-gray-400 hover:border-teal-border hover:text-teal-light hover:bg-teal-dim'
-                  }`}
-                >
-                  <span className="text-[0.9rem]">{emoji}</span>
-                  {label}
-                  <span className={`text-[0.7rem] font-bold px-2 py-0.5 rounded-full min-w-[28px] text-center transition-all ${
-                    activeFilter === cat
-                      ? 'bg-teal bg-opacity-20 text-teal-light'
-                      : 'bg-white bg-opacity-[0.06] text-gray-500'
-                  }`}>
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
+      {/* Jump Nav */}
+      <section className="bg-bg-card border-b border-border sticky top-[70px] z-30">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-6 py-4 overflow-x-auto scrollbar-hide">
+            {panelGroups.map((group) => (
+              <a
+                key={group.id}
+                href={`#${group.id}`}
+                className="text-sm font-semibold text-gray-400 hover:text-teal-light whitespace-nowrap transition-colors duration-200"
+              >
+                {group.title}
+              </a>
+            ))}
+            <span className="text-border">|</span>
+            <span className="text-xs text-gray-500">{biomarkersData.length} biomarkers total</span>
           </div>
+        </div>
+      </section>
 
-          {/* Search Bar */}
-          <div className="relative mb-3">
+      {/* Search Bar */}
+      <section className="px-4 sm:px-6 lg:px-8 pt-10 pb-4">
+        <div className="mx-auto max-w-6xl">
+          <div className="relative">
             <svg className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
               <circle cx="11" cy="11" r="8"/>
               <path d="m21 21-4.35-4.35"/>
             </svg>
             <input
               type="text"
-              placeholder="Search any biomarker, e.g. testosterone, vitamin D, ApoB…"
+              placeholder="Search any biomarker, e.g. testosterone, vitamin D, ApoB..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-bg-card border border-border rounded-[10px] py-3 pl-12 pr-4 text-white font-body text-sm focus:outline-none focus:border-teal transition-colors placeholder-gray-600"
             />
           </div>
-
-          {/* Count Label */}
-          <p className="text-xs text-gray-600 mb-5">
-            Showing {filteredBiomarkers.length} biomarker{filteredBiomarkers.length !== 1 ? 's' : ''}
-          </p>
-
-          {/* Biomarkers Grid */}
-          {filteredBiomarkers.length > 0 ? (
-            <div className="grid grid-cols-1 gap-3 fade-up">
-              {filteredBiomarkers.map((marker, idx) => (
-                <div
-                  key={marker.id}
-                  onClick={() => toggleCard(marker.id)}
-                  className={`bg-bg-card border rounded-[12px] p-5 sm:p-[22px] cursor-pointer transition-all card-hover card-glow delay-${idx % 5} ${
-                    expandedCards.has(marker.id)
-                      ? 'border-teal shadow-[0_0_0_1px_var(--teal),0_8px_32px_rgba(13,148,136,0.1)]'
-                      : 'border-border hover:border-teal-border hover:shadow-[0_4px_20px_rgba(13,148,136,0.08)]'
-                  }`}
-                >
-                  <div className="flex justify-between items-start mb-2.5">
-                    <div>
-                      <span className="text-xs font-bold uppercase tracking-[0.1em] text-teal-light bg-teal-dim border border-teal-border rounded-full px-2.5 py-0.75 inline-block mb-2">
-                        {categoryLabels[marker.cat]}
-                      </span>
-                    </div>
-                    <svg
-                      className={`w-4 h-4 text-gray-600 transition-all ${expandedCards.has(marker.id) ? 'rotate-180 !text-teal' : ''}`}
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <polyline points="6 9 12 15 18 9"/>
-                    </svg>
-                  </div>
-
-                  <h4 className="text-sm font-bold text-white mb-1.5">{marker.name}</h4>
-                  <p className="text-xs text-gray-400 leading-relaxed">{marker.short}</p>
-
-                  {/* Expanded Details */}
-                  {expandedCards.has(marker.id) && (
-                    <div className="mt-4 pt-4 border-t border-border">
-                      <p className="text-xs text-gray-300 leading-relaxed mb-4">{marker.why}</p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div className="bg-white bg-opacity-3 border border-border rounded-2xl p-3">
-                          <label className="text-[0.6rem] font-bold uppercase tracking-[0.08em] text-gray-600 block mb-1">Standard Range</label>
-                          <span className="text-xs text-gray-300">{marker.std}</span>
-                        </div>
-                        <div className="bg-white bg-opacity-3 border border-border rounded-2xl p-3">
-                          <label className="text-[0.6rem] font-bold uppercase tracking-[0.08em] text-gray-600 block mb-1">Optimal Range</label>
-                          <span className="text-xs text-teal-light font-bold">{marker.opt}</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12 text-gray-600 text-sm">
-              No biomarkers match your search.
-            </div>
-          )}
-
         </div>
       </section>
+
+      {/* Panel Group Sections */}
+      {panelGroups.map((group) => {
+        const groupMarkers = getBiomarkersForGroup(group.categories);
+        if (groupMarkers.length === 0 && searchQuery.trim()) return null;
+
+        return (
+          <section
+            key={group.id}
+            id={group.id}
+            className="px-4 py-16 sm:px-6 lg:px-8 scroll-mt-[140px]"
+          >
+            <div className="mx-auto max-w-6xl">
+              {/* Section Header */}
+              <div className="mb-10 fade-up">
+                <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">{group.title}</p>
+                <h2 className="font-heading font-extrabold text-3xl md:text-4xl text-white mb-3">{group.title}</h2>
+                <p className="text-gray-400 text-base leading-relaxed max-w-2xl">{group.description}</p>
+                <div className="flex flex-wrap gap-2 mt-5">
+                  {group.categories.map((cat) => (
+                    <span
+                      key={cat}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-dim border border-teal-border text-teal-light text-xs font-bold"
+                    >
+                      <span>{categoryEmojis[cat]}</span>
+                      {categoryLabels[cat]}
+                      <span className="text-teal/60 ml-1">{catCounts[cat] || 0}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Category Filter Tabs within group */}
+              <div className="flex gap-2 overflow-x-auto pb-1.5 mb-6 scrollbar-hide">
+                <button
+                  onClick={() => { setActiveFilter('all'); }}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-body text-xs font-semibold whitespace-nowrap border transition-all ${
+                    activeFilter === 'all'
+                      ? 'bg-teal-dim border-teal text-teal-light'
+                      : 'bg-bg-card border-border text-gray-400 hover:border-teal-border hover:text-teal-light'
+                  }`}
+                >
+                  All in section
+                </button>
+                {group.categories.map(cat => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveFilter(cat)}
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-body text-xs font-semibold whitespace-nowrap border transition-all ${
+                      activeFilter === cat
+                        ? 'bg-teal-dim border-teal text-teal-light'
+                        : 'bg-bg-card border-border text-gray-400 hover:border-teal-border hover:text-teal-light'
+                    }`}
+                  >
+                    <span>{categoryEmojis[cat]}</span>
+                    {categoryLabels[cat]}
+                  </button>
+                ))}
+              </div>
+
+              {/* Biomarker Cards */}
+              <div className="grid grid-cols-1 gap-3 fade-up">
+                {(activeFilter === 'all' || group.categories.includes(activeFilter)
+                  ? groupMarkers.filter(m => activeFilter === 'all' || m.cat === activeFilter)
+                  : groupMarkers
+                ).map((marker, idx) => (
+                  <div
+                    key={marker.id}
+                    onClick={() => toggleCard(marker.id)}
+                    className={`bg-bg-card border rounded-[12px] p-5 sm:p-[22px] cursor-pointer transition-all card-hover card-glow ${
+                      expandedCards.has(marker.id)
+                        ? 'border-teal shadow-[0_0_0_1px_var(--teal),0_8px_32px_rgba(13,148,136,0.1)]'
+                        : 'border-border hover:border-teal-border hover:shadow-[0_4px_20px_rgba(13,148,136,0.08)]'
+                    }`}
+                  >
+                    <div className="flex justify-between items-start mb-2.5">
+                      <div>
+                        <span className="text-xs font-bold uppercase tracking-[0.1em] text-teal-light bg-teal-dim border border-teal-border rounded-full px-2.5 py-0.5 inline-block mb-2">
+                          {categoryLabels[marker.cat]}
+                        </span>
+                      </div>
+                      <svg
+                        className={`w-4 h-4 text-gray-600 transition-all ${expandedCards.has(marker.id) ? 'rotate-180 !text-teal' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <polyline points="6 9 12 15 18 9"/>
+                      </svg>
+                    </div>
+
+                    <h4 className="text-sm font-bold text-white mb-1.5">{marker.name}</h4>
+                    <p className="text-xs text-gray-400 leading-relaxed">{marker.short}</p>
+
+                    {/* Expanded Details */}
+                    {expandedCards.has(marker.id) && (
+                      <div className="mt-4 pt-4 border-t border-border">
+                        <p className="text-xs text-gray-300 leading-relaxed mb-4">{marker.why}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                          <div className="bg-white/[0.03] border border-border rounded-2xl p-3">
+                            <label className="text-[0.6rem] font-bold uppercase tracking-[0.08em] text-gray-600 block mb-1">Standard Range</label>
+                            <span className="text-xs text-gray-300">{marker.std}</span>
+                          </div>
+                          <div className="bg-white/[0.03] border border-border rounded-2xl p-3">
+                            <label className="text-[0.6rem] font-bold uppercase tracking-[0.08em] text-gray-600 block mb-1">Optimal Range</label>
+                            <span className="text-xs text-teal-light font-bold">{marker.opt}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Section Divider */}
+            <div className="max-w-6xl mx-auto mt-16">
+              <hr className="divider-gradient" />
+            </div>
+          </section>
+        );
+      })}
 
       {/* Bottom CTA Section */}
       <section className="bg-bg-card border-t border-border px-4 py-20 sm:px-6 lg:px-8">

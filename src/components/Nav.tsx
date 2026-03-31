@@ -33,6 +33,9 @@ export default function Nav() {
   // Explore column links
   const exploreLinks = [
     { label: 'Journal', desc: 'Physician-written health insights & articles', href: '/blog' },
+    { label: 'Core Panels', desc: 'Cardiovascular, hormones, metabolic & thyroid', href: '/what-we-test#core-panels' },
+    { label: 'Advanced Markers', desc: 'Immune, inflammation, nutrients & cancer screening', href: '/what-we-test#advanced-markers' },
+    { label: 'Organ Systems', desc: 'Liver, kidney, blood & hematology', href: '/what-we-test#organ-systems' },
     { label: 'For Providers', desc: 'Partner program for clinics & practices', href: '/for-providers' },
     { label: 'Contact Us', desc: 'hello@briellahealth.com', href: 'mailto:hello@briellahealth.com' },
   ];
