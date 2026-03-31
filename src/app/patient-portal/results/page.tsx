@@ -163,8 +163,10 @@ export default function ResultsPage() {
       <nav className="bg-bg-card border-b border-border sticky top-0 z-40">
         <div className="px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-7 h-7 bg-teal rounded-lg text-white font-heading font-bold text-sm flex items-center justify-center">B</div>
-            <span className="font-heading text-base text-white">Briella <span className="text-teal">Health</span></span>
+            <a href="/" className="flex items-center gap-4">
+              <div className="w-7 h-7 bg-teal rounded-lg text-white font-heading font-bold text-sm flex items-center justify-center">B</div>
+              <span className="font-heading text-base text-white">Briella <span className="text-teal">Health</span></span>
+            </a>
             <span className="text-xs font-bold text-teal uppercase tracking-wider bg-teal/10 border border-teal/30 rounded-full px-3 py-1">
               Patient Portal
             </span>
