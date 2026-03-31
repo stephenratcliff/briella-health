@@ -34,7 +34,7 @@ export default function Nav() {
   const exploreLinks = [
     { label: 'Journal', desc: 'Physician-written health insights & articles', href: '/blog' },
     { label: 'For Providers', desc: 'Partner program for clinics & practices', href: '/for-providers' },
-    { label: 'Contact Us', desc: 'hello@briella.health', href: 'mailto:hello@briella.health' },
+    { label: 'Contact Us', desc: 'hello@briellahealth.com', href: 'mailto:hello@briellahealth.com' },
   ];
 
   // Quick Links column

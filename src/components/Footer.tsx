@@ -12,7 +12,7 @@ export default function Footer() {
     company: [
       { label: 'About', href: '/#about' },
       { label: 'For Wellness Partners', href: '/for-providers' },
-      { label: 'Contact', href: 'mailto:hello@briella.health' },
+      { label: 'Contact', href: 'mailto:hello@briellahealth.com' },
     ],
     legal: [
       { label: 'Privacy Policy', href: '/privacy' },

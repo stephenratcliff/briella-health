@@ -13,6 +13,7 @@ export async function POST(request: Request) {
 
     const { data, error } = await resend.emails.send({
       from: 'Briella Health <hello@briella.health>',
+      replyTo: 'hello@briellahealth.com',
       to: email,
       subject: `Welcome to Briella Health, ${firstName}`,
       html: `
@@ -84,7 +85,7 @@ export async function POST(request: Request) {
     <div style="text-align:center;margin-top:32px;">
       <p style="color:#6b7280;font-size:12px;line-height:1.6;margin:0 0 16px 0;">
         Questions? Reply to this email or contact us at<br>
-        <a href="mailto:hello@briella.health" style="color:#0d9488;text-decoration:none;">hello@briella.health</a>
+        <a href="mailto:hello@briellahealth.com" style="color:#0d9488;text-decoration:none;">hello@briellahealth.com</a>
       </p>
       <p style="color:#4b5563;font-size:11px;margin:0;">
         © ${new Date().getFullYear()} Briella Health LLC. All rights reserved.<br>
