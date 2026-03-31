@@ -8,40 +8,51 @@ export const metadata: Metadata = {
 
 export default function MembershipPage() {
   return (
-    <div className="min-h-screen bg-cream-light flex flex-col">
+    <div className="min-h-screen flex flex-col bg-bg-dark">
       <Nav />
 
       {/* Hero Section */}
-      <section className="bg-cream-light pt-20 pb-12 px-4 sm:px-6 lg:px-8">
+      <section className="bg-bg-dark pt-20 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-terracotta uppercase tracking-wide text-sm font-semibold mb-4">
+          <p className="text-teal uppercase tracking-wide text-sm font-semibold mb-4">
             Membership
           </p>
-          <h1 className="font-serif text-5xl sm:text-6xl text-charcoal mb-6 leading-tight">
+          <h1 className="font-heading text-5xl sm:text-6xl text-white mb-6 leading-tight">
             One price. Complete clarity.
           </h1>
-          <p className="text-lg sm:text-xl text-warm-gray-dark max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
             No per-test fees. No insurance paperwork. No surprise bills. One annual membership covers everything.
           </p>
         </div>
       </section>
 
+      {/* Image Section - Patient Smiling */}
+      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-4xl mx-auto">
+          <img
+            src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600"
+            alt="Female patient smiling"
+            className="w-full rounded-xl"
+          />
+        </div>
+      </section>
+
       {/* Pricing Grid */}
-      <section className="bg-cream px-4 sm:px-6 lg:px-8 py-16">
+      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-16">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Annual Membership Card - Featured */}
-          <div className="bg-cream-light border-2 border-terracotta rounded-2xl p-8 shadow-lg flex flex-col">
+          <div className="bg-bg-card border-2 border-teal rounded-2xl p-8 flex flex-col">
             <div className="mb-6">
-              <span className="inline-block bg-terracotta text-cream-light text-xs font-semibold rounded-full px-3 py-1">
+              <span className="inline-block bg-teal text-white text-xs font-semibold rounded-full px-3 py-1">
                 Most Popular
               </span>
             </div>
             <div className="mb-4">
               <div className="flex items-baseline gap-2">
-                <span className="font-serif text-5xl text-charcoal">$365</span>
-                <span className="text-lg text-warm-gray-dark">/year</span>
+                <span className="font-heading text-5xl text-white">$365</span>
+                <span className="text-lg text-gray-400">/year</span>
               </div>
-              <p className="text-warm-gray-dark mt-2">
+              <p className="text-gray-400 mt-2">
                 Less than $1/day for your complete annual picture
               </p>
             </div>
@@ -58,9 +69,9 @@ export default function MembershipPage() {
                 "Year-over-year trending",
                 "HIPAA-secure platform",
               ].map((feature, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-charcoal">
+                <li key={idx} className="flex items-start gap-3 text-gray-300">
                   <svg
-                    className="w-5 h-5 text-olive flex-shrink-0 mt-0.5"
+                    className="w-5 h-5 text-teal flex-shrink-0 mt-0.5"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -75,15 +86,15 @@ export default function MembershipPage() {
               ))}
             </ul>
 
-            <button className="bg-terracotta text-cream-light w-full py-3 rounded-xl font-semibold hover:bg-terracotta-dark transition">
+            <button className="bg-teal text-white w-full py-3 rounded-xl font-semibold hover:bg-teal-light transition">
               Join the Waitlist
             </button>
           </div>
 
           {/* Practice Partner Access Card */}
-          <div className="bg-cream-light border border-sand-light rounded-2xl p-8 flex flex-col">
+          <div className="bg-bg-card border border-border rounded-2xl p-8 flex flex-col">
             <div className="mb-6">
-              <span className="font-serif text-4xl text-charcoal">Partner</span>
+              <span className="font-heading text-4xl text-white">Partner</span>
             </div>
 
             <ul className="mb-8 flex-grow space-y-3">
@@ -96,9 +107,9 @@ export default function MembershipPage() {
                 "Co-branded materials",
                 "Dedicated partner support",
               ].map((feature, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-charcoal">
+                <li key={idx} className="flex items-start gap-3 text-gray-300">
                   <svg
-                    className="w-5 h-5 text-olive flex-shrink-0 mt-0.5"
+                    className="w-5 h-5 text-teal flex-shrink-0 mt-0.5"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -113,7 +124,7 @@ export default function MembershipPage() {
               ))}
             </ul>
 
-            <button className="border border-charcoal text-charcoal w-full py-3 rounded-xl font-semibold hover:bg-charcoal hover:text-cream-light transition">
+            <button className="border border-border-gold text-gold w-full py-3 rounded-xl font-semibold hover:border-gold transition">
               Contact Us for Pricing
             </button>
           </div>
@@ -121,21 +132,21 @@ export default function MembershipPage() {
       </section>
 
       {/* Value Callout */}
-      <section className="bg-sand-light px-4 sm:px-6 lg:px-8 py-12">
-        <div className="max-w-3xl mx-auto bg-sand-light rounded-2xl p-8">
-          <h2 className="font-serif text-3xl text-charcoal mb-4">
+      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-3xl mx-auto border border-border-teal bg-bg-light rounded-2xl p-8">
+          <h2 className="font-heading text-3xl text-white mb-4">
             How is $365 possible?
           </h2>
-          <p className="text-lg text-warm-gray-dark">
+          <p className="text-lg text-gray-400">
             We partner directly with Quest Diagnostics at volume rates. What would cost $1,500–$3,000+ ordered individually, we deliver annually for $365.
           </p>
         </div>
       </section>
 
       {/* Everything Included Grid */}
-      <section className="bg-cream px-4 sm:px-6 lg:px-8 py-16">
+      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-16">
         <div className="max-w-5xl mx-auto">
-          <h2 className="font-serif text-4xl text-charcoal text-center mb-12">
+          <h2 className="font-heading text-4xl text-white text-center mb-12">
             Everything Included
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -173,13 +184,13 @@ export default function MembershipPage() {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="bg-cream-light border border-sand-light rounded-xl p-6"
+                className="bg-bg-card border border-border rounded-xl p-6"
               >
                 <div className="text-4xl mb-3">{item.emoji}</div>
-                <h3 className="font-serif text-xl text-charcoal mb-2">
+                <h3 className="font-heading text-xl text-white mb-2">
                   {item.title}
                 </h3>
-                <p className="text-warm-gray-dark">{item.description}</p>
+                <p className="text-gray-400">{item.description}</p>
               </div>
             ))}
           </div>
@@ -187,9 +198,9 @@ export default function MembershipPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-cream px-4 sm:px-6 lg:px-8 py-16">
+      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-16">
         <div className="max-w-3xl mx-auto">
-          <h2 className="font-serif text-4xl text-charcoal text-center mb-12">
+          <h2 className="font-heading text-4xl text-white text-center mb-12">
             Questions?
           </h2>
           <div className="space-y-4">
@@ -236,15 +247,15 @@ export default function MembershipPage() {
             ].map((item, idx) => (
               <details
                 key={idx}
-                className="bg-cream-light rounded-lg border border-sand-light p-4 group cursor-pointer"
+                className="bg-bg-card rounded-lg border border-border p-4 group cursor-pointer"
               >
-                <summary className="font-semibold text-charcoal flex items-center justify-between">
+                <summary className="font-semibold text-white flex items-center justify-between">
                   {item.question}
-                  <span className="text-warm-gray transition group-open:rotate-180">
+                  <span className="text-gray-400 transition group-open:rotate-180">
                     ▼
                   </span>
                 </summary>
-                <p className="text-warm-gray-dark mt-3 leading-relaxed">
+                <p className="text-gray-400 mt-3 leading-relaxed">
                   {item.answer}
                 </p>
               </details>
@@ -254,15 +265,15 @@ export default function MembershipPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="bg-terracotta text-cream-light py-20 px-4 sm:px-6 lg:px-8">
+      <section className="bg-teal text-white py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-serif text-4xl sm:text-5xl mb-8">
+          <h2 className="font-heading text-4xl sm:text-5xl mb-8">
             Join the waitlist. Get priority access.
           </h2>
-          <button className="bg-cream-light text-terracotta px-8 py-3 rounded-xl font-semibold hover:bg-cream transition mb-4 inline-block">
+          <button className="bg-white text-teal px-8 py-3 rounded-xl font-semibold hover:bg-gray-100 transition mb-4 inline-block">
             Join the Waitlist
           </button>
-          <p className="text-cream-light/80 text-sm mt-6">
+          <p className="text-white/80 text-sm mt-6">
             No spam. No commitment. Just early access.
           </p>
         </div>

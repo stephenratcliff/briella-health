@@ -79,18 +79,18 @@ export default function WhatWeTest() {
   ];
 
   return (
-    <div className="bg-cream-light">
+    <div className="bg-bg-dark">
       <Nav />
 
       {/* Hero Section */}
-      <section className="bg-cream-light px-4 py-20 sm:px-6 lg:px-8">
+      <section className="bg-bg-dark px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
-            <p className="text-sm uppercase tracking-wide text-terracotta">The Panel</p>
-            <h1 className="mt-4 font-serif text-5xl font-bold text-charcoal sm:text-6xl">
+            <p className="text-sm uppercase tracking-wide text-teal">The Panel</p>
+            <h1 className="mt-4 font-heading text-5xl font-bold text-white sm:text-6xl">
               100+ tests. Every system that matters.
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-warm-gray-dark">
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-300">
               Selected by physicians to cover cardiovascular, hormonal, metabolic, thyroid, immune, and
               nutritional health.
             </p>
@@ -99,40 +99,51 @@ export default function WhatWeTest() {
       </section>
 
       {/* Stats Row */}
-      <section className="bg-charcoal px-4 py-8 sm:px-6 lg:px-8">
+      <section className="border-y border-border bg-bg-card px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat, idx) => (
               <div key={idx} className="text-center">
-                <p className="font-serif text-4xl font-bold text-cream-light">{stat.number}</p>
-                <p className="mt-2 text-sm text-warm-gray">{stat.label}</p>
+                <p className="font-heading text-4xl font-bold text-white">{stat.number}</p>
+                <p className="mt-2 text-sm text-gray-400">{stat.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Image Section - Lab Technician */}
+      <section className="bg-bg-dark px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <img
+            src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600"
+            alt="Lab technician working"
+            className="w-full rounded-xl"
+          />
+        </div>
+      </section>
+
       {/* Test Categories Grid */}
-      <section className="bg-cream px-4 py-20 sm:px-6 lg:px-8">
+      <section className="bg-bg-dark px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((category, idx) => (
               <div
                 key={idx}
-                className="rounded-xl border border-sand-light bg-cream-light p-6"
+                className="rounded-xl border border-border bg-bg-card p-6"
               >
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-3xl">{category.emoji}</p>
-                    <h3 className="mt-3 font-serif text-lg font-bold text-charcoal">
+                    <h3 className="mt-3 font-heading text-lg font-bold text-white">
                       {category.name}
                     </h3>
                   </div>
-                  <span className="rounded-full bg-sand-light px-2 py-1 text-sm font-semibold text-warm-gray-dark">
+                  <span className="rounded-full border border-border-teal bg-bg-teal-dim px-3 py-1 text-sm font-semibold text-teal">
                     {category.count}
                   </span>
                 </div>
-                <p className="mt-4 text-sm text-warm-gray-dark">{category.tests}</p>
+                <p className="mt-4 text-sm text-gray-400">{category.tests}</p>
               </div>
             ))}
           </div>
@@ -141,8 +152,8 @@ export default function WhatWeTest() {
 
       {/* Disclaimer */}
       <section className="px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl rounded-xl bg-sand-light p-6">
-          <p className="text-sm text-warm-gray-dark">
+        <div className="mx-auto max-w-4xl rounded-xl border border-border bg-bg-light p-6">
+          <p className="text-sm text-gray-400">
             <strong>Important:</strong> Panel may vary based on your selections. Results are not intended
             to diagnose, treat, cure, or prevent any disease. Some tests may require physician
             authorization. Please consult with your healthcare provider to discuss your results.
@@ -151,11 +162,11 @@ export default function WhatWeTest() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-terracotta px-4 py-20 text-center sm:px-6 lg:px-8">
+      <section className="bg-teal px-4 py-20 text-center sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl">
-          <h2 className="font-serif text-4xl font-bold text-cream-light">Know Your Numbers</h2>
-          <p className="mt-4 text-lg text-cream-light">$365/year · All-inclusive</p>
-          <button className="mt-8 rounded-lg bg-charcoal px-8 py-3 font-sans font-semibold text-cream-light transition-colors hover:bg-deep-earth">
+          <h2 className="font-heading text-4xl font-bold text-white">Know Your Numbers</h2>
+          <p className="mt-4 text-lg text-white">$365/year · All-inclusive</p>
+          <button className="mt-8 rounded-lg bg-white px-8 py-3 font-body font-semibold text-teal transition-colors hover:bg-gray-100">
             Join the Waitlist
           </button>
         </div>

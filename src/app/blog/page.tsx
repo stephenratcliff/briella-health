@@ -83,24 +83,24 @@ export default function BlogPage() {
     <>
       <Nav />
 
-      <main className="min-h-screen">
+      <main className="min-h-screen bg-bg-dark">
         {/* Hero Section */}
-        <section className="bg-cream-light py-16 md:py-24">
+        <section className="bg-bg-dark py-16 md:py-24">
           <div className="max-w-4xl mx-auto px-6">
-            <p className="text-warm-gray-dark text-sm uppercase tracking-widest mb-4 font-medium">
+            <p className="text-gray-400 text-sm uppercase tracking-widest mb-4 font-medium">
               Briella Health Journal
             </p>
-            <h1 className="font-serif text-4xl md:text-5xl text-charcoal mb-6">
+            <h1 className="font-heading text-4xl md:text-5xl text-white mb-6">
               The science behind knowing your numbers.
             </h1>
-            <p className="text-warm-gray-dark text-lg">
+            <p className="text-gray-300 text-lg">
               Physician-written insights on biomarkers, lab testing, and preventive health.
             </p>
           </div>
         </section>
 
         {/* Category Filter */}
-        <section className="bg-cream-light border-b border-sand-light sticky top-20 md:top-0 z-30">
+        <section className="bg-bg-dark border-b border-border sticky top-20 md:top-0 z-30">
           <div className="max-w-7xl mx-auto px-6 py-4">
             <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0">
               {categories.map((category) => (
@@ -108,8 +108,8 @@ export default function BlogPage() {
                   key={category}
                   className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition ${
                     category === 'All'
-                      ? 'bg-terracotta text-cream-light'
-                      : 'bg-sand-light text-warm-gray-dark hover:bg-sand'
+                      ? 'bg-teal text-white'
+                      : 'bg-bg-card text-gray-400 border border-border hover:border-border-teal'
                   }`}
                 >
                   {category}
@@ -121,9 +121,9 @@ export default function BlogPage() {
 
         {/* Featured Article */}
         {featuredArticle && (
-          <section className="bg-cream py-12 md:py-16">
+          <section className="bg-bg-dark py-12 md:py-16">
             <div className="max-w-7xl mx-auto px-6">
-              <div className="bg-cream-light border border-sand-light rounded-2xl overflow-hidden flex flex-col lg:flex-row">
+              <div className="bg-bg-card border border-border rounded-2xl overflow-hidden flex flex-col lg:flex-row">
                 {/* Gradient Placeholder */}
                 <div
                   className={`w-full lg:w-1/2 h-64 lg:h-auto bg-gradient-to-br ${featuredArticle.gradient}`}
@@ -132,25 +132,25 @@ export default function BlogPage() {
                 {/* Content */}
                 <div className="w-full lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="bg-terracotta text-cream-light text-xs font-medium rounded-full px-3 py-1">
+                    <span className="bg-teal text-white text-xs font-medium rounded-full px-3 py-1">
                       {featuredArticle.category}
                     </span>
-                    <span className="text-warm-gray text-sm">{featuredArticle.date}</span>
+                    <span className="text-gray-400 text-sm">{featuredArticle.date}</span>
                   </div>
 
-                  <h2 className="font-serif text-2xl md:text-3xl text-charcoal mb-4">
+                  <h2 className="font-heading text-2xl md:text-3xl text-white mb-4">
                     {featuredArticle.title}
                   </h2>
 
-                  <p className="text-warm-gray-dark mb-6">
+                  <p className="text-gray-400 mb-6">
                     {featuredArticle.author} · <span className="font-medium">{featuredArticle.role}</span>
                   </p>
 
-                  <p className="text-warm-gray-dark text-sm leading-relaxed mb-6">
+                  <p className="text-gray-400 text-sm leading-relaxed mb-6">
                     {featuredArticle.excerpt}
                   </p>
 
-                  <a href="#" className="text-terracotta font-medium inline-flex items-center gap-2 hover:gap-3 transition">
+                  <a href="#" className="text-teal-light font-medium inline-flex items-center gap-2 hover:gap-3 transition">
                     Read Article <span>→</span>
                   </a>
                 </div>
@@ -160,13 +160,13 @@ export default function BlogPage() {
         )}
 
         {/* Article Grid */}
-        <section className="bg-cream py-12 md:py-20">
+        <section className="bg-bg-dark py-12 md:py-20">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {otherArticles.map((article) => (
                 <article
                   key={article.id}
-                  className="bg-cream-light border border-sand-light rounded-xl overflow-hidden hover:border-terracotta transition flex flex-col"
+                  className="bg-bg-card border border-border rounded-xl overflow-hidden hover:border-teal transition flex flex-col"
                 >
                   {/* Gradient Placeholder */}
                   <div
@@ -176,21 +176,21 @@ export default function BlogPage() {
                   {/* Content */}
                   <div className="p-6 flex flex-col flex-grow">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="bg-sand-light text-warm-gray-dark text-xs font-medium rounded-full px-3 py-1">
+                      <span className="bg-bg-dark border border-border text-gray-400 text-xs font-medium rounded-full px-3 py-1">
                         {article.category}
                       </span>
-                      <span className="text-warm-gray text-xs">{article.date}</span>
+                      <span className="text-gray-500 text-xs">{article.date}</span>
                     </div>
 
-                    <h3 className="font-serif text-lg text-charcoal mb-3 leading-snug">
+                    <h3 className="font-heading text-lg text-white mb-3 leading-snug">
                       {article.title}
                     </h3>
 
-                    <p className="text-warm-gray-dark text-sm line-clamp-2 mb-4 flex-grow">
+                    <p className="text-gray-400 text-sm line-clamp-2 mb-4 flex-grow">
                       {article.excerpt}
                     </p>
 
-                    <a href="#" className="text-terracotta text-sm font-medium inline-flex items-center gap-1 hover:gap-2 transition">
+                    <a href="#" className="text-teal-light text-sm font-medium inline-flex items-center gap-1 hover:gap-2 transition">
                       Read <span>→</span>
                     </a>
                   </div>
@@ -201,12 +201,12 @@ export default function BlogPage() {
         </section>
 
         {/* Newsletter Section */}
-        <section className="bg-linen py-16 md:py-20">
+        <section className="bg-bg-dark py-16 md:py-20">
           <div className="max-w-2xl mx-auto px-6 text-center">
-            <h2 className="font-serif text-3xl md:text-4xl text-charcoal mb-3">
+            <h2 className="font-heading text-3xl md:text-4xl text-white mb-3">
               Health insights, delivered monthly.
             </h2>
-            <p className="text-warm-gray-dark mb-8">
+            <p className="text-gray-400 mb-8">
               Physician-written. No hype, no spam.
             </p>
 
@@ -214,11 +214,11 @@ export default function BlogPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-grow bg-cream-light border border-sand-light rounded-xl px-4 py-3 text-charcoal placeholder:text-warm-gray focus:outline-none focus:border-terracotta transition"
+                className="flex-grow bg-bg-card border border-border rounded-xl px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-teal transition"
               />
               <button
                 type="submit"
-                className="bg-terracotta text-cream-light px-6 md:px-8 py-3 rounded-xl font-medium hover:bg-terracotta-dark transition whitespace-nowrap"
+                className="bg-teal text-white px-6 md:px-8 py-3 rounded-xl font-medium hover:bg-teal-light transition whitespace-nowrap"
               >
                 Subscribe
               </button>
