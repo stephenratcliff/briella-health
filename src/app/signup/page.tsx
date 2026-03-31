@@ -2,13 +2,20 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function SignupPage() {
+  const router = useRouter();
   const [selectedSex, setSelectedSex] = useState<'female' | 'male' | null>(null);
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
+    lastName: '',
+    phone: '',
+    dob: '',
+    state: '',
+    password: '',
   });
 
   const benefits = [
@@ -45,7 +52,31 @@ export default function SignupPage() {
 
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Save account to localStorage
+    const account = {
+      email: formData.email.toLowerCase().trim(),
+      password: formData.password,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      phone: formData.phone,
+      dob: formData.dob,
+      sex: selectedSex,
+      state: formData.state,
+      createdAt: new Date().toISOString(),
+      memberId: 'BH-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
+    };
+    // Store in localStorage (array of accounts)
+    const existing = JSON.parse(localStorage.getItem('briella-accounts') || '[]');
+    // Check for duplicate email
+    if (existing.some((a: { email: string }) => a.email === account.email)) {
+      alert('An account with this email already exists. Please log in.');
+      return;
+    }
+    existing.push(account);
+    localStorage.setItem('briella-accounts', JSON.stringify(existing));
     setSignupSuccess(true);
+    // Auto-redirect to login after 3 seconds
+    setTimeout(() => router.push('/login'), 3000);
   };
 
   return (
@@ -163,6 +194,8 @@ export default function SignupPage() {
                     name="lastName"
                     placeholder="Last"
                     required
+                    value={formData.lastName}
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                     className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
                   />
                 </div>
@@ -180,6 +213,8 @@ export default function SignupPage() {
                     name="phone"
                     placeholder="+1 (555) 000-0000"
                     required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
                   />
                 </div>
@@ -192,6 +227,8 @@ export default function SignupPage() {
                     type="date"
                     name="dob"
                     required
+                    value={formData.dob}
+                    onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
                     className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
                   />
                 </div>
@@ -240,6 +277,8 @@ export default function SignupPage() {
                   id="signupState"
                   name="state"
                   required
+                  value={formData.state}
+                  onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                   className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)] appearance-none bg-[image:url('data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2712%27%20height=%2712%27%20fill=%27none%27%20stroke=%27%236b7280%27%20stroke-width=%272%27%20viewBox=%270%200%2024%2024%27%3E%3Cpolyline%20points=%276%209%2012%2015%2018%209%27/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] pr-9"
                 >
                   <option value="" disabled selected>Select your state</option>
@@ -247,6 +286,24 @@ export default function SignupPage() {
                     <option key={state} value={state}>{state}</option>
                   ))}
                 </select>
+              </div>
+
+              {/* Password */}
+              <div className="flex flex-col gap-1.5 mb-4">
+                <label htmlFor="signupPassword" className="text-xs font-bold uppercase tracking-[0.04em] text-gray-400">
+                  Create Password
+                </label>
+                <input
+                  id="signupPassword"
+                  type="password"
+                  name="password"
+                  placeholder="Min 8 characters"
+                  required
+                  minLength={8}
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                />
               </div>
 
               {/* Divider */}
@@ -311,18 +368,21 @@ export default function SignupPage() {
                 </svg>
               </div>
               <h3 className="font-heading font-bold text-2xl text-white mb-3">
-                You're on the list.
+                Account created.
               </h3>
-              <p className="text-gray-400 text-sm leading-relaxed mb-7">
-                Thanks for signing up, <strong>{formData.firstName}</strong>. Briella Health is currently in pre-launch in Texas. We'll reach out to <strong>{formData.email}</strong> with next steps as soon as your membership is ready to activate.
+              <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                Welcome, <strong>{formData.firstName}</strong>. Your Briella Health membership is active. Redirecting you to login...
               </p>
-              <Link href="/" className="inline-block bg-teal text-white px-8 py-3 rounded-2xl font-heading font-bold text-sm hover:bg-teal-light transition mb-4">
-                Back to Home
+              <p className="text-gray-500 text-xs mb-7">
+                Email: <strong className="text-gray-300">{formData.email}</strong>
+              </p>
+              <Link href="/login" className="inline-block bg-teal text-white px-8 py-3 rounded-2xl font-heading font-bold text-sm hover:bg-teal-light transition mb-4">
+                Go to Login →
               </Link>
               <br />
-              <a href="#" className="text-teal-light text-xs font-medium hover:underline">
+              <Link href="/what-we-test" className="text-teal-light text-xs font-medium hover:underline">
                 Explore what we test →
-              </a>
+              </Link>
             </div>
           )}
         </div>

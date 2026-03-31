@@ -2,17 +2,42 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'patient' | 'provider'>('patient');
-
-  const handleTabSwitch = (tab: 'patient' | 'provider') => {
-    setActiveTab(tab);
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>, type: 'patient' | 'provider') => {
     e.preventDefault();
-    // Handle login logic here
+    setError('');
+
+    // Check localStorage for accounts
+    const accounts = JSON.parse(localStorage.getItem('briella-accounts') || '[]');
+    const match = accounts.find(
+      (a: { email: string; password: string }) =>
+        a.email === email.toLowerCase().trim() && a.password === password
+    );
+
+    if (match) {
+      // Set session
+      sessionStorage.setItem('briella-session', JSON.stringify({
+        ...match,
+        loggedInAt: new Date().toISOString(),
+        type,
+      }));
+      // Redirect to portal
+      if (type === 'patient') {
+        router.push('/patient-portal');
+      } else {
+        router.push('/patient-portal'); // Same portal for now
+      }
+    } else {
+      setError('No account found with that email and password.');
+    }
   };
 
   return (
@@ -30,7 +55,6 @@ export default function LoginPage() {
 
         {/* Card */}
         <div className="bg-bg-card border border-border rounded-3xl px-10 py-11 shadow-2xl">
-          {/* Heading */}
           <h1 className="font-heading font-extrabold text-3xl text-white text-center mb-2">
             Welcome back
           </h1>
@@ -41,7 +65,7 @@ export default function LoginPage() {
           {/* Tab Switcher */}
           <div className="grid grid-cols-2 border border-border rounded-2xl overflow-hidden mb-8">
             <button
-              onClick={() => handleTabSwitch('patient')}
+              onClick={() => { setActiveTab('patient'); setError(''); }}
               className={`py-3 text-center text-sm font-bold uppercase tracking-[0.05em] transition ${
                 activeTab === 'patient'
                   ? 'bg-teal-dim text-teal-light'
@@ -51,7 +75,7 @@ export default function LoginPage() {
               Patient
             </button>
             <button
-              onClick={() => handleTabSwitch('provider')}
+              onClick={() => { setActiveTab('provider'); setError(''); }}
               className={`py-3 text-center text-sm font-bold uppercase tracking-[0.05em] transition border-l border-border ${
                 activeTab === 'provider'
                   ? 'bg-teal-dim text-teal-light'
@@ -62,10 +86,16 @@ export default function LoginPage() {
             </button>
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 mb-6">
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
+
           {/* Patient Tab */}
           {activeTab === 'patient' && (
             <form onSubmit={(e) => handleLogin(e, 'patient')} noValidate className="space-y-5">
-              {/* Email */}
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="patientEmail" className="text-xs font-bold uppercase tracking-[0.04em] text-gray-400">
                   Email
@@ -75,11 +105,11 @@ export default function LoginPage() {
                   type="email"
                   placeholder="you@example.com"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
                 />
               </div>
-
-              {/* Password */}
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="patientPass" className="text-xs font-bold uppercase tracking-[0.04em] text-gray-400">
                   Password
@@ -87,23 +117,16 @@ export default function LoginPage() {
                 <input
                   id="patientPass"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
                 />
               </div>
-
-              {/* Forgot Password */}
-              <div className="flex justify-end mt-1">
-                <a href="#" className="text-teal-light text-sm font-bold hover:underline">
-                  Forgot password?
-                </a>
-              </div>
-
-              {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-5"
+                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2"
               >
                 Log In
               </button>
@@ -113,7 +136,6 @@ export default function LoginPage() {
           {/* Provider Tab */}
           {activeTab === 'provider' && (
             <form onSubmit={(e) => handleLogin(e, 'provider')} noValidate className="space-y-5">
-              {/* Email */}
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="providerEmail" className="text-xs font-bold uppercase tracking-[0.04em] text-gray-400">
                   Work Email
@@ -123,11 +145,11 @@ export default function LoginPage() {
                   type="email"
                   placeholder="you@clinic.com"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
                 />
               </div>
-
-              {/* Password */}
               <div className="flex flex-col gap-1.5">
                 <label htmlFor="providerPass" className="text-xs font-bold uppercase tracking-[0.04em] text-gray-400">
                   Password
@@ -135,23 +157,16 @@ export default function LoginPage() {
                 <input
                   id="providerPass"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
                 />
               </div>
-
-              {/* Forgot Password */}
-              <div className="flex justify-end mt-1">
-                <a href="#" className="text-teal-light text-sm font-bold hover:underline">
-                  Forgot password?
-                </a>
-              </div>
-
-              {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-5"
+                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2"
               >
                 Log In to Provider Portal
               </button>

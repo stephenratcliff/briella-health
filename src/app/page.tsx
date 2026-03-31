@@ -118,12 +118,12 @@ export default function Home() {
   ];
 
   const peopleCards = [
-    { src: 'https://images.unsplash.com/photo-1534438327431-68e574578cfc?w=600&h=400&fit=crop&q=80', alt: 'Man checking fitness tracker after workout', title: 'Health Optimizers', description: 'You track your fitness, nutrition, and sleep — but have limited insight into what\'s actually happening inside your body.' },
-    { src: 'https://images.unsplash.com/photo-1609220136736-443140cffec6?w=600&h=400&fit=crop&q=80', alt: 'Father playing with children outdoors', title: 'Family-Focused Adults', description: 'You have people counting on you. Annual comprehensive testing gives you the data to catch problems early — before they become serious.' },
-    { src: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop&q=80', alt: 'Woman practicing yoga at sunrise', title: 'Longevity-Minded', description: 'You\'ve read the research. You understand that early detection and longitudinal data are the foundation of preventive health.' },
-    { src: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&h=400&fit=crop&q=80', alt: 'Professional in modern office', title: 'Busy Professionals', description: 'You don\'t have time for multiple doctor visits and insurance paperwork. One membership, one blood draw, complete picture.' },
-    { src: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=400&fit=crop&q=80', alt: 'Person reviewing health data on phone', title: 'Frustrated Patients', description: 'Your doctor says everything looks "normal" — but you know something\'s off. We test what standard panels miss.' },
-    { src: 'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=600&h=400&fit=crop&q=80', alt: 'Modern medical professional with tablet', title: 'Practice & Wellness Partners', description: 'Offer your clients comprehensive health testing as a natural extension of your services. Partner pricing available.' },
+    { src: 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&h=400&fit=crop&q=80', alt: 'Woman running outdoors', title: 'Health Optimizers', description: 'You track your fitness, nutrition, and sleep — but have limited insight into what\'s actually happening inside your body.' },
+    { src: 'https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=600&h=400&fit=crop&q=80', alt: 'Parent carrying child on shoulders outdoors', title: 'Family-Focused Adults', description: 'You have people counting on you. Annual comprehensive testing gives you the data to catch problems early — before they become serious.' },
+    { src: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&h=400&fit=crop&q=80', alt: 'Woman practicing yoga', title: 'Longevity-Minded', description: 'You\'ve read the research. You understand that early detection and longitudinal data are the foundation of preventive health.' },
+    { src: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?w=600&h=400&fit=crop&q=80', alt: 'Professional woman working at laptop', title: 'Busy Professionals', description: 'You don\'t have time for multiple doctor visits and insurance paperwork. One membership, one blood draw, complete picture.' },
+    { src: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=400&fit=crop&q=80', alt: 'Woman looking thoughtful', title: 'Frustrated Patients', description: 'Your doctor says everything looks "normal" — but you know something\'s off. We test what standard panels miss.' },
+    { src: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&h=400&fit=crop&q=80', alt: 'Healthcare professional with modern technology', title: 'Practice & Wellness Partners', description: 'Offer your clients comprehensive health testing as a natural extension of your services. Partner pricing available.' },
   ];
 
   const faqItems = [
@@ -308,7 +308,17 @@ export default function Home() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {photoStrip.map((photo) => (
                 <div key={photo.label} className="relative rounded-xl overflow-hidden aspect-[4/5] group">
-                  <img src={photo.src} alt={photo.alt} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      target.parentElement!.style.background = 'linear-gradient(135deg, #0b1e30 0%, #0d9488 100%)';
+                    }}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <p className="text-white font-heading font-bold text-sm mb-1">{photo.label}</p>
@@ -453,7 +463,17 @@ export default function Home() {
               {peopleCards.map((person) => (
                 <div key={person.title} className="bg-bg-card border border-border rounded-xl overflow-hidden hover:border-teal-border hover:-translate-y-1 transition-all group">
                   <div className="relative h-48 overflow-hidden">
-                    <img src={person.src} alt={person.alt} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img
+                      src={person.src}
+                      alt={person.alt}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        target.parentElement!.style.background = 'linear-gradient(135deg, #0b1e30 0%, #0d9488 100%)';
+                      }}
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   </div>
                   <div className="p-6">

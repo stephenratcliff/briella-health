@@ -1,8 +1,27 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function PatientPortalPage() {
+  const router = useRouter();
+  const [user, setUser] = useState<{ firstName: string; lastName: string; email: string; memberId: string; sex: string; state: string; createdAt: string } | null>(null);
+
+  useEffect(() => {
+    // Check for session
+    const session = sessionStorage.getItem('briella-session');
+    if (!session) {
+      router.push('/login');
+      return;
+    }
+    setUser(JSON.parse(session));
+  }, [router]);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('briella-session');
+    router.push('/login');
+  };
+
   useEffect(() => {
     // Load Chart.js and create charts
     const script = document.createElement('script');
@@ -300,14 +319,25 @@ export default function PatientPortalPage() {
           {/* Header */}
           <div className="flex justify-between items-start flex-wrap gap-4 mb-8">
             <div>
-              <h1 className="font-heading font-extrabold text-2xl text-white mb-2">Good morning, Sarah.</h1>
+              <h1 className="font-heading font-extrabold text-2xl text-white mb-2">Good morning, {user?.firstName || 'there'}.</h1>
               <p className="text-gray-400 text-sm">
                 Your last panel was drawn <strong className="text-white">March 12, 2026</strong> · Results complete
               </p>
             </div>
-            <a href="#" className="inline-flex items-center gap-2 bg-teal text-white font-semibold text-sm px-4 py-2 rounded-lg hover:bg-teal-light transition">
-              Order Next Panel
-            </a>
+            <div className="flex items-center gap-3">
+              {user?.memberId && (
+                <span className="text-gray-500 text-xs font-mono">ID: {user.memberId}</span>
+              )}
+              <a href="#" className="inline-flex items-center gap-2 bg-teal text-white font-semibold text-sm px-4 py-2 rounded-lg hover:bg-teal-light transition">
+                Order Next Panel
+              </a>
+              <button
+                onClick={handleLogout}
+                className="inline-flex items-center gap-2 bg-white/5 border border-border text-gray-400 font-semibold text-sm px-4 py-2 rounded-lg hover:text-white hover:border-border-strong transition"
+              >
+                Sign Out
+              </button>
+            </div>
           </div>
 
           {/* Summary Stats */}
