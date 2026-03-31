@@ -54,6 +54,23 @@ export default function SignupPage() {
 
   const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Validate password is filled
+    if (!formData.password || formData.password.length < 8) {
+      alert('Please create a password with at least 8 characters.');
+      return;
+    }
+    if (!formData.email || !formData.firstName || !formData.lastName) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+    if (!selectedSex) {
+      alert('Please select your biological sex.');
+      return;
+    }
+    if (!formData.state) {
+      alert('Please select your state.');
+      return;
+    }
     // Save account to localStorage
     const account = {
       email: formData.email.toLowerCase().trim(),

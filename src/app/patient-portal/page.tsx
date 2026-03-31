@@ -216,9 +216,9 @@ export default function PatientPortalPage() {
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-gray-400">Sarah M.</span>
+            <span className="text-xs text-gray-400">{user?.firstName} {user?.lastName?.charAt(0)}.</span>
             <div className="w-8 h-8 bg-teal text-white rounded-full flex items-center justify-center text-sm font-bold">
-              SM
+              {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
             </div>
           </div>
         </div>
@@ -235,22 +235,22 @@ export default function PatientPortalPage() {
               </h3>
               <ul className="space-y-1">
                 <li>
-                  <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-teal/10 text-teal text-sm font-medium hover:bg-teal/15 transition">
+                  <a href="/patient-portal" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-teal/10 text-teal text-sm font-medium hover:bg-teal/15 transition">
                     <span>📊</span> Dashboard
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
+                  <a href="/patient-portal/results" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
                     <span>🧬</span> My Results
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
+                  <a href="/patient-portal/trends" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
                     <span>📈</span> Trends
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
+                  <a href="/patient-portal/health-report" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
                     <span>📋</span> Health Report
                   </a>
                 </li>
@@ -264,17 +264,17 @@ export default function PatientPortalPage() {
               </h3>
               <ul className="space-y-1">
                 <li>
-                  <a href="#" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
+                  <a href="/patient-portal/order" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
                     <span>🔬</span> Order Lab Panel
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
+                  <a href="/patient-portal/draw-site" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
                     <span>📍</span> Find Draw Site
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
+                  <a href="/patient-portal/history" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
                     <span>📅</span> Lab History
                   </a>
                 </li>
@@ -302,14 +302,14 @@ export default function PatientPortalPage() {
               </h3>
               <ul className="space-y-1">
                 <li>
-                  <a href="#" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
+                  <a href="/patient-portal/settings" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
                     <span>⚙️</span> Settings
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition">
+                  <button onClick={handleLogout} className="flex items-center gap-3 px-3 py-2 text-gray-400 text-sm hover:bg-bg-dark rounded-lg transition w-full text-left">
                     <span>↩️</span> Sign Out
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -330,7 +330,7 @@ export default function PatientPortalPage() {
               {user?.memberId && (
                 <span className="text-gray-500 text-xs font-mono">ID: {user.memberId}</span>
               )}
-              <a href="#" className="inline-flex items-center gap-2 bg-teal text-white font-semibold text-sm px-4 py-2 rounded-lg hover:bg-teal-light transition btn-primary">
+              <a href="/patient-portal/order" className="inline-flex items-center gap-2 bg-teal text-white font-semibold text-sm px-4 py-2 rounded-lg hover:bg-teal-light transition btn-primary">
                 Order Next Panel
               </a>
               <button
