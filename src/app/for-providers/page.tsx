@@ -53,10 +53,10 @@ export default function ForProvidersPage() {
               Apply to Partner
             </a>
             <a
-              href="spa-portal.html"
+              href="/login"
               className="inline-block border border-border hover:border-teal-border text-white px-8 py-3 rounded-xl font-semibold transition"
             >
-              See the Dashboard
+              Provider Login
             </a>
           </div>
         </div>
