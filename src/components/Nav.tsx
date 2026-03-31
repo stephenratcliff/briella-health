@@ -3,516 +3,301 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronDown } from 'lucide-react';
-
-interface BiomarkerCategory {
-  icon: string;
-  title: string;
-  description: string;
-  href?: string;
-}
-
-interface DropdownColumn {
-  title: string;
-  items: BiomarkerCategory[];
-}
 
 export default function Nav() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [openDesktopDropdown, setOpenDesktopDropdown] = useState<string | null>(
-    null
-  );
-  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(
-    null
-  );
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout>(undefined);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
-
-  // Biomarker categories for "What We Test" mega-dropdown
-  const whatWeTestColumns: DropdownColumn[] = [
-    {
-      title: 'Core Panels',
-      items: [
-        {
-          icon: '❤️',
-          title: 'Heart & Cardiovascular',
-          description: 'Lipid profiles, lipoproteins, inflammatory markers',
-        },
-        {
-          icon: '⚖️',
-          title: 'Hormones & Metabolism',
-          description: 'Cortisol, thyroid-binding proteins, metabolic panels',
-        },
-        {
-          icon: '🛡️',
-          title: 'Thyroid Function',
-          description: 'TSH, free T3/T4, thyroid antibodies, iodine status',
-        },
-      ],
-    },
-    {
-      title: 'Advanced Markers',
-      items: [
-        {
-          icon: '🥗',
-          title: 'Nutrients & Vitamins',
-          description: 'Vitamin D, B12, folate, iron, magnesium, zinc',
-        },
-        {
-          icon: '🔬',
-          title: 'Immune & Inflammation',
-          description: 'CRP, homocysteine, hs-TNI, interleukins, cytokines',
-        },
-        {
-          icon: '🎯',
-          title: 'Cancer Screening',
-          description: 'PSA, CEA, CA-19-9, tumor markers by risk',
-        },
-      ],
-    },
-    {
-      title: 'Organ Systems',
-      items: [
-        {
-          icon: '🫀',
-          title: 'Liver & Kidney',
-          description: 'AST, ALT, GGT, bilirubin, creatinine, BUN, eGFR',
-        },
-        {
-          icon: '🩸',
-          title: 'Blood & Hematology',
-          description: 'CBC, RBC count, hemoglobin, platelets, coagulation',
-        },
-        {
-          icon: '→',
-          title: 'View All 100+ Biomarkers',
-          description: 'Explore our complete testing library',
-          href: '/what-we-test',
-        },
-      ],
-    },
-  ];
-
-  // For Providers dropdown
-  const forProvidersItems: BiomarkerCategory[] = [
-    {
-      icon: '📋',
-      title: 'Partnership Model',
-      description: 'How providers integrate with Briella Health',
-      href: '/for-providers',
-    },
-    {
-      icon: '📊',
-      title: 'Provider Dashboard',
-      description: 'Manage patients, access results, and insights',
-      href: '/for-providers',
-    },
-    {
-      icon: '💰',
-      title: 'Pricing Tiers',
-      description: 'Flexible plans for practices of any size',
-      href: '/for-providers',
-    },
-    {
-      icon: '✍️',
-      title: 'Apply to Partner',
-      description: 'Join our provider network today',
-      href: '/for-providers',
-    },
-  ];
 
   const isActive = (href: string) => pathname === href;
 
-  // Handle dropdown hover with delay to prevent flickering
-  const handleDropdownEnter = (dropdownName: string) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setOpenDesktopDropdown(dropdownName);
-    }, 150);
-  };
+  // Close everything on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setDropdownOpen(false);
+  }, [pathname]);
 
-  const handleDropdownLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setOpenDesktopDropdown(null);
-    }, 150);
-  };
-
-  // Close dropdowns when clicking outside
+  // Close dropdown on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpenDesktopDropdown(null);
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+        setMobileMenuOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Close mobile menu on navigation
-  const closeMobileMenu = () => {
-    setIsOpen(false);
-    setOpenMobileDropdown(null);
-  };
+  // Explore column links
+  const exploreLinks = [
+    { label: 'Journal', desc: 'Physician-written health insights & articles', href: '/blog' },
+    { label: 'For Providers', desc: 'Partner program for clinics & practices', href: '/for-providers' },
+    { label: 'Contact Us', desc: 'hello@briellahealth.com', href: 'mailto:hello@briellahealth.com' },
+  ];
+
+  // Quick Links column
+  const quickLinks = [
+    { label: 'Pricing', desc: '$365/year — all-inclusive membership', href: '/membership' },
+    { label: 'How It Works', desc: 'From sign-up to results in 3 steps', href: '/how-it-works' },
+    { label: 'Gift a Membership', desc: 'Give the gift of comprehensive health data', href: '/signup' },
+  ];
+
+  const navLinks = [
+    { label: 'How It Works', href: '/how-it-works' },
+    { label: 'What We Test', href: '/what-we-test' },
+    { label: 'Membership', href: '/membership' },
+    { label: 'For Providers', href: '/for-providers' },
+  ];
 
   return (
     <nav
-      className="fixed top-0 z-50 w-full h-[70px] bg-bg-dark/92 backdrop-blur-xl border-b border-border"
-      ref={dropdownRef}
+      ref={navRef}
+      className="fixed top-0 z-50 w-full bg-bg-dark/92 backdrop-blur-xl border-b border-border"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-        <div className="flex justify-between items-center h-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-[70px]">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
             <div className="bg-teal text-white w-[34px] h-[34px] rounded-[7px] font-heading font-black text-sm flex items-center justify-center">
               B
             </div>
-            <span className="text-white font-heading font-extrabold hidden sm:inline">
+            <span className="text-white font-heading font-extrabold">
               Briella&nbsp;
             </span>
-            <span className="text-teal font-heading font-extrabold hidden sm:inline">
+            <span className="text-teal font-heading font-extrabold">
               Health
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link
-              href="/how-it-works"
-              className={`text-sm font-semibold transition-colors duration-200 relative group ${
-                isActive('/how-it-works')
-                  ? 'text-white'
-                  : 'text-gray-300 hover:text-white'
-              }`}
-            >
-              How It Works
-              {isActive('/how-it-works') && (
-                <span className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-teal rounded-full" />
-              )}
-            </Link>
-
-            {/* What We Test Dropdown */}
-            <div
-              onMouseEnter={() => handleDropdownEnter('whatWeTest')}
-              onMouseLeave={handleDropdownLeave}
-              className="relative group"
-            >
-              <button
-                className={`text-sm font-semibold transition-colors duration-200 flex items-center gap-1.5 relative ${
-                  isActive('/what-we-test')
-                    ? 'text-white'
-                    : 'text-gray-300 hover:text-white'
+          {/* Desktop Nav Links */}
+          <div className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-semibold px-3.5 py-1.5 rounded-md transition-colors duration-200 ${
+                  isActive(link.href)
+                    ? 'text-white bg-white/5'
+                    : 'text-gray-300 hover:text-white hover:bg-white/5'
                 }`}
               >
-                What We Test
-                <ChevronDown
-                  size={16}
-                  className={`transition-transform duration-300 ${
-                    openDesktopDropdown === 'whatWeTest' ? 'rotate-180' : ''
-                  }`}
-                />
-                {isActive('/what-we-test') && (
-                  <span className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-teal rounded-full" />
-                )}
-              </button>
-
-              {/* Mega Dropdown */}
-              {openDesktopDropdown === 'whatWeTest' && (
-                <div
-                  className="absolute top-full left-0 mt-2 w-screen max-w-4xl bg-bg-card border border-border rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200"
-                  onMouseEnter={() => handleDropdownEnter('whatWeTest')}
-                  onMouseLeave={handleDropdownLeave}
-                >
-                  <div className="grid grid-cols-3 gap-8 p-8">
-                    {whatWeTestColumns.map((column, colIdx) => (
-                      <div key={colIdx}>
-                        <h3 className="text-teal uppercase text-xs font-bold tracking-[0.16em] mb-6">
-                          {column.title}
-                        </h3>
-                        <div className="space-y-4">
-                          {column.items.map((item, itemIdx) => (
-                            <Link
-                              key={itemIdx}
-                              href={item.href || '#'}
-                              className="block group/item"
-                            >
-                              <div className="p-4 rounded-lg hover:bg-white/5 transition-colors duration-200">
-                                <div className="flex items-start gap-3">
-                                  <span className="text-2xl flex-shrink-0 mt-1">
-                                    {item.icon}
-                                  </span>
-                                  <div className="flex-1 min-w-0">
-                                    <h4 className="text-white font-semibold text-sm group-hover/item:text-teal-light transition-colors duration-200">
-                                      {item.title}
-                                    </h4>
-                                    <p className="text-gray-400 text-xs mt-1 leading-snug">
-                                      {item.description}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <Link
-              href="/membership"
-              className={`text-sm font-semibold transition-colors duration-200 relative group ${
-                isActive('/membership')
-                  ? 'text-white'
-                  : 'text-gray-300 hover:text-white'
-              }`}
-            >
-              Membership
-              {isActive('/membership') && (
-                <span className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-teal rounded-full" />
-              )}
-            </Link>
-
-            {/* For Providers Dropdown */}
-            <div
-              onMouseEnter={() => handleDropdownEnter('forProviders')}
-              onMouseLeave={handleDropdownLeave}
-              className="relative group"
-            >
-              <button
-                className={`text-sm font-semibold transition-colors duration-200 flex items-center gap-1.5 relative ${
-                  isActive('/for-providers')
-                    ? 'text-white'
-                    : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                For Providers
-                <ChevronDown
-                  size={16}
-                  className={`transition-transform duration-300 ${
-                    openDesktopDropdown === 'forProviders' ? 'rotate-180' : ''
-                  }`}
-                />
-                {isActive('/for-providers') && (
-                  <span className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-teal rounded-full" />
-                )}
-              </button>
-
-              {/* Simple Dropdown */}
-              {openDesktopDropdown === 'forProviders' && (
-                <div
-                  className="absolute top-full left-0 mt-2 w-80 bg-bg-card border border-border rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200"
-                  onMouseEnter={() => handleDropdownEnter('forProviders')}
-                  onMouseLeave={handleDropdownLeave}
-                >
-                  <div className="p-6 space-y-2">
-                    {forProvidersItems.map((item, idx) => (
-                      <Link
-                        key={idx}
-                        href={item.href || '#'}
-                        className="block group/item"
-                      >
-                        <div className="p-4 rounded-lg hover:bg-white/5 transition-colors duration-200">
-                          <div className="flex items-start gap-3">
-                            <span className="text-xl flex-shrink-0 mt-0.5">
-                              {item.icon}
-                            </span>
-                            <div className="flex-1 min-w-0">
-                              <h4 className="text-white font-semibold text-sm group-hover/item:text-teal-light transition-colors duration-200">
-                                {item.title}
-                              </h4>
-                              <p className="text-gray-400 text-xs mt-1 leading-snug">
-                                {item.description}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+                {link.label}
+              </Link>
+            ))}
           </div>
 
-          {/* Right Side - Desktop */}
-          <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+          {/* Right Side */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            {/* Login - desktop only */}
             <Link
               href="/login"
-              className="bg-white/5 border border-border-strong text-white text-xs px-4 py-2 rounded-md hover:bg-white/10 transition-colors duration-200"
+              className="hidden lg:inline-flex bg-white/5 border border-border-strong text-white text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-md hover:bg-white/10 transition-colors duration-200"
+            >
+              Login
+            </Link>
+
+            {/* Get Started - desktop only */}
+            <Link
+              href="/signup"
+              className="hidden lg:inline-flex bg-teal text-white text-xs font-bold uppercase tracking-wider px-6 py-2.5 rounded-md hover:bg-teal-light transition-colors duration-200 btn-primary"
+            >
+              Get Started
+            </Link>
+
+            {/* More Button (hamburger) — visible on ALL screens */}
+            <button
+              onClick={() => {
+                setDropdownOpen(!dropdownOpen);
+                setMobileMenuOpen(false);
+              }}
+              className="relative w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-lg border border-border-strong hover:bg-white/5 transition-colors duration-200"
+              aria-label="More"
+            >
+              <span
+                className={`block w-4 h-[2px] bg-gray-300 rounded-full transition-all duration-300 ${
+                  dropdownOpen ? 'rotate-45 translate-y-[3.5px]' : ''
+                }`}
+              />
+              <span
+                className={`block w-4 h-[2px] bg-gray-300 rounded-full transition-all duration-300 ${
+                  dropdownOpen ? '-rotate-45 -translate-y-[3.5px]' : ''
+                }`}
+              />
+            </button>
+
+            {/* Mobile hamburger — only on small screens */}
+            <button
+              className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg border border-border-strong hover:bg-white/5 transition-colors duration-200"
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen);
+                setDropdownOpen(false);
+              }}
+              aria-label="Menu"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="text-gray-300"
+              >
+                {mobileMenuOpen ? (
+                  <>
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </>
+                ) : (
+                  <>
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                  </>
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ===== MEGA DROPDOWN (from hamburger/more button) ===== */}
+      <div
+        className={`absolute top-[70px] left-0 right-0 bg-bg-card border-b border-border overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          dropdownOpen
+            ? 'max-h-[500px] opacity-100'
+            : 'max-h-0 opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Explore Column */}
+            <div>
+              <h3 className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-6">
+                Explore
+              </h3>
+              <div className="space-y-1">
+                {exploreLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="block group py-3 border-b border-border last:border-b-0"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    <span className="text-white font-semibold text-sm group-hover:text-teal-light transition-colors duration-200">
+                      {link.label}
+                    </span>
+                    <span className="block text-gray-400 text-xs mt-0.5">
+                      {link.desc}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Links Column */}
+            <div>
+              <h3 className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-6">
+                Quick Links
+              </h3>
+              <div className="space-y-1">
+                {quickLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="block group py-3 border-b border-border last:border-b-0"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    <span className="text-white font-semibold text-sm group-hover:text-teal-light transition-colors duration-200">
+                      {link.label}
+                    </span>
+                    <span className="block text-gray-400 text-xs mt-0.5">
+                      {link.desc}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA Card Column */}
+            <div>
+              <div className="bg-bg-dark border border-border-strong rounded-xl p-8">
+                <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">
+                  Now Enrolling
+                </p>
+                <p className="font-heading font-extrabold text-2xl text-white leading-tight mb-1">
+                  100+ biomarkers.
+                </p>
+                <p className="font-heading font-extrabold text-2xl text-teal leading-tight mb-4">
+                  $365/year.
+                </p>
+                <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                  No insurance required. HSA/FSA eligible. Quest Diagnostics
+                  nationwide.
+                </p>
+                <Link
+                  href="/signup"
+                  className="inline-flex bg-teal text-white text-xs font-bold uppercase tracking-wider px-6 py-3 rounded-md hover:bg-teal-light transition-colors duration-200 btn-primary"
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  Get Started &rarr;
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ===== MOBILE MENU (full links for small screens) ===== */}
+      <div
+        className={`lg:hidden absolute top-[70px] left-0 right-0 bg-bg-dark/98 border-b border-border overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          mobileMenuOpen
+            ? 'max-h-[500px] opacity-100'
+            : 'max-h-0 opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="flex flex-col px-4 py-4 space-y-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-sm font-semibold px-3.5 py-2.5 rounded-md transition-colors duration-200 ${
+                isActive(link.href)
+                  ? 'text-teal bg-white/5'
+                  : 'text-gray-300 hover:text-white hover:bg-white/5'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          <div className="pt-4 border-t border-border space-y-2 mt-2">
+            <Link
+              href="/blog"
+              className="block text-gray-300 text-sm font-semibold hover:text-white hover:bg-white/5 px-3.5 py-2.5 rounded-md transition-colors duration-200"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Journal
+            </Link>
+            <Link
+              href="/login"
+              className="block text-gray-300 text-sm font-semibold hover:text-white hover:bg-white/5 px-3.5 py-2.5 rounded-md transition-colors duration-200"
+              onClick={() => setMobileMenuOpen(false)}
             >
               Login
             </Link>
             <Link
               href="/signup"
-              className="bg-teal text-white text-xs font-bold uppercase tracking-widest px-6 py-2.5 rounded-md hover:bg-teal-light transition-colors duration-200"
+              className="block w-full bg-teal text-white text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-md hover:bg-teal-light text-center transition-colors duration-200"
+              onClick={() => setMobileMenuOpen(false)}
             >
               Get Started
             </Link>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-gray-300 hover:text-white flex-shrink-0"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden absolute top-[70px] left-0 right-0 bg-bg-dark/98 border-b border-border max-h-[calc(100vh-70px)] overflow-y-auto">
-            <div className="flex flex-col px-4 py-4 space-y-1">
-              {/* How It Works */}
-              <Link
-                href="/how-it-works"
-                className={`text-sm font-semibold px-3.5 py-2.5 rounded-md transition-colors duration-200 ${
-                  isActive('/how-it-works')
-                    ? 'text-teal bg-white/5'
-                    : 'text-gray-300 hover:text-white hover:bg-white/5'
-                }`}
-                onClick={closeMobileMenu}
-              >
-                How It Works
-              </Link>
-
-              {/* What We Test Mobile Accordion */}
-              <div className="border border-border rounded-md overflow-hidden">
-                <button
-                  onClick={() =>
-                    setOpenMobileDropdown(
-                      openMobileDropdown === 'whatWeTest' ? null : 'whatWeTest'
-                    )
-                  }
-                  className={`w-full text-sm font-semibold px-3.5 py-2.5 flex items-center justify-between transition-colors duration-200 ${
-                    isActive('/what-we-test')
-                      ? 'text-teal bg-white/5'
-                      : 'text-gray-300 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <span>What We Test</span>
-                  <ChevronDown
-                    size={16}
-                    className={`transition-transform duration-300 ${
-                      openMobileDropdown === 'whatWeTest' ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-
-                {openMobileDropdown === 'whatWeTest' && (
-                  <div className="bg-white/2.5 border-t border-border p-3 space-y-3">
-                    {whatWeTestColumns.map((column, colIdx) => (
-                      <div key={colIdx}>
-                        <h4 className="text-teal uppercase text-xs font-bold tracking-[0.16em] mb-2 px-2">
-                          {column.title}
-                        </h4>
-                        <div className="space-y-1">
-                          {column.items.map((item, itemIdx) => (
-                            <Link
-                              key={itemIdx}
-                              href={item.href || '#'}
-                              className="block text-gray-300 text-xs py-2 px-3 rounded hover:text-white hover:bg-white/5 transition-colors duration-200"
-                              onClick={closeMobileMenu}
-                            >
-                              <span className="mr-2">{item.icon}</span>
-                              {item.title}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Membership */}
-              <Link
-                href="/membership"
-                className={`text-sm font-semibold px-3.5 py-2.5 rounded-md transition-colors duration-200 ${
-                  isActive('/membership')
-                    ? 'text-teal bg-white/5'
-                    : 'text-gray-300 hover:text-white hover:bg-white/5'
-                }`}
-                onClick={closeMobileMenu}
-              >
-                Membership
-              </Link>
-
-              {/* For Providers Mobile Accordion */}
-              <div className="border border-border rounded-md overflow-hidden">
-                <button
-                  onClick={() =>
-                    setOpenMobileDropdown(
-                      openMobileDropdown === 'forProviders'
-                        ? null
-                        : 'forProviders'
-                    )
-                  }
-                  className={`w-full text-sm font-semibold px-3.5 py-2.5 flex items-center justify-between transition-colors duration-200 ${
-                    isActive('/for-providers')
-                      ? 'text-teal bg-white/5'
-                      : 'text-gray-300 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  <span>For Providers</span>
-                  <ChevronDown
-                    size={16}
-                    className={`transition-transform duration-300 ${
-                      openMobileDropdown === 'forProviders' ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-
-                {openMobileDropdown === 'forProviders' && (
-                  <div className="bg-white/2.5 border-t border-border p-3 space-y-1">
-                    {forProvidersItems.map((item, idx) => (
-                      <Link
-                        key={idx}
-                        href={item.href || '#'}
-                        className="block text-gray-300 text-xs py-2 px-3 rounded hover:text-white hover:bg-white/5 transition-colors duration-200"
-                        onClick={closeMobileMenu}
-                      >
-                        <span className="mr-2">{item.icon}</span>
-                        {item.title}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Divider */}
-              <div className="pt-4 border-t border-border space-y-2 mt-2">
-                <Link
-                  href="/login"
-                  className="block text-gray-300 text-sm font-semibold hover:text-white hover:bg-white/5 px-3.5 py-2.5 rounded-md transition-colors duration-200"
-                  onClick={closeMobileMenu}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/signup"
-                  className="block w-full bg-teal text-white text-sm font-bold uppercase tracking-widest px-6 py-2.5 rounded-md hover:bg-teal-light text-center transition-colors duration-200"
-                  onClick={closeMobileMenu}
-                >
-                  Get Started
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </nav>
   );
