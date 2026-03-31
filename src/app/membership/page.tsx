@@ -4,8 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function MembershipPage() {
+  useScrollReveal();
+
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
   const [waitlistMessage, setWaitlistMessage] = useState<string | null>(null);
   const [helpPanelOpen, setHelpPanelOpen] = useState(false);
@@ -57,11 +60,11 @@ export default function MembershipPage() {
 
       {/* ===== PAGE HERO ===== */}
       <section className="bg-bg-dark pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center fade-up">
           <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-6">
             Membership
           </p>
-          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white mb-8 leading-tight">
+          <h1 className="font-heading font-extrabold text-fluid-section text-white mb-8 leading-tight">
             One price.<br />
             Complete clarity.
           </h1>
@@ -75,9 +78,9 @@ export default function MembershipPage() {
       {/* ===== PRICING ===== */}
       <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-16">
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-up">
             {/* DTC Annual - Featured */}
-            <div className="bg-bg-card border-2 border-teal-border rounded-xl p-8 flex flex-col">
+            <div className="bg-bg-card border-2 border-teal-border rounded-xl p-8 flex flex-col card-hover card-glow delay-1">
               <div className="mb-6">
                 <span className="inline-block bg-teal text-white text-xs font-bold rounded-full px-3 py-1">
                   Most Popular
@@ -153,14 +156,14 @@ export default function MembershipPage() {
 
               <Link
                 href="/signup"
-                className="bg-teal hover:border-teal-border text-white w-full py-3 rounded-xl font-semibold text-center transition"
+                className="bg-teal hover:border-teal-border text-white w-full py-3 rounded-xl font-semibold text-center transition btn-primary"
               >
                 Join the Waitlist
               </Link>
             </div>
 
             {/* Practice / B2B */}
-            <div className="bg-bg-card border border-border rounded-xl p-8 flex flex-col">
+            <div className="bg-bg-card border border-border rounded-xl p-8 flex flex-col card-hover card-glow delay-2">
               <div className="mb-6">
                 <p className="text-sm text-gray-400 mb-2">
                   Practice Partner Access
@@ -223,7 +226,7 @@ export default function MembershipPage() {
 
               <Link
                 href="/for-providers"
-                className="border border-border text-gray-300 hover:border-teal hover:text-teal w-full py-3 rounded-xl font-semibold text-center transition"
+                className="border border-border text-gray-300 hover:border-teal hover:text-teal w-full py-3 rounded-xl font-semibold text-center transition btn-secondary"
               >
                 Contact Us for Partner Pricing
               </Link>
@@ -231,7 +234,7 @@ export default function MembershipPage() {
           </div>
 
           {/* Value Callout */}
-          <div className="mt-8 bg-bg-card border border-border rounded-xl p-8 flex gap-6 items-start">
+          <div className="mt-8 bg-bg-card border border-border rounded-xl p-8 flex gap-6 items-start card-hover card-glow fade-up">
             <div className="text-3xl flex-shrink-0">💡</div>
             <div>
               <h4 className="font-heading font-bold text-lg text-white mb-2">
@@ -258,7 +261,7 @@ export default function MembershipPage() {
             <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">
               Everything Included
             </p>
-            <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">
+            <h2 className="font-heading font-extrabold text-fluid-section text-white mb-4">
               More than just labs.
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
@@ -266,7 +269,7 @@ export default function MembershipPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 fade-up">
             {[
               {
                 emoji: "🔬",
@@ -301,7 +304,7 @@ export default function MembershipPage() {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="bg-bg-card border border-border rounded-xl p-8 text-center"
+                className="bg-bg-card border border-border rounded-xl p-8 text-center card-hover card-glow delay-{idx % 3}"
               >
                 <div className="text-4xl mb-4">{item.emoji}</div>
                 <h3 className="font-heading font-bold text-xl text-white mb-3">
@@ -325,12 +328,12 @@ export default function MembershipPage() {
             <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">
               FAQ
             </p>
-            <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white">
+            <h2 className="font-heading font-extrabold text-fluid-section text-white">
               Common questions.
             </h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 fade-up">
             {[
               {
                 question: "Does insurance cover this?",
@@ -409,12 +412,12 @@ export default function MembershipPage() {
 
       {/* ===== CTA ===== */}
       <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="bg-bg-card border border-border rounded-xl p-12">
+        <div className="max-w-3xl mx-auto text-center fade-up">
+          <div className="bg-bg-card border border-border rounded-xl p-12 card-hover card-glow">
             <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">
               Founding Member Access
             </p>
-            <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-6 leading-tight">
+            <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6 leading-tight">
               Join the waitlist.<br />
               Get priority access.
             </h2>
@@ -433,7 +436,7 @@ export default function MembershipPage() {
               />
               <button
                 type="submit"
-                className="bg-teal hover:bg-teal-light text-white px-6 py-3 rounded-xl font-semibold transition whitespace-nowrap"
+                className="bg-teal hover:bg-teal-light text-white px-6 py-3 rounded-xl font-semibold transition whitespace-nowrap btn-primary"
               >
                 Join the Waitlist
               </button>

@@ -4,8 +4,10 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function BlogPage() {
+  useScrollReveal();
   const [activeCategory, setActiveCategory] = useState('All');
   const [newsLetterState, setNewsletterState] = useState<'form' | 'success'>('form');
 
@@ -98,11 +100,11 @@ export default function BlogPage() {
       <main className="min-h-screen bg-bg-dark">
         {/* Hero Section */}
         <section className="border-b border-border py-16 md:py-28">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-6 fade-up">
             <p className="text-teal text-xs uppercase tracking-[0.16em] font-bold mb-3">
               Briella Health Journal
             </p>
-            <h1 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4 max-w-2xl">
+            <h1 className="font-heading font-extrabold text-fluid-section text-white mb-4 max-w-2xl">
               The science behind<br /><span style={{ color: 'var(--teal-light)' }}>knowing your numbers.</span>
             </h1>
             <p className="text-gray-400 text-base max-w-xl">
@@ -135,12 +137,12 @@ export default function BlogPage() {
         {/* Articles Section */}
         <section className="bg-bg-dark py-12">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 fade-up">
               {/* Featured Article */}
               {featuredArticle && (
                 <a
                   href="#"
-                  className="lg:col-span-3 bg-bg-card border border-border rounded-2xl overflow-hidden transition hover:border-teal-border hover:shadow-lg hover:shadow-teal/10 flex flex-col lg:flex-row"
+                  className="lg:col-span-3 bg-bg-card border border-border rounded-2xl overflow-hidden transition hover:border-teal-border hover:shadow-lg hover:shadow-teal/10 flex flex-col lg:flex-row card-hover card-glow"
                 >
                   {/* Image Placeholder */}
                   <div className="w-full lg:w-1/2 h-64 lg:h-auto bg-gradient-to-br from-blue-900 via-teal-600 to-teal-700 flex-shrink-0">
@@ -186,11 +188,11 @@ export default function BlogPage() {
               )}
 
               {/* Other Articles */}
-              {otherArticles.map((article) => (
+              {otherArticles.map((article, idx) => (
                 <a
                   key={article.id}
                   href="#"
-                  className="bg-bg-card border border-border rounded-xl overflow-hidden transition hover:border-teal-border hover:shadow-lg hover:shadow-teal/10 flex flex-col"
+                  className={`bg-bg-card border border-border rounded-xl overflow-hidden transition hover:border-teal-border hover:shadow-lg hover:shadow-teal/10 flex flex-col card-hover card-glow ${idx % 3 === 0 ? 'delay-1' : idx % 3 === 1 ? 'delay-2' : 'delay-3'}`}
                 >
                   {/* Image Placeholder */}
                   <div className="w-full aspect-video bg-gradient-to-br from-slate-800 to-slate-900">
@@ -249,9 +251,9 @@ export default function BlogPage() {
         </section>
 
         {/* Newsletter Section */}
-        <section className="bg-bg-dark py-16">
+        <section className="bg-bg-dark py-16 fade-up">
           <div className="max-w-2xl mx-auto px-6">
-            <div className="bg-bg-card border border-border rounded-3xl p-12 text-center">
+            <div className="bg-bg-card border border-border rounded-3xl p-12 text-center card-hover card-glow">
               <p className="text-teal text-xs uppercase tracking-[0.16em] font-bold mb-3">
                 Stay Informed
               </p>
@@ -272,7 +274,7 @@ export default function BlogPage() {
                   />
                   <button
                     type="submit"
-                    className="bg-teal text-white px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition hover:bg-teal-light"
+                    className="bg-teal text-white px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition hover:bg-teal-light btn-primary"
                   >
                     Subscribe
                   </button>

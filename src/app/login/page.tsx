@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function LoginPage() {
+  useScrollReveal();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'patient' | 'provider'>('patient');
   const [email, setEmail] = useState('');
@@ -42,7 +44,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-bg-dark flex flex-col items-center justify-center px-6 py-6">
-      <div className="w-full max-w-lg">
+      <div className="w-full max-w-lg fade-up">
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center gap-2.5 mb-11">
           <div className="w-9 h-9 bg-teal rounded flex items-center justify-center text-white font-heading font-bold text-sm">
@@ -54,7 +56,7 @@ export default function LoginPage() {
         </Link>
 
         {/* Card */}
-        <div className="bg-bg-card border border-border rounded-3xl px-10 py-11 shadow-2xl">
+        <div className="bg-bg-card border border-border rounded-3xl px-10 py-11 shadow-2xl card-hover card-glow">
           <h1 className="font-heading font-extrabold text-3xl text-white text-center mb-2">
             Welcome back
           </h1>
@@ -126,7 +128,7 @@ export default function LoginPage() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2"
+                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2 btn-primary"
               >
                 Log In
               </button>
@@ -166,7 +168,7 @@ export default function LoginPage() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2"
+                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2 btn-primary"
               >
                 Log In to Provider Portal
               </button>

@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function PatientPortalPage() {
+  useScrollReveal();
   const router = useRouter();
   const [user, setUser] = useState<{ firstName: string; lastName: string; email: string; memberId: string; sex: string; state: string; createdAt: string } | null>(null);
 
@@ -317,7 +319,7 @@ export default function PatientPortalPage() {
         {/* Main Content */}
         <main className="flex-1 p-6 md:p-8">
           {/* Header */}
-          <div className="flex justify-between items-start flex-wrap gap-4 mb-8">
+          <div className="flex justify-between items-start flex-wrap gap-4 mb-8 fade-up">
             <div>
               <h1 className="font-heading font-extrabold text-2xl text-white mb-2">Good morning, {user?.firstName || 'there'}.</h1>
               <p className="text-gray-400 text-sm">
@@ -328,12 +330,12 @@ export default function PatientPortalPage() {
               {user?.memberId && (
                 <span className="text-gray-500 text-xs font-mono">ID: {user.memberId}</span>
               )}
-              <a href="#" className="inline-flex items-center gap-2 bg-teal text-white font-semibold text-sm px-4 py-2 rounded-lg hover:bg-teal-light transition">
+              <a href="#" className="inline-flex items-center gap-2 bg-teal text-white font-semibold text-sm px-4 py-2 rounded-lg hover:bg-teal-light transition btn-primary">
                 Order Next Panel
               </a>
               <button
                 onClick={handleLogout}
-                className="inline-flex items-center gap-2 bg-white/5 border border-border text-gray-400 font-semibold text-sm px-4 py-2 rounded-lg hover:text-white hover:border-border-strong transition"
+                className="inline-flex items-center gap-2 bg-white/5 border border-border text-gray-400 font-semibold text-sm px-4 py-2 rounded-lg hover:text-white hover:border-border-strong transition btn-secondary"
               >
                 Sign Out
               </button>
@@ -341,9 +343,9 @@ export default function PatientPortalPage() {
           </div>
 
           {/* Summary Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8 fade-up">
             {/* Briella Health Score */}
-            <div className="bg-bg-card border border-border rounded-xl p-6">
+            <div className="bg-bg-card border border-border rounded-xl p-6 card-hover card-glow delay-1">
               <div className="flex items-baseline gap-1 mb-2">
                 <span className="font-heading font-extrabold text-4xl text-teal">84</span>
                 <span className="text-gray-400 text-sm font-medium">/100</span>
@@ -353,7 +355,7 @@ export default function PatientPortalPage() {
             </div>
 
             {/* Optimal */}
-            <div className="bg-bg-card border border-border rounded-xl p-6">
+            <div className="bg-bg-card border border-border rounded-xl p-6 card-hover card-glow delay-2">
               <div className="mb-2">
                 <span className="font-heading font-extrabold text-4xl text-white">67</span>
               </div>
@@ -362,7 +364,7 @@ export default function PatientPortalPage() {
             </div>
 
             {/* Watch */}
-            <div className="bg-bg-card border border-border rounded-xl p-6">
+            <div className="bg-bg-card border border-border rounded-xl p-6 card-hover card-glow delay-3">
               <div className="mb-2">
                 <span className="font-heading font-extrabold text-4xl text-gold">4</span>
               </div>
@@ -371,7 +373,7 @@ export default function PatientPortalPage() {
             </div>
 
             {/* Out of Optimal */}
-            <div className="bg-bg-card border border-border rounded-xl p-6">
+            <div className="bg-bg-card border border-border rounded-xl p-6 card-hover card-glow delay-4">
               <div className="mb-2">
                 <span className="font-heading font-extrabold text-4xl text-red-500">1</span>
               </div>
@@ -381,7 +383,7 @@ export default function PatientPortalPage() {
           </div>
 
           {/* Key Biomarker Results */}
-          <div className="bg-bg-card border border-border rounded-xl p-8 mb-8">
+          <div className="bg-bg-card border border-border rounded-xl p-8 mb-8 card-hover card-glow fade-up">
             <div className="flex justify-between items-start mb-8">
               <div>
                 <h2 className="font-heading font-bold text-xl text-white mb-1">Key Biomarker Results — March 2026</h2>
@@ -400,7 +402,7 @@ export default function PatientPortalPage() {
                 else if (marker.status === 'Low') borderColor = 'border-red-500/30';
 
                 return (
-                  <div key={idx} className={`bg-bg-card border ${borderColor} rounded-lg p-5`}>
+                  <div key={idx} className={`bg-bg-card border ${borderColor} rounded-lg p-5 card-hover card-glow ${idx % 4 === 0 ? 'delay-1' : idx % 4 === 1 ? 'delay-2' : idx % 4 === 2 ? 'delay-3' : 'delay-4'}`}>
                     <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">{marker.name}</p>
                     <div className="mb-3">
                       <span className="font-heading font-extrabold text-2xl text-white">{marker.value}</span>
@@ -419,7 +421,7 @@ export default function PatientPortalPage() {
           </div>
 
           {/* Biomarker Trends Chart */}
-          <div className="bg-bg-card border border-border rounded-xl p-8 mb-8">
+          <div className="bg-bg-card border border-border rounded-xl p-8 mb-8 card-hover card-glow fade-up">
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h2 className="font-heading font-bold text-xl text-white mb-1">Biomarker Trends — 3-Year View</h2>
@@ -437,9 +439,9 @@ export default function PatientPortalPage() {
           </div>
 
           {/* Thyroid and Metabolic Panels */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 fade-up">
             {/* Thyroid Panel */}
-            <div className="bg-bg-card border border-border rounded-xl p-8">
+            <div className="bg-bg-card border border-border rounded-xl p-8 card-hover card-glow delay-1">
               <div className="mb-6">
                 <h2 className="font-heading font-bold text-xl text-white mb-1">Thyroid Panel</h2>
                 <p className="text-gray-400 text-xs">TSH · Free T3 · Free T4</p>
@@ -450,7 +452,7 @@ export default function PatientPortalPage() {
             </div>
 
             {/* Metabolic Panel */}
-            <div className="bg-bg-card border border-border rounded-xl p-8">
+            <div className="bg-bg-card border border-border rounded-xl p-8 card-hover card-glow delay-2">
               <div className="mb-6">
                 <h2 className="font-heading font-bold text-xl text-white mb-1">Metabolic Panel</h2>
                 <p className="text-gray-400 text-xs">Fasting Glucose · HbA1c · Insulin</p>
@@ -462,11 +464,11 @@ export default function PatientPortalPage() {
           </div>
 
           {/* Physician Insights */}
-          <div className="bg-bg-card border border-border rounded-xl p-8 mb-8">
+          <div className="bg-bg-card border border-border rounded-xl p-8 mb-8 card-hover card-glow fade-up">
             <h2 className="font-heading font-bold text-xl text-white mb-6">💡 Physician Insights — March 2026</h2>
             <div className="space-y-6">
               {insights.map((insight, idx) => (
-                <div key={idx} className={`flex gap-4 pb-6 border-b border-border last:border-0 last:pb-0`}>
+                <div key={idx} className={`flex gap-4 pb-6 border-b border-border last:border-0 last:pb-0 ${idx === 0 ? 'delay-1' : idx === 1 ? 'delay-2' : idx === 2 ? 'delay-3' : idx === 3 ? 'delay-4' : 'delay-5'}`}>
                   <div className={`w-2 h-2 ${getDotColor(insight.dot)} rounded-full flex-shrink-0 mt-2`} />
                   <div>
                     <h3 className="text-white font-semibold mb-2">{insight.title}</h3>
@@ -479,7 +481,7 @@ export default function PatientPortalPage() {
 
           {/* Provider CTA Section */}
           <div
-            className="relative overflow-hidden rounded-xl p-8 mb-8 border border-teal/30"
+            className="relative overflow-hidden rounded-xl p-8 mb-8 border border-teal/30 card-hover card-glow fade-up"
             style={{
               background: 'linear-gradient(135deg, #0a1f2e 0%, #0d2a3a 60%, rgba(13,148,136,0.08) 100%)',
             }}
@@ -532,7 +534,7 @@ export default function PatientPortalPage() {
                   href="https://myleaderhealth.com/schedule/"
                   target="_blank"
                   rel="noopener"
-                  className="inline-flex items-center gap-2 bg-teal text-white font-bold text-sm px-6 py-3 rounded-lg hover:bg-teal-light transition"
+                  className="inline-flex items-center gap-2 bg-teal text-white font-bold text-sm px-6 py-3 rounded-lg hover:bg-teal-light transition btn-primary"
                 >
                   Schedule a Free Consultation →
                 </a>
@@ -540,7 +542,7 @@ export default function PatientPortalPage() {
 
               {/* Right Card */}
               <div className="lg:w-80 flex-shrink-0">
-                <div className="bg-bg-card border border-border rounded-lg p-5">
+                <div className="bg-bg-card border border-border rounded-lg p-5 card-hover card-glow">
                   <div className="w-11 h-11 rounded-2xl bg-teal text-white font-heading font-bold text-xl flex items-center justify-center mb-3">L</div>
                   <h3 className="font-heading font-bold text-white mb-1">Leader Health</h3>
                   <p className="text-gray-500 text-xs mb-4">Science-Driven Care for Modern Wellness</p>
@@ -558,7 +560,7 @@ export default function PatientPortalPage() {
                     href="https://myleaderhealth.com/schedule/"
                     target="_blank"
                     rel="noopener"
-                    className="block w-full text-center py-2 text-white text-xs font-bold rounded-lg border border-border hover:bg-white/5 transition"
+                    className="block w-full text-center py-2 text-white text-xs font-bold rounded-lg border border-border hover:bg-white/5 transition btn-secondary"
                   >
                     Book at myleaderhealth.com
                   </a>

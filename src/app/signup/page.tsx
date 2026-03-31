@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function SignupPage() {
+  useScrollReveal();
   const router = useRouter();
   const [selectedSex, setSelectedSex] = useState<'female' | 'male' | null>(null);
   const [signupSuccess, setSignupSuccess] = useState(false);
@@ -82,7 +84,7 @@ export default function SignupPage() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen bg-bg-dark">
       {/* Left Panel */}
-      <div className="bg-bg-card border-r border-border px-14 py-12 lg:py-16 flex flex-col justify-center relative overflow-hidden">
+      <div className="bg-bg-card border-r border-border px-14 py-12 lg:py-16 flex flex-col justify-center relative overflow-hidden fade-up">
         {/* Decorative gradient background */}
         <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-gradient-radial from-teal/10 to-transparent pointer-events-none" />
 
@@ -109,7 +111,7 @@ export default function SignupPage() {
         {/* Benefits List */}
         <ul className="space-y-4 mb-16 relative z-10">
           {benefits.map((benefit, idx) => (
-            <li key={idx} className="flex items-start gap-3.5">
+            <li key={idx} className={`flex items-start gap-3.5 ${idx === 0 ? 'delay-1' : idx === 1 ? 'delay-2' : idx === 2 ? 'delay-3' : 'delay-4'}`}>
               <div className="w-7 h-7 rounded-full bg-teal-dim border border-teal-border flex items-center justify-center flex-shrink-0 mt-0.5">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-teal-light">
                   <polyline points="20 6 9 17 4 12" />
@@ -130,7 +132,7 @@ export default function SignupPage() {
       </div>
 
       {/* Right Panel */}
-      <div className="px-14 py-12 lg:py-16 flex flex-col justify-center overflow-y-auto">
+      <div className="px-14 py-12 lg:py-16 flex flex-col justify-center overflow-y-auto fade-up">
         <div className="max-w-md w-full">
           {/* Form Header */}
           <div className="mb-9">
@@ -350,7 +352,7 @@ export default function SignupPage() {
               <button
                 type="submit"
                 id="submitBtn"
-                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mb-4"
+                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mb-4 btn-primary"
               >
                 Create My Account →
               </button>
@@ -376,7 +378,7 @@ export default function SignupPage() {
               <p className="text-gray-500 text-xs mb-7">
                 Email: <strong className="text-gray-300">{formData.email}</strong>
               </p>
-              <Link href="/login" className="inline-block bg-teal text-white px-8 py-3 rounded-2xl font-heading font-bold text-sm hover:bg-teal-light transition mb-4">
+              <Link href="/login" className="inline-block bg-teal text-white px-8 py-3 rounded-2xl font-heading font-bold text-sm hover:bg-teal-light transition mb-4 btn-primary">
                 Go to Login →
               </Link>
               <br />

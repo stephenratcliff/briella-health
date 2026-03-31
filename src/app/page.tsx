@@ -4,8 +4,13 @@ import { useState } from 'react';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { useMouseGlow } from '@/hooks/useMouseGlow';
 
 export default function Home() {
+  useScrollReveal();
+  useMouseGlow();
+
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const biomarkerCategories = [
@@ -159,12 +164,12 @@ export default function Home() {
         {/* ===== HERO ===== */}
         <section className="bg-bg-dark relative pt-20 pb-24">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-teal/5 rounded-full blur-[120px] pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start lg:items-center">
               {/* Left */}
               <div className="flex flex-col gap-8">
                 <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold">Comprehensive Health Testing</p>
-                <h1 className="font-heading font-extrabold text-5xl md:text-6xl tracking-tight leading-[1.08]">
+                <h1 className="font-heading font-extrabold text-fluid-hero tracking-tight leading-[1.08]">
                   <span className="text-white">Know every number</span><br />
                   <em className="text-teal not-italic">that matters.</em>
                 </h1>
@@ -172,10 +177,10 @@ export default function Home() {
                   100+ biomarkers tested annually through Quest Diagnostics. Clear results. Actionable insights. One membership covers everything — for less than $1 a day.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                  <Link href="/signup" className="bg-teal text-white uppercase font-bold px-8 py-4 rounded-md hover:bg-teal-light transition-colors text-center text-sm tracking-wide">
+                  <Link href="/signup" className="btn-primary bg-teal text-white uppercase font-bold px-8 py-4 rounded-md hover:bg-teal-light text-center text-sm tracking-wide">
                     Join the Waitlist
                   </Link>
-                  <Link href="/how-it-works" className="border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal transition-colors text-center text-sm tracking-wide">
+                  <Link href="/how-it-works" className="btn-secondary border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal text-center text-sm tracking-wide">
                     How It Works
                   </Link>
                 </div>
@@ -196,7 +201,7 @@ export default function Home() {
 
               {/* Right — Biomarker Card */}
               <div className="lg:sticky lg:top-32 h-fit">
-                <div className="bg-bg-card border border-border-strong rounded-[20px] p-7 shadow-[0_2px_4px_rgba(0,0,0,0.5),0_12px_40px_rgba(0,0,0,0.35)]">
+                <div className="card-hover card-glow bg-bg-card border border-border-strong rounded-[20px] p-7 shadow-[0_2px_4px_rgba(0,0,0,0.5),0_12px_40px_rgba(0,0,0,0.35)]">
                   <div className="flex items-center justify-between mb-6">
                     <span className="text-gray-400 text-xs font-bold uppercase">Your Annual Panel</span>
                     <span className="bg-teal-dim border border-border-teal rounded-full px-3 py-1 text-xs font-bold text-teal">100+ tests</span>
@@ -225,7 +230,7 @@ export default function Home() {
 
         {/* ===== STAT BAR ===== */}
         <section className="bg-bg-card border-y border-border py-10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-border">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center py-4 px-4">
@@ -239,10 +244,10 @@ export default function Home() {
 
         {/* ===== THE PROBLEM ===== */}
         <section className="bg-bg-dark py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">The Problem</p>
-              <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-6">
+              <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 Your annual physical<br /><em className="text-teal not-italic">isn&apos;t enough.</em>
               </h2>
               <p className="text-gray-300 text-lg leading-relaxed">
@@ -250,8 +255,8 @@ export default function Home() {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {problemCards.map((card) => (
-                <div key={card.title} className="bg-bg-card border border-border rounded-xl p-8 text-center hover:border-teal-border hover:-translate-y-1 transition-all">
+              {problemCards.map((card, idx) => (
+                <div key={card.title} className={`card-hover card-glow bg-bg-card border border-border rounded-xl p-8 text-center delay-${idx + 1}`}>
                   <div className="text-4xl mb-4">{card.emoji}</div>
                   <h3 className="font-heading font-bold text-white text-lg mb-3">{card.title}</h3>
                   <p className="text-gray-400 text-sm leading-relaxed">{card.description}</p>
@@ -262,21 +267,21 @@ export default function Home() {
         </section>
 
         {/* Divider */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="border-border" /></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
 
         {/* ===== HOW IT WORKS ===== */}
         <section className="bg-bg-dark py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">Simple by Design</p>
-              <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-6">
+              <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 From sign-up to insights<br /><em className="text-teal not-italic">in three steps.</em>
               </h2>
               <p className="text-gray-300 text-lg">We handle the complexity. You get clarity.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {steps.map((step) => (
-                <div key={step.number} className="bg-bg-card border border-border rounded-xl p-8 hover:border-teal-border hover:-translate-y-1 transition-all">
+              {steps.map((step, idx) => (
+                <div key={step.number} className={`card-hover card-glow bg-bg-card border border-border rounded-xl p-8 delay-${idx + 1}`}>
                   <div className="w-[42px] h-[42px] bg-teal-dim border border-border-teal rounded-[10px] flex items-center justify-center font-heading font-extrabold text-teal mb-6">
                     {step.number}
                   </div>
@@ -294,14 +299,14 @@ export default function Home() {
         </section>
 
         {/* Divider */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="border-border" /></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
 
         {/* ===== LIFESTYLE PHOTO STRIP ===== */}
         <section className="bg-bg-dark py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">For Every Body</p>
-              <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white">
+              <h2 className="font-heading font-extrabold text-fluid-section text-white">
                 People who take<br /><em className="text-teal not-italic">their health seriously.</em>
               </h2>
             </div>
@@ -312,7 +317,7 @@ export default function Home() {
                     src={photo.src}
                     alt={photo.alt}
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
@@ -331,14 +336,14 @@ export default function Home() {
         </section>
 
         {/* Divider */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="border-border" /></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
 
         {/* ===== BIOMARKER CATEGORIES (Full 8-card grid) ===== */}
         <section className="bg-bg-dark py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16 max-w-3xl">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">Comprehensive Coverage</p>
-              <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-6">
+              <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 What others skip,<br /><em className="text-teal not-italic">we test.</em>
               </h2>
               <p className="text-gray-300 text-lg leading-relaxed">
@@ -346,8 +351,8 @@ export default function Home() {
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {fullBiomarkerCategories.map((cat) => (
-                <div key={cat.name} className="bg-bg-card border border-border rounded-xl p-6 hover:border-teal-border hover:-translate-y-1 transition-all">
+              {fullBiomarkerCategories.map((cat, idx) => (
+                <div key={cat.name} className={`card-hover card-glow bg-bg-card border border-border rounded-xl p-6 delay-${(idx % 6) + 1}`}>
                   <div className="text-3xl mb-4">{cat.emoji}</div>
                   <h4 className="font-heading font-bold text-white text-base mb-2">{cat.name}</h4>
                   <p className="bg-teal-dim border border-border-teal text-teal rounded-full px-2.5 py-0.5 text-xs font-bold inline-block mb-3">{cat.count}</p>
@@ -356,7 +361,7 @@ export default function Home() {
               ))}
             </div>
             <div className="text-center mt-12">
-              <Link href="/what-we-test" className="inline-flex items-center gap-2 border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal transition-colors text-sm tracking-wide">
+              <Link href="/what-we-test" className="btn-secondary inline-flex items-center gap-2 border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal text-sm tracking-wide">
                 View Full Biomarker List →
               </Link>
             </div>
@@ -364,14 +369,14 @@ export default function Home() {
         </section>
 
         {/* Divider */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="border-border" /></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
 
         {/* ===== VALUE COMPARISON ===== */}
         <section className="bg-bg-dark py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">Value</p>
-              <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-6">
+              <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 $365/year for what would cost<br /><em className="text-teal not-italic">$1,500–$3,000+ elsewhere.</em>
               </h2>
               <p className="text-gray-300 text-lg leading-relaxed">
@@ -381,12 +386,12 @@ export default function Home() {
 
             {/* Savings Visual */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-16">
-              <div className="bg-bg-card border border-border rounded-xl p-8 text-center">
+              <div className="card-hover card-glow bg-bg-card border border-border rounded-xl p-8 text-center">
                 <h4 className="text-gray-400 text-sm font-bold uppercase mb-4">Ordering through your doctor</h4>
                 <div className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">$1,500–$3,000<span className="text-xl text-gray-400">+</span></div>
                 <p className="text-gray-400 text-sm leading-relaxed">Multiple office visits, insurance pre-approvals, copays, limited biomarker coverage, and weeks of waiting.</p>
               </div>
-              <div className="bg-bg-card border-2 border-teal rounded-xl p-8 text-center relative">
+              <div className="card-hover card-glow bg-bg-card border-2 border-teal rounded-xl p-8 text-center relative">
                 <span className="bg-teal text-white text-xs font-bold uppercase tracking-wider rounded-full px-3 py-1 absolute -top-3 left-1/2 -translate-x-1/2">Briella Health</span>
                 <h4 className="text-teal text-sm font-bold uppercase mb-4 mt-2">All-inclusive membership</h4>
                 <div className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">$365<span className="text-xl text-gray-400">/yr</span></div>
@@ -421,14 +426,14 @@ export default function Home() {
         </section>
 
         {/* Divider */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="border-border" /></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
 
         {/* ===== PLATFORM FEATURES ===== */}
         <section className="bg-bg-dark py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">Your Health Platform</p>
-              <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-6">
+              <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 More than lab results.<br /><em className="text-teal not-italic">A complete health system.</em>
               </h2>
               <p className="text-gray-300 text-lg leading-relaxed">
@@ -436,8 +441,8 @@ export default function Home() {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {platformFeatures.map((feature) => (
-                <div key={feature.title} className="bg-bg-card border border-border rounded-xl p-8 text-center hover:border-teal-border hover:-translate-y-1 transition-all">
+              {platformFeatures.map((feature, idx) => (
+                <div key={feature.title} className={`card-hover card-glow bg-bg-card border border-border rounded-xl p-8 text-center delay-${(idx % 3) + 1}`}>
                   <div className="text-3xl mb-4">{feature.emoji}</div>
                   <h3 className="font-heading font-bold text-white text-lg mb-3">{feature.title}</h3>
                   <p className="text-gray-400 text-sm leading-relaxed">{feature.description}</p>
@@ -448,26 +453,26 @@ export default function Home() {
         </section>
 
         {/* Divider */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="border-border" /></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
 
         {/* ===== WHO IT'S FOR ===== */}
         <section className="bg-bg-dark py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">Who It&apos;s For</p>
-              <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white">
+              <h2 className="font-heading font-extrabold text-fluid-section text-white">
                 Built for people who take<br /><em className="text-teal not-italic">their health seriously.</em>
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {peopleCards.map((person) => (
-                <div key={person.title} className="bg-bg-card border border-border rounded-xl overflow-hidden hover:border-teal-border hover:-translate-y-1 transition-all group">
+              {peopleCards.map((person, idx) => (
+                <div key={person.title} className={`card-hover card-glow bg-bg-card border border-border rounded-xl overflow-hidden delay-${(idx % 6) + 1}`}>
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={person.src}
                       alt={person.alt}
                       loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
@@ -487,18 +492,18 @@ export default function Home() {
         </section>
 
         {/* Divider */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="border-border" /></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
 
         {/* ===== FAQ ===== */}
         <section className="bg-bg-dark py-24">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">Questions</p>
-              <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white">Common questions.</h2>
+              <h2 className="font-heading font-extrabold text-fluid-section text-white">Common questions.</h2>
             </div>
             <div className="space-y-3">
               {faqItems.map((item, i) => (
-                <div key={i} className="bg-bg-card border border-border rounded-xl overflow-hidden transition-all">
+                <div key={i} className="card-hover card-glow bg-bg-card border border-border rounded-xl overflow-hidden transition-all">
                   <button
                     className="w-full text-left px-6 py-5 flex justify-between items-center gap-4"
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -506,14 +511,14 @@ export default function Home() {
                     <span className="text-white font-semibold text-sm">{item.question}</span>
                     <span className={`text-teal text-xl shrink-0 transition-transform duration-300 ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
                   </button>
-                  <div className={`overflow-hidden transition-all duration-300 ${openFaq === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div className={`overflow-hidden transition-all duration-500 ${openFaq === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                     <p className="px-6 pb-5 text-gray-400 text-sm leading-relaxed">{item.answer}</p>
                   </div>
                 </div>
               ))}
             </div>
             <div className="text-center mt-10">
-              <Link href="/membership" className="inline-flex items-center gap-2 border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal transition-colors text-sm tracking-wide">
+              <Link href="/membership" className="btn-secondary inline-flex items-center gap-2 border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal text-sm tracking-wide">
                 See All FAQs →
               </Link>
             </div>
@@ -522,10 +527,10 @@ export default function Home() {
 
         {/* ===== B2B SPLIT SECTION ===== */}
         <section className="bg-bg-card border-y border-border py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 max-w-3xl mx-auto">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">Two Ways to Access Briella Health</p>
-              <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-6">
+              <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 Built for patients.<br /><em className="text-teal not-italic">Designed for providers.</em>
               </h2>
               <p className="text-gray-300 text-lg leading-relaxed">
@@ -534,26 +539,26 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {/* For Patients */}
-              <div className="bg-bg-dark border border-border rounded-xl p-9 hover:border-teal-border transition-colors">
+              <div className="card-hover card-glow bg-bg-dark border border-border rounded-xl p-9 delay-1">
                 <div className="text-3xl mb-4">🧬</div>
                 <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-2">For Patients</p>
                 <h3 className="font-heading font-bold text-white text-xl mb-3">Own your biology</h3>
                 <p className="text-gray-400 text-sm leading-relaxed mb-6">
                   Order your comprehensive panel, visit any Quest location nationwide, and log in to see your results, track trends over time, and understand what every number means — in plain language.
                 </p>
-                <Link href="/membership" className="inline-flex bg-teal text-white uppercase font-bold px-6 py-3 rounded-md hover:bg-teal-light transition-colors text-sm tracking-wide">
+                <Link href="/membership" className="btn-primary inline-flex bg-teal text-white uppercase font-bold px-6 py-3 rounded-md hover:bg-teal-light text-sm tracking-wide">
                   See Membership Plans
                 </Link>
               </div>
               {/* For Providers */}
-              <div className="bg-bg-dark border border-teal-border rounded-xl p-9 hover:border-teal transition-colors">
+              <div className="card-hover card-glow bg-bg-dark border border-teal-border rounded-xl p-9 delay-2">
                 <div className="text-3xl mb-4">🏥</div>
                 <p className="text-gold uppercase tracking-[0.16em] text-xs font-bold mb-2">For Providers & Practices</p>
                 <h3 className="font-heading font-bold text-white text-xl mb-3">Elevate your practice</h3>
                 <p className="text-gray-400 text-sm leading-relaxed mb-6">
                   Offer physician-ordered comprehensive lab testing under your brand. Your clients get Briella Health&apos;s full platform — you get a branded dashboard, lab visibility for every patient, and a new revenue stream.
                 </p>
-                <Link href="/for-providers" className="inline-flex border border-teal text-teal uppercase font-bold px-6 py-3 rounded-md hover:bg-teal hover:text-white transition-colors text-sm tracking-wide">
+                <Link href="/for-providers" className="btn-secondary inline-flex border border-teal text-teal uppercase font-bold px-6 py-3 rounded-md hover:bg-teal hover:text-white text-sm tracking-wide">
                   Learn About Partnership
                 </Link>
               </div>
@@ -563,20 +568,20 @@ export default function Home() {
 
         {/* ===== SIGNUP CTA ===== */}
         <section className="bg-bg-dark py-24">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="fade-up max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gradient-to-br from-teal/10 via-bg-card to-bg-card border border-teal-border rounded-2xl p-12 md:p-16 text-center">
               <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">Now Enrolling</p>
-              <h2 className="font-heading font-extrabold text-3xl md:text-5xl text-white mb-6">
+              <h2 className="font-heading font-extrabold text-fluid-hero text-white mb-6">
                 Be among the first<br />to know your numbers.
               </h2>
               <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
                 Join as a founding member — early access, priority scheduling, and exclusive founding pricing when we launch in Texas.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-                <Link href="/signup" className="bg-teal text-white uppercase font-bold px-8 py-4 rounded-md hover:bg-teal-light transition-colors text-sm tracking-wide">
+                <Link href="/signup" className="btn-primary bg-teal text-white uppercase font-bold px-8 py-4 rounded-md hover:bg-teal-light text-sm tracking-wide">
                   Create My Account
                 </Link>
-                <Link href="/what-we-test" className="border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal transition-colors text-sm tracking-wide">
+                <Link href="/what-we-test" className="btn-secondary border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal text-sm tracking-wide">
                   See What We Test
                 </Link>
               </div>
@@ -587,16 +592,6 @@ export default function Home() {
       </main>
 
       <Footer />
-
-      <style jsx>{`
-        @keyframes ticker {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .ticker-track {
-          animation: ticker 40s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }

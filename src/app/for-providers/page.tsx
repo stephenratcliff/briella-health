@@ -3,8 +3,11 @@
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function ForProvidersPage() {
+  useScrollReveal();
+
   const handlePartnerApply = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const btn = e.currentTarget.querySelector(
@@ -25,11 +28,11 @@ export default function ForProvidersPage() {
       {/* HERO */}
       <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 bg-gradient-to-b from-gold/8 to-transparent pointer-events-none"></div>
-        <div className="max-w-4xl mx-auto relative z-10">
+        <div className="max-w-4xl mx-auto relative z-10 fade-up">
           <div className="text-gold uppercase tracking-[0.16em] text-xs font-bold mb-6">
             For Providers &amp; Practices
           </div>
-          <h1 className="font-heading font-extrabold text-5xl md:text-6xl text-white mb-6 leading-tight">
+          <h1 className="font-heading font-extrabold text-fluid-section text-white mb-6 leading-tight">
             Your clients want
             <br />
             <span style={{ color: "var(--gold)", fontStyle: "normal" }}>
@@ -108,7 +111,7 @@ export default function ForProvidersPage() {
             >
               The Partnership Model
             </div>
-            <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">
+            <h2 className="font-heading font-extrabold text-fluid-section text-white mb-4">
               Everything you need.
               <br />
               Nothing you don't.
@@ -119,7 +122,7 @@ export default function ForProvidersPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 fade-up">
             {[
               {
                 step: "1",
@@ -136,8 +139,8 @@ export default function ForProvidersPage() {
                 title: "Results route directly to your dashboard",
                 desc: "When a client's labs are complete, you and your NP are notified in real time. Their full 100+ biomarker panel appears in your clinic dashboard — organized, interpreted, and ready for follow-up consultation. The patient sees their own portal simultaneously.",
               },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
+            ].map((item, idx) => (
+              <div key={item.step} className="text-center delay-{idx}">
                 <div
                   className="w-12 h-12 rounded-lg border mx-auto mb-6 flex items-center justify-center font-heading text-2xl"
                   style={{
@@ -230,7 +233,7 @@ export default function ForProvidersPage() {
               </div>
             </div>
 
-            <div className="bg-bg-dark rounded-xl border border-border p-6">
+            <div className="bg-bg-dark rounded-xl border border-border p-6 card-hover card-glow fade-up">
               <div className="flex justify-between items-center mb-6">
                 <span className="text-sm font-bold text-white">
                   Patient Overview
@@ -350,7 +353,7 @@ export default function ForProvidersPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 fade-up">
             {[
               {
                 emoji: "⚕️",
@@ -370,7 +373,7 @@ export default function ForProvidersPage() {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="bg-bg-card rounded-xl border border-border p-8 text-center"
+                className="bg-bg-card rounded-xl border border-border p-8 text-center card-hover card-glow delay-{idx}"
               >
                 <div className="text-4xl mb-4">{item.emoji}</div>
                 <h3 className="font-heading font-bold text-xl text-white mb-3">
@@ -399,7 +402,7 @@ export default function ForProvidersPage() {
             >
               Partnership Pricing
             </div>
-            <h2 className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">
+            <h2 className="font-heading font-extrabold text-fluid-section text-white mb-4">
               Simple, transparent revenue share.
             </h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
@@ -408,9 +411,9 @@ export default function ForProvidersPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto fade-up">
             {/* Starter */}
-            <div className="bg-bg-dark rounded-xl border border-border p-8">
+            <div className="bg-bg-dark rounded-xl border border-border p-8 card-hover card-glow delay-1">
               <div
                 className="uppercase tracking-[0.16em] text-xs font-bold mb-6"
               >
@@ -438,7 +441,7 @@ export default function ForProvidersPage() {
               </div>
               <a
                 href="#partner"
-                className="block w-full text-center border border-border hover:border-teal-border text-white px-8 py-3 rounded-xl font-semibold transition"
+                className="block w-full text-center border border-border hover:border-teal-border text-white px-8 py-3 rounded-xl font-semibold transition btn-secondary"
               >
                 Apply
               </a>
@@ -446,7 +449,7 @@ export default function ForProvidersPage() {
 
             {/* Growth - Featured */}
             <div
-              className="bg-bg-dark rounded-xl border-2 p-8 relative"
+              className="bg-bg-dark rounded-xl border-2 p-8 relative card-hover card-glow delay-2"
               style={{ borderColor: "var(--gold)" }}
             >
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -491,14 +494,14 @@ export default function ForProvidersPage() {
               </div>
               <a
                 href="#partner"
-                className="block w-full text-center bg-gold hover:bg-gold/90 text-bg-dark px-8 py-3 rounded-xl font-semibold transition"
+                className="block w-full text-center bg-gold hover:bg-gold/90 text-bg-dark px-8 py-3 rounded-xl font-semibold transition btn-primary"
               >
                 Apply — Most Popular
               </a>
             </div>
 
             {/* Enterprise */}
-            <div className="bg-bg-dark rounded-xl border border-border p-8">
+            <div className="bg-bg-dark rounded-xl border border-border p-8 card-hover card-glow delay-3">
               <div
                 className="uppercase tracking-[0.16em] text-xs font-bold mb-6"
               >
@@ -527,7 +530,7 @@ export default function ForProvidersPage() {
               </div>
               <a
                 href="#partner"
-                className="block w-full text-center border border-border hover:border-teal-border text-white px-8 py-3 rounded-xl font-semibold transition"
+                className="block w-full text-center border border-border hover:border-teal-border text-white px-8 py-3 rounded-xl font-semibold transition btn-secondary"
               >
                 Contact Us
               </a>
@@ -538,7 +541,7 @@ export default function ForProvidersPage() {
 
       {/* CTA / APPLY FORM */}
       <section id="partner" className="py-20 px-4 sm:px-6 lg:px-8 bg-bg-dark">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto fade-up">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <div
@@ -547,7 +550,7 @@ export default function ForProvidersPage() {
               >
                 Apply to Partner
               </div>
-              <h2 className="font-heading font-extrabold text-4xl text-white mb-4">
+              <h2 className="font-heading font-extrabold text-fluid-section text-white mb-4">
                 Ready to add lab testing to your practice?
               </h2>
               <p className="text-gray-300 mb-8">

@@ -5,6 +5,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 // Metadata cannot be used in 'use client' components, so we'll define it separately if needed
 
@@ -82,6 +83,8 @@ const categoryEmojis: Record<string, string> = {
 };
 
 export default function WhatWeTest() {
+  useScrollReveal();
+
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
@@ -128,10 +131,10 @@ export default function WhatWeTest() {
 
       {/* Hero Section */}
       <section style={{ paddingTop: '120px', paddingBottom: '64px', borderBottom: '1px solid var(--border)' }} className="px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-4xl fade-up">
           <div>
             <p className="text-xs uppercase tracking-[0.16em] font-bold text-teal">The Full Panel</p>
-            <h1 className="font-heading font-extrabold text-4xl md:text-5xl text-white mt-6 mb-5" style={{ maxWidth: '640px' }}>
+            <h1 className="font-heading font-extrabold text-fluid-section text-white mt-6 mb-5" style={{ maxWidth: '640px' }}>
               What we test — <span style={{ fontStyle: 'normal', color: 'var(--teal-light)' }}>and why it matters.</span>
             </h1>
             <p className="text-gray-400 text-base leading-relaxed" style={{ maxWidth: '580px', marginBottom: 0 }}>
@@ -215,12 +218,12 @@ export default function WhatWeTest() {
 
           {/* Biomarkers Grid */}
           {filteredBiomarkers.length > 0 ? (
-            <div className="grid grid-cols-1 gap-3">
-              {filteredBiomarkers.map(marker => (
+            <div className="grid grid-cols-1 gap-3 fade-up">
+              {filteredBiomarkers.map((marker, idx) => (
                 <div
                   key={marker.id}
                   onClick={() => toggleCard(marker.id)}
-                  className={`bg-bg-card border rounded-[12px] p-5 sm:p-[22px] cursor-pointer transition-all ${
+                  className={`bg-bg-card border rounded-[12px] p-5 sm:p-[22px] cursor-pointer transition-all card-hover card-glow delay-${idx % 5} ${
                     expandedCards.has(marker.id)
                       ? 'border-teal shadow-[0_0_0_1px_var(--teal),0_8px_32px_rgba(13,148,136,0.1)]'
                       : 'border-border hover:border-teal-border hover:shadow-[0_4px_20px_rgba(13,148,136,0.08)]'
@@ -276,15 +279,15 @@ export default function WhatWeTest() {
 
       {/* Bottom CTA Section */}
       <section className="bg-bg-card border-t border-border px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto max-w-2xl text-center fade-up">
           <p className="text-xs uppercase tracking-[0.16em] font-bold text-teal mb-4">Every marker. Every year.</p>
-          <h2 className="font-heading font-extrabold text-4xl text-white mb-3">100+ biomarkers. One membership.</h2>
+          <h2 className="font-heading font-extrabold text-fluid-section text-white mb-3">100+ biomarkers. One membership.</h2>
           <p className="text-gray-400 text-base leading-relaxed mb-8" style={{ maxWidth: '460px', marginLeft: 'auto', marginRight: 'auto' }}>
             $365/year — no add-ons, no à la carte pricing. All 50 states through Quest Diagnostics.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-8 py-3 bg-teal text-white font-heading font-bold rounded-lg hover:bg-teal-light transition-colors"
+            className="inline-block px-8 py-3 bg-teal text-white font-heading font-bold rounded-lg hover:bg-teal-light transition-colors btn-primary"
           >
             View Membership Plans
           </Link>

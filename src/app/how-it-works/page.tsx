@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 // export const metadata: Metadata = {
 //   title: 'How It Works — Briella Health',
@@ -11,6 +12,8 @@ import Footer from '@/components/Footer';
 // };
 
 export default function HowItWorks() {
+  useScrollReveal();
+
   return (
     <div className="bg-bg-dark">
       <Nav />
@@ -41,9 +44,9 @@ export default function HowItWorks() {
 
       {/* ===== PAGE HERO ===== */}
       <section className="bg-bg-dark px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto max-w-4xl text-center fade-up">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-teal">The Process</p>
-          <h1 className="mt-6 font-heading text-4xl font-extrabold text-white md:text-5xl">
+          <h1 className="mt-6 font-heading text-fluid-section font-extrabold text-white">
             Simple, thorough,<br />
             physician-supervised.
           </h1>
@@ -250,11 +253,11 @@ export default function HowItWorks() {
       {/* ===== ABOUT THE LABS ===== */}
       <section className="bg-bg-dark px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center fade-up">
             {/* Left column */}
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-teal">Lab Partner</p>
-              <h2 className="mt-6 font-heading text-4xl font-extrabold text-white md:text-5xl">
+              <h2 className="mt-6 font-heading text-fluid-section font-extrabold text-white">
                 Quest Diagnostics.<br />
                 The gold standard.
               </h2>
@@ -287,7 +290,7 @@ export default function HowItWorks() {
             </div>
 
             {/* Right column - Timeline card */}
-            <div className="rounded-xl border border-border bg-bg-card p-8">
+            <div className="rounded-xl border border-border bg-bg-card p-8 card-hover card-glow">
               <h3 className="text-sm font-semibold text-gray-300">Your typical visit timeline</h3>
               <div className="mt-6 space-y-0 divide-y divide-border">
                 <div className="flex gap-5 py-4 first:pt-0">
@@ -338,9 +341,9 @@ export default function HowItWorks() {
 
       {/* ===== CTA SECTION ===== */}
       <section className="bg-bg-dark px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-3xl text-center fade-up">
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-teal">Ready to Get Started?</p>
-          <h2 className="mt-6 font-heading text-4xl font-extrabold text-white md:text-5xl">
+          <h2 className="mt-6 font-heading text-fluid-section font-extrabold text-white">
             Your most comprehensive<br />
             health panel. Simplified.
           </h2>
@@ -349,7 +352,7 @@ export default function HowItWorks() {
           </p>
           <Link
             href="/signup"
-            className="mt-8 inline-block rounded-lg bg-teal px-8 py-3 font-heading font-bold text-white transition-colors hover:bg-teal-light"
+            className="mt-8 inline-block rounded-lg bg-teal px-8 py-3 font-heading font-bold text-white transition-colors hover:bg-teal-light btn-primary"
           >
             Join the Waitlist
           </Link>

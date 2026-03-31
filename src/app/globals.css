@@ -83,3 +83,193 @@ html {
   background: var(--teal);
   color: white;
 }
+
+/* ============================================================================
+   ANIMATION & MOTION SYSTEM
+   ========================================================================== */
+
+/* Scroll-triggered fade-up animation system */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delay utilities (100ms increments) */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s; }
+
+/* Ticker animation (infinite scroll) */
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker-scroll 35s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* ============================================================================
+   CARD & HOVER EFFECTS
+   ========================================================================== */
+
+/* Card glow effect with mouse tracking */
+.card-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(13, 148, 136, 0.06),
+    transparent 40%
+  );
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-glow:hover::before {
+  opacity: 1;
+}
+
+/* Enhanced card hover transitions */
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: var(--teal-border);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+              0 0 40px rgba(13, 148, 136, 0.08);
+}
+
+/* ============================================================================
+   BUTTON EFFECTS
+   ========================================================================== */
+
+/* Primary button - lift + glow on hover */
+.btn-primary {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(13, 148, 136, 0.3),
+              0 0 0 1px rgba(13, 148, 136, 0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary button - subtle lift */
+.btn-secondary {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================================
+   TYPOGRAPHY - FLUID & RESPONSIVE
+   ========================================================================== */
+
+.text-fluid-hero {
+  font-size: clamp(2.5rem, 5vw + 1rem, 4rem);
+}
+
+.text-fluid-section {
+  font-size: clamp(2rem, 3.5vw + 0.5rem, 3.25rem);
+}
+
+.text-fluid-body {
+  font-size: clamp(1rem, 1.2vw + 0.5rem, 1.25rem);
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================================================
+   DIVIDERS & VISUAL SEPARATORS
+   ========================================================================== */
+
+.divider-gradient {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--teal-border),
+    transparent
+  );
+  border: none;
+}
+
+/* ============================================================================
+   STATUS INDICATORS & PULSE EFFECTS
+   ========================================================================== */
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ============================================================================
+   ACCESSIBILITY & FOCUS STATES
+   ========================================================================== */
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
