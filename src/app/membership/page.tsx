@@ -5,6 +5,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { Check, Star, MapPin, Shield, BarChart3, Lock } from 'lucide-react';
 
 export default function MembershipPage() {
   useScrollReveal();
@@ -30,287 +31,291 @@ export default function MembershipPage() {
     <div className="min-h-screen flex flex-col bg-bg-dark">
       <Nav />
 
-      {/* ===== TICKER BAR ===== */}
-      <div className="bg-bg-dark border-b border-border overflow-hidden">
-        <div className="flex whitespace-nowrap animate-scroll">
-          {[
-            "Results in 3–5 Days",
-            "100+ Biomarkers Tested",
-            "Quest Diagnostics Network",
-            "$365 / Year — All Inclusive",
-            "2,000+ Lab Locations",
-            "No Insurance Required",
-            "Results in 3–5 Days",
-            "100+ Biomarkers Tested",
-            "Quest Diagnostics Network",
-            "$365 / Year — All Inclusive",
-            "2,000+ Lab Locations",
-            "No Insurance Required",
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="px-6 py-3 flex items-center gap-3 text-sm text-gray-400 flex-shrink-0"
-            >
-              <span>{item}</span>
-              <span className="w-1.5 h-1.5 bg-gray-600 rounded-full"></span>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* ===== PAGE HERO ===== */}
-      <section className="bg-bg-dark pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center fade-up">
-          <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-6">
-            Membership
-          </p>
-          <h1 className="font-heading font-extrabold text-fluid-section text-white mb-8 leading-tight">
+      <section className="bg-bg-dark pt-20 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto text-center fade-up">
+          <h1 className="font-heading font-extrabold text-5xl md:text-6xl text-white mb-8 leading-tight">
             One price.<br />
             Complete clarity.
           </h1>
-          <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            No per-test fees. No insurance paperwork. No surprise bills. One
-            annual membership covers everything.
+          <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto mb-12 leading-relaxed">
+            Everything you need to understand your health at a deeper level. No surprise fees. No insurance headaches. Just comprehensive lab intelligence, interpreted by physicians who care.
           </p>
+
+          {/* Trust Badges */}
+          <div className="flex flex-wrap justify-center gap-6 text-sm font-semibold text-white">
+            <span className="flex items-center gap-2">
+              <Check className="w-5 h-5 text-teal flex-shrink-0" />
+              HSA/FSA eligible
+            </span>
+            <span className="flex items-center gap-2">
+              <Check className="w-5 h-5 text-teal flex-shrink-0" />
+              Cancel anytime
+            </span>
+            <span className="flex items-center gap-2">
+              <Check className="w-5 h-5 text-teal flex-shrink-0" />
+              Physician-supervised
+            </span>
+          </div>
         </div>
       </section>
 
-      {/* ===== PRICING ===== */}
-      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-up">
-            {/* DTC Annual - Featured */}
-            <div className="bg-bg-card border-2 border-teal-border rounded-xl p-8 flex flex-col card-hover card-glow delay-1">
-              <div className="mb-6">
-                <span className="inline-block bg-teal text-pure-white text-xs font-bold rounded-full px-3 py-1">
-                  Most Popular
-                </span>
-              </div>
-
-              <div className="mb-6">
-                <p className="text-sm text-gray-400 mb-2">Annual Membership</p>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="font-heading font-extrabold text-5xl text-white">
-                    $365
+      {/* ===== PRICING TIERS ===== */}
+      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch fade-up">
+            {/* Essential */}
+            <div className="bg-bg-mid p-10 rounded-2xl border border-border flex flex-col card-hover card-glow delay-1">
+              <div className="mb-8">
+                <h3 className="font-heading font-bold text-2xl text-white mb-2">
+                  Essential
+                </h3>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-heading font-extrabold text-4xl text-white">
+                    $249
                   </span>
-                  <span className="text-lg text-gray-400">/year</span>
+                  <span className="text-white/60">/year</span>
                 </div>
-                <p className="text-gray-400 text-sm">
-                  That's less than $1/day for a complete annual picture of your
-                  health.
-                </p>
               </div>
 
-              <div className="border-t border-border mb-6"></div>
-
-              <ul className="mb-8 flex-grow space-y-4">
-                {[
-                  {
-                    label: "100+ biomarkers",
-                    desc: "comprehensive annual panel covering every major organ system",
-                  },
-                  {
-                    label: "Quest Diagnostics",
-                    desc: "schedule at any of 2,000+ locations nationwide",
-                  },
-                  {
-                    label: "Physician-reviewed results",
-                    desc: "not just lab ranges, but clinical context",
-                  },
-                  {
-                    label: "Personalized action plan",
-                    desc: "what to address, track, and follow up on",
-                  },
-                  {
-                    label: "Member dashboard",
-                    desc: "your results, trends, and history in one place",
-                  },
-                  {
-                    label: "Plain-language explanations",
-                    desc: "understand every result, not just the numbers",
-                  },
-                  {
-                    label: "Critical value monitoring",
-                    desc:
-                      "physician-designed escalation if anything urgent appears",
-                  },
-                  {
-                    label: "Year-over-year trending",
-                    desc: "your data stays with you, building over time",
-                  },
-                  {
-                    label: "HIPAA-secure platform",
-                    desc: "your health data is private and protected",
-                  },
-                ].map((feature, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-gray-300">
-                    <span className="text-teal font-bold flex-shrink-0 mt-0.5">
-                      ✓
-                    </span>
-                    <span>
-                      <strong>{feature.label}</strong> — {feature.desc}
-                    </span>
-                  </li>
-                ))}
+              <ul className="mb-10 flex-grow space-y-4">
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>60+ biomarkers</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Functional ranges (Optimal vs Normal)</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Personalized digital report</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Trend tracking over time</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Access to 2,000+ Quest locations</span>
+                </li>
               </ul>
 
               <Link
                 href="/signup"
-                className="bg-teal hover:border-teal-border text-pure-white w-full py-3 rounded-xl font-semibold text-center transition btn-primary"
+                className="w-full py-4 border-2 border-teal text-teal hover:bg-teal hover:text-pure-white font-bold rounded-xl transition-all"
               >
-                Join the Waitlist
+                Choose Essential
               </Link>
             </div>
 
-            {/* Practice / B2B */}
-            <div className="bg-bg-card border border-border rounded-xl p-8 flex flex-col card-hover card-glow delay-2">
-              <div className="mb-6">
-                <p className="text-sm text-gray-400 mb-2">
-                  Practice Partner Access
-                </p>
-                <div className="font-heading font-extrabold text-3xl text-white">
-                  Partner
+            {/* Complete - Featured */}
+            <div className="bg-bg-mid p-10 rounded-2xl border-2 border-teal flex flex-col card-hover card-glow delay-2 relative lg:-translate-y-4 shadow-xl">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-teal text-pure-white px-6 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase">
+                Most Popular
+              </div>
+
+              <div className="mb-8">
+                <h3 className="font-heading font-bold text-2xl text-white mb-2">
+                  Complete
+                </h3>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-heading font-extrabold text-4xl text-white">
+                    $365
+                  </span>
+                  <span className="text-white/60">/year</span>
                 </div>
               </div>
 
-              <p className="text-gray-400 text-sm mb-6">
-                For practice and wellness clinic partners. Offer your clients
-                comprehensive health testing as a natural extension of your
-                services.
-              </p>
-
-              <div className="border-t border-border mb-6"></div>
-
-              <ul className="mb-8 flex-grow space-y-4">
-                {[
-                  "Everything in the Annual Membership for your clients",
-                  {
-                    label: "Wholesale pricing",
-                    desc: "bulk rates for partner locations",
-                  },
-                  {
-                    label: "White-glove onboarding",
-                    desc: "staff training and enrollment support",
-                  },
-                  {
-                    label: "Referral and enrollment tools",
-                    desc: "easy client sign-up flow for your front desk",
-                  },
-                  {
-                    label: "Clinical protocol coordination",
-                    desc:
-                      "works alongside your existing practice services",
-                  },
-                  "Co-branded client materials",
-                  "Dedicated partner support",
-                ].map((feature, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-start gap-3 text-gray-300"
-                  >
-                    <span className="text-teal font-bold flex-shrink-0 mt-0.5">
-                      ✓
-                    </span>
-                    <span>
-                      {typeof feature === "string" ? (
-                        feature
-                      ) : (
-                        <>
-                          <strong>{feature.label}</strong> — {feature.desc}
-                        </>
-                      )}
-                    </span>
-                  </li>
-                ))}
+              <ul className="mb-10 flex-grow space-y-4">
+                <li className="flex items-start gap-3 text-white font-semibold">
+                  <Star className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Everything in Essential</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>100+ biomarkers analyzed</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Full Hormonal + Thyroid panels</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Early detection cancer markers</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Detailed Physician Insights</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Personalized supplement plan</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Priority lab processing</span>
+                </li>
               </ul>
 
               <Link
-                href="/for-providers"
-                className="border border-border text-gray-300 hover:border-teal hover:text-teal w-full py-3 rounded-xl font-semibold text-center transition btn-secondary"
+                href="/signup"
+                className="w-full py-4 bg-teal hover:bg-teal-light text-pure-white font-bold rounded-xl transition-all shadow-lg"
               >
-                Contact Us for Partner Pricing
+                Choose Complete
               </Link>
             </div>
-          </div>
 
-          {/* Value Callout */}
-          <div className="mt-8 bg-bg-card border border-border rounded-xl p-8 flex gap-6 items-start card-hover card-glow fade-up">
-            <div className="text-3xl flex-shrink-0">💡</div>
-            <div>
-              <h4 className="font-heading font-bold text-lg text-white mb-2">
-                How is $365 possible?
-              </h4>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                We partner directly with Quest Diagnostics at volume rates.
-                Because we order comprehensive panels in bulk, we access lab
-                pricing that individual patients simply can't. Your $365
-                membership covers what would otherwise cost $1,500–$3,000+ if
-                ordered à la carte through your doctor's office.
-              </p>
+            {/* Complete + Consult */}
+            <div className="bg-bg-mid p-10 rounded-2xl border border-border flex flex-col card-hover card-glow delay-3">
+              <div className="mb-8">
+                <h3 className="font-heading font-bold text-2xl text-white mb-2">
+                  Complete + Consult
+                </h3>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-heading font-extrabold text-4xl text-white">
+                    $549
+                  </span>
+                  <span className="text-white/60">/year</span>
+                </div>
+              </div>
+
+              <ul className="mb-10 flex-grow space-y-4">
+                <li className="flex items-start gap-3 text-white font-semibold">
+                  <Star className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Everything in Complete</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>30-min Physician Consultation</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Custom Health Action Plan</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Integrated follow-up protocol</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Direct messaging with clinical team</span>
+                </li>
+                <li className="flex items-start gap-3 text-white">
+                  <Check className="w-5 h-5 text-teal flex-shrink-0 mt-0.5" />
+                  <span>Priority scheduling</span>
+                </li>
+              </ul>
+
+              <Link
+                href="/signup"
+                className="w-full py-4 border-2 border-teal text-teal hover:bg-teal hover:text-pure-white font-bold rounded-xl transition-all"
+              >
+                Choose Consultation
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="bg-bg-dark border-t border-border"></div>
+      {/* ===== COMPARISON TABLE ===== */}
+      <section className="bg-bg-mid py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="font-heading font-bold text-4xl text-white mb-16 text-center">
+            Compare our plans
+          </h2>
 
-      {/* ===== WHAT'S INCLUDED DETAIL ===== */}
-      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-16">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">
-              Everything Included
-            </p>
-            <h2 className="font-heading font-extrabold text-fluid-section text-white mb-4">
-              More than just labs.
-            </h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Your membership is an annual health system — not a one-time test.
-            </p>
+          <div className="overflow-x-auto fade-up">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="py-6 px-4 font-heading text-lg text-white">Key Features</th>
+                  <th className="py-6 px-4 font-heading text-lg text-white text-center">Essential</th>
+                  <th className="py-6 px-4 font-heading text-lg text-white text-center bg-bg-dark/40 rounded-t-xl">Complete</th>
+                  <th className="py-6 px-4 font-heading text-lg text-white text-center">Consult</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                <tr>
+                  <td className="py-6 px-4 font-semibold text-white">Biomarkers Tracked</td>
+                  <td className="py-6 px-4 text-center text-white">60+</td>
+                  <td className="py-6 px-4 text-center font-bold text-white bg-bg-dark/40">100+</td>
+                  <td className="py-6 px-4 text-center text-white">100+</td>
+                </tr>
+                <tr>
+                  <td className="py-6 px-4 font-semibold text-white">Hormonal & Thyroid Panels</td>
+                  <td className="py-6 px-4 text-center text-white/40">—</td>
+                  <td className="py-6 px-4 text-center bg-bg-dark/40"><Check className="w-5 h-5 text-teal inline" /></td>
+                  <td className="py-6 px-4 text-center"><Check className="w-5 h-5 text-teal inline" /></td>
+                </tr>
+                <tr>
+                  <td className="py-6 px-4 font-semibold text-white">Physician Insights Report</td>
+                  <td className="py-6 px-4 text-center"><Check className="w-5 h-5 text-teal inline" /></td>
+                  <td className="py-6 px-4 text-center font-bold bg-bg-dark/40"><Check className="w-5 h-5 text-teal inline" /></td>
+                  <td className="py-6 px-4 text-center"><Check className="w-5 h-5 text-teal inline" /></td>
+                </tr>
+                <tr>
+                  <td className="py-6 px-4 font-semibold text-white">Supplement Recommendations</td>
+                  <td className="py-6 px-4 text-center text-white/40">—</td>
+                  <td className="py-6 px-4 text-center bg-bg-dark/40"><Check className="w-5 h-5 text-teal inline" /></td>
+                  <td className="py-6 px-4 text-center"><Check className="w-5 h-5 text-teal inline" /></td>
+                </tr>
+                <tr>
+                  <td className="py-6 px-4 font-semibold text-white">1:1 Physician Consultation</td>
+                  <td className="py-6 px-4 text-center text-white/40">—</td>
+                  <td className="py-6 px-4 text-center bg-bg-dark/40 text-white/40">—</td>
+                  <td className="py-6 px-4 text-center"><Check className="w-5 h-5 text-teal inline" /></td>
+                </tr>
+                <tr>
+                  <td className="py-6 px-4 font-semibold text-white">Quest Lab Access</td>
+                  <td className="py-6 px-4 text-center"><Check className="w-5 h-5 text-teal inline" /></td>
+                  <td className="py-6 px-4 text-center bg-bg-dark/40 rounded-b-xl"><Check className="w-5 h-5 text-teal inline" /></td>
+                  <td className="py-6 px-4 text-center"><Check className="w-5 h-5 text-teal inline" /></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 fade-up">
+      {/* ===== EVERY MEMBERSHIP INCLUDES ===== */}
+      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="font-heading font-bold text-3xl text-white mb-12 text-center">
+            Every membership includes
+          </h2>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 fade-up">
             {[
               {
-                emoji: "🔬",
-                title: "The Panel",
-                desc: "100+ biomarkers across 11 organ systems, drawn once a year at any Quest Diagnostics location. Processed by CLIA-certified labs.",
+                icon: MapPin,
+                title: "Quest Network",
+                desc: "2,000+ national locations for easy blood draws.",
               },
               {
-                emoji: "📊",
-                title: "Your Dashboard",
-                desc: "Every result organized, explained, and tracked year over year. See trends. Share with your doctor. Download your full report.",
+                icon: Shield,
+                title: "CLIA-Certified",
+                desc: "The highest gold standard in clinical laboratory testing.",
               },
               {
-                emoji: "👨‍⚕️",
-                title: "Physician Review",
-                desc: "Results reviewed through a clinical lens — not just lab ranges. Flagged findings, contextual notes, and a personalized action plan.",
+                icon: BarChart3,
+                title: "Optimal Ranges",
+                desc: "We test for peak function, not just absence of disease.",
               },
               {
-                emoji: "🚨",
-                title: "Critical Value Protocol",
-                desc: "If anything requires immediate attention, our physician-designed escalation system ensures you're notified and supported — not left to figure it out alone.",
-              },
-              {
-                emoji: "📈",
-                title: "Longitudinal Tracking",
-                desc: "Your data builds year over year. A single data point tells you where you are. Years of data tell you where you're going.",
-              },
-              {
-                emoji: "🔒",
-                title: "Privacy & Security",
-                desc: "HIPAA-compliant platform with bank-grade encryption. Your health data is yours — we never sell it, share it, or use it for advertising.",
+                icon: Lock,
+                title: "HSA/FSA Eligible",
+                desc: "Use your pre-tax health savings for all memberships.",
               },
             ].map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-bg-card border border-border rounded-xl p-8 text-center card-hover card-glow delay-{idx % 3}"
-              >
-                <div className="text-4xl mb-4">{item.emoji}</div>
-                <h3 className="font-heading font-bold text-xl text-white mb-3">
+              <div key={idx} className="text-center group">
+                <div className="w-16 h-16 bg-bg-mid rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-teal-dim transition-colors">
+                  <item.icon className="w-8 h-8 text-teal" />
+                </div>
+                <h4 className="font-heading font-bold text-lg text-white mb-2">
                   {item.title}
-                </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                </h4>
+                <p className="text-sm text-white/70">
                   {item.desc}
                 </p>
               </div>
@@ -319,19 +324,12 @@ export default function MembershipPage() {
         </div>
       </section>
 
-      <div className="bg-bg-dark border-t border-border"></div>
-
       {/* ===== FAQ ===== */}
-      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-16">
+      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-20">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">
-              FAQ
-            </p>
-            <h2 className="font-heading font-extrabold text-fluid-section text-white">
-              Common questions.
-            </h2>
-          </div>
+          <h2 className="font-heading font-bold text-4xl text-white mb-12 text-center">
+            Common questions
+          </h2>
 
           <div className="space-y-4 fade-up">
             {[
@@ -378,28 +376,28 @@ export default function MembershipPage() {
             ].map((item, idx) => (
               <div
                 key={idx}
-                className="bg-bg-card border border-border rounded-xl overflow-hidden"
+                className="bg-bg-mid p-6 rounded-xl cursor-pointer hover:shadow-md transition-shadow"
               >
                 <button
                   onClick={() =>
                     setExpandedFAQ(expandedFAQ === idx ? null : idx)
                   }
-                  className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-bg-dark/50 transition"
+                  className="w-full flex items-center justify-between text-left"
                 >
                   <span className="font-semibold text-white">
                     {item.question}
                   </span>
                   <span
-                    className={`text-gray-400 transition transform ${
+                    className={`text-white transition transform ${
                       expandedFAQ === idx ? "rotate-180" : ""
                     }`}
                   >
-                    ▼
+                    +
                   </span>
                 </button>
                 {expandedFAQ === idx && (
-                  <div className="border-t border-border px-6 py-4">
-                    <p className="text-gray-400 leading-relaxed">
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <p className="text-white/80 leading-relaxed">
                       {item.answer}
                     </p>
                   </div>
@@ -410,48 +408,24 @@ export default function MembershipPage() {
         </div>
       </section>
 
-      {/* ===== CTA ===== */}
-      <section className="bg-bg-dark px-4 sm:px-6 lg:px-8 py-16">
-        <div className="max-w-3xl mx-auto text-center fade-up">
-          <div className="bg-bg-card border border-border rounded-xl p-12 card-hover card-glow">
-            <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">
-              Founding Member Access
-            </p>
-            <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6 leading-tight">
-              Join the waitlist.<br />
-              Get priority access.
-            </h2>
-            <p className="text-lg text-gray-300 max-w-xl mx-auto mb-8">
-              We're launching soon. Founding members get early access, priority
-              scheduling, and exclusive pricing locked in for life.
-            </p>
-
-            <form onSubmit={handleWaitlist} className="flex gap-3 max-w-sm mx-auto mb-4 flex-col sm:flex-row">
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                required
-                className="flex-1 px-4 py-3 rounded-xl bg-bg-dark border border-border text-white placeholder-gray-500 focus:outline-none focus:border-teal transition"
-              />
-              <button
-                type="submit"
-                className="bg-teal hover:bg-teal-light text-pure-white px-6 py-3 rounded-xl font-semibold transition whitespace-nowrap btn-primary"
-              >
-                Join the Waitlist
-              </button>
-            </form>
-
-            {waitlistMessage && (
-              <p className="text-teal font-semibold text-center">
-                ✓ {waitlistMessage}
-              </p>
-            )}
-
-            <p className="text-gray-400 text-sm mt-4">
-              No spam. No commitment. Just early access when we launch.
-            </p>
-          </div>
+      {/* ===== BOTTOM CTA ===== */}
+      <section className="dark-section px-4 sm:px-6 lg:px-8 py-20 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto text-center relative z-10 fade-up">
+          <h2 className="font-heading font-bold text-4xl text-white mb-6">
+            Still have questions? We are here to help.
+          </h2>
+          <p className="text-lg text-white/80 mb-10">
+            Email our clinical team at{" "}
+            <a href="mailto:hello@briellahealth.com" className="underline decoration-gold hover:text-gold transition">
+              hello@briellahealth.com
+            </a>
+          </p>
+          <Link
+            href="/signup"
+            className="inline-block bg-warm hover:opacity-90 text-pure-white px-10 py-4 rounded-xl font-bold text-lg transition shadow-lg"
+          >
+            Get Started
+          </Link>
         </div>
       </section>
 
@@ -482,7 +456,7 @@ export default function MembershipPage() {
             <h3 className="font-semibold text-white">How can we help?</h3>
             <button
               onClick={() => setHelpPanelOpen(false)}
-              className="text-gray-400 hover:text-white text-xl"
+              className="text-white/60 hover:text-white text-xl"
             >
               ✕
             </button>
@@ -491,31 +465,31 @@ export default function MembershipPage() {
           <div className="space-y-2 mb-4">
             <Link
               href="/how-it-works"
-              className="block text-sm text-gray-300 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
+              className="block text-sm text-white/80 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
             >
               How does Briella Health work?
             </Link>
             <Link
-              href="/biomarkers"
-              className="block text-sm text-gray-300 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
+              href="/what-we-test"
+              className="block text-sm text-white/80 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
             >
               What biomarkers do you test?
             </Link>
             <Link
               href="/membership"
-              className="block text-sm text-gray-300 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
+              className="block text-sm text-white/80 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
             >
               What's included in my membership?
             </Link>
             <Link
               href="/signup"
-              className="block text-sm text-gray-300 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
+              className="block text-sm text-white/80 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
             >
               Create a new account
             </Link>
             <Link
               href="/login"
-              className="block text-sm text-gray-300 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
+              className="block text-sm text-white/80 hover:text-teal transition p-2 rounded hover:bg-bg-dark/50"
             >
               Log in to my account
             </Link>
@@ -523,7 +497,7 @@ export default function MembershipPage() {
 
           <div className="border-t border-border my-4"></div>
 
-          <p className="text-xs text-gray-500 text-center mb-3">
+          <p className="text-xs text-white/60 text-center mb-3">
             Still have a question?
           </p>
           <a
@@ -532,27 +506,13 @@ export default function MembershipPage() {
           >
             Email Us
           </a>
-          <p className="text-xs text-gray-500 text-center mt-2">
+          <p className="text-xs text-white/60 text-center mt-2">
             We typically respond within 1 business day.
           </p>
         </div>
       )}
 
       <Footer />
-
-      <style jsx>{`
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        .animate-scroll {
-          animation: scroll 30s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }

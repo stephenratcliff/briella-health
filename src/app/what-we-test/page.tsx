@@ -2,11 +2,11 @@
 
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-/* ─── Biomarker Data ─── */
+/* ─── Biomarker Data (100+ markers across 14 categories) ─── */
 const biomarkersData = [
   // ── HEART & CARDIOVASCULAR (15) ──
   { id: 'totalChol', name: 'Total Cholesterol', cat: 'cardiovascular', short: 'The sum of all cholesterol fractions — provides context but must be interpreted with LDL, HDL, and triglycerides.', why: 'Total cholesterol alone is a poor predictor of risk. It gains meaning alongside particle counts and ratios. Very low levels can also signal nutritional or hormonal issues.', std: '< 200 mg/dL', opt: '150–200 mg/dL', unit: 'mg/dL' },
@@ -98,445 +98,306 @@ const biomarkersData = [
 
   // ── BLOOD & HEMATOLOGY (16) ──
   { id: 'wbc', name: 'WBC (White Blood Cell Count)', cat: 'blood', short: 'Total white blood cell count — your immune system\'s overall activity level.', why: 'Elevated WBC signals infection, inflammation, or stress response. Persistently low counts may indicate immune suppression or bone marrow disorders.', std: '4.5–11.0 K/µL', opt: '5.0–8.0 K/µL', unit: 'K/µL' },
-  { id: 'rbc', name: 'RBC (Red Blood Cell Count)', cat: 'blood', short: 'Total red blood cell count — the oxygen-carrying capacity of your blood.', why: 'Low RBC indicates anemia. High RBC can signal dehydration, polycythemia, or chronic hypoxia. Must be interpreted with hemoglobin and hematocrit.', std: '4.5–5.5 M/µL', opt: '4.5–5.2 M/µL', unit: 'M/µL' },
-  { id: 'hemoglobin', name: 'Hemoglobin', cat: 'blood', short: 'The oxygen-carrying protein in red blood cells — the most important single measure of anemia.', why: 'Hemoglobin directly reflects oxygen delivery capacity. Low levels cause fatigue, dizziness, and cognitive impairment long before severe anemia develops.', std: '12–17 g/dL', opt: '13.5–16 g/dL', unit: 'g/dL' },
-  { id: 'hematocrit', name: 'Hematocrit', cat: 'blood', short: 'The percentage of blood volume occupied by red blood cells.', why: 'Hematocrit tracks with hemoglobin but is more affected by hydration status. Useful for monitoring polycythemia and treatment response.', std: '36–48%', opt: '40–45%', unit: '%' },
-  { id: 'mcv', name: 'MCV (Mean Corpuscular Volume)', cat: 'blood', short: 'The average size of red blood cells — distinguishes different types of anemia.', why: 'Low MCV (microcytic) points to iron deficiency or thalassemia. High MCV (macrocytic) signals B12/folate deficiency or liver disease.', std: '80–100 fL', opt: '85–95 fL', unit: 'fL' },
-  { id: 'mch', name: 'MCH', cat: 'blood', short: 'Mean corpuscular hemoglobin — the average amount of hemoglobin per red blood cell.', why: 'MCH parallels MCV in anemia classification. Low MCH confirms iron deficiency anemia; high MCH supports B12/folate deficiency.', std: '27–33 pg', opt: '28–32 pg', unit: 'pg' },
-  { id: 'mchc', name: 'MCHC', cat: 'blood', short: 'Mean corpuscular hemoglobin concentration — how densely packed hemoglobin is inside each red cell.', why: 'Low MCHC is characteristic of iron deficiency. High MCHC can indicate hereditary spherocytosis or sickle cell disease.', std: '32–36 g/dL', opt: '33–35 g/dL', unit: 'g/dL' },
-  { id: 'rdw', name: 'RDW (Red Cell Distribution Width)', cat: 'blood', short: 'Measures variation in red blood cell size — elevated in nutritional deficiencies and chronic disease.', why: 'High RDW predicts all-cause mortality, cardiovascular events, and cancer independently. It signals that something is disrupting red blood cell production.', std: '11.5–14.5%', opt: '< 13%', unit: '%' },
-  { id: 'platelets', name: 'Platelet Count', cat: 'blood', short: 'The blood cells responsible for clotting — abnormal levels signal bleeding or thrombotic risk.', why: 'Low platelets increase bleeding risk. High platelets can be reactive (infection, inflammation) or primary (myeloproliferative disorder).', std: '150–400 K/µL', opt: '200–350 K/µL', unit: 'K/µL' },
-  { id: 'mpv', name: 'MPV (Mean Platelet Volume)', cat: 'blood', short: 'The average size of platelets — larger platelets are more reactive and prothrombotic.', why: 'High MPV with normal platelet count is an independent cardiovascular risk factor. It reflects bone marrow activity and platelet turnover.', std: '7.5–12.5 fL', opt: '8.0–11.0 fL', unit: 'fL' },
-  { id: 'neutrophils', name: 'Neutrophils', cat: 'blood', short: 'The first-responder white blood cells — the primary defense against bacterial infection.', why: 'Elevated neutrophils indicate acute infection or inflammation. Low neutrophils (neutropenia) significantly increase infection risk.', std: '40–60%', opt: '45–55%', unit: '%' },
-  { id: 'lymphocytes', name: 'Lymphocytes', cat: 'blood', short: 'T cells, B cells, and NK cells — the adaptive immune system and viral defense.', why: 'Low lymphocytes can signal viral infection, immune suppression, or chronic stress. Elevated lymphocytes may indicate viral infection or lymphoproliferative disease.', std: '20–40%', opt: '25–35%', unit: '%' },
-  { id: 'monocytes', name: 'Monocytes', cat: 'blood', short: 'Immune cells that become tissue macrophages — involved in chronic inflammation and tissue repair.', why: 'Elevated monocytes are seen in chronic infections, autoimmune disease, and recovery from acute illness.', std: '2–8%', opt: '3–7%', unit: '%' },
-  { id: 'eosinophils', name: 'Eosinophils', cat: 'blood', short: 'Immune cells responding to parasites and allergies — elevated in allergic and atopic conditions.', why: 'Elevated eosinophils suggest allergic disease, parasitic infection, or eosinophilic disorders. Common in asthma and food sensitivities.', std: '1–4%', opt: '1–3%', unit: '%' },
-  { id: 'basophils', name: 'Basophils', cat: 'blood', short: 'The rarest white blood cells — involved in allergic reactions and inflammation.', why: 'Elevated basophils are uncommon but can signal myeloproliferative disorders or chronic inflammatory conditions.', std: '0–1%', opt: '< 1%', unit: '%' },
-  { id: 'reticulocytes', name: 'Reticulocyte Count', cat: 'blood', short: 'Immature red blood cells — reflects how actively the bone marrow is producing new red cells.', why: 'Low reticulocytes with anemia indicate production failure (iron, B12, or bone marrow issue). High reticulocytes indicate the marrow is responding to blood loss or hemolysis.', std: '0.5–2.5%', opt: '0.8–2.0%', unit: '%' },
+  { id: 'rbc', name: 'RBC (Red Blood Cell Count)', cat: 'blood', short: 'The total number of red blood cells — foundational oxygen-carrying capacity.', why: 'Low RBC causes fatigue, weakness, and cognitive dysfunction (anemia). High RBC (polycythemia) increases clotting risk.', std: '4.5–5.9 M/µL (men)', opt: '4.8–5.5 M/µL', unit: 'M/µL' },
+  { id: 'hemoglobin', name: 'Hemoglobin', cat: 'blood', short: 'The oxygen-carrying protein in red blood cells — the most widely tested blood marker.', why: 'Hemoglobin less than 13.5 g/dL (men) or 12.0 g/dL (women) impairs oxygen delivery to tissues.', std: '13.5–17.5 g/dL (men)', opt: '14.0–17.0 g/dL', unit: 'g/dL' },
+  { id: 'hematocrit', name: 'Hematocrit', cat: 'blood', short: 'The percentage of blood that is red blood cells — another measure of oxygen-carrying capacity.', why: 'Low hematocrit indicates anemia. High hematocrit (dehydration, polycythemia) increases blood viscosity and clotting risk.', std: '41–53% (men)', opt: '44–50%', unit: '%' },
+  { id: 'mcv', name: 'MCV (Mean Corpuscular Volume)', cat: 'blood', short: 'The average size of red blood cells — helps classify types of anemia.', why: 'Low MCV indicates iron deficiency. High MCV suggests B12 or folate deficiency or alcohol use.', std: '80–100 fL', opt: '85–95 fL', unit: 'fL' },
+  { id: 'mch', name: 'MCH (Mean Corpuscular Hemoglobin)', cat: 'blood', short: 'The average amount of hemoglobin per red blood cell.', why: 'Abnormal MCH parallels MCV changes and helps identify anemia subtypes.', std: '27–33 pg', opt: '28–32 pg', unit: 'pg' },
+  { id: 'mchc', name: 'MCHC (Mean Corpuscular Hemoglobin Concentration)', cat: 'blood', short: 'The average concentration of hemoglobin within red blood cells.', why: 'MCHC is the most stable RBC index but rarely reveals new pathology on its own.', std: '32–36 g/dL', opt: '33–35 g/dL', unit: 'g/dL' },
+  { id: 'platelets', name: 'Platelets', cat: 'blood', short: 'The clotting cells in blood — too few risks bleeding, too many risks clotting.', why: 'Platelet counts below 150 K/µL increase bleeding risk. Above 400 K/µL increases thrombosis risk and suggests inflammation or bone marrow disorders.', std: '150–400 K/µL', opt: '200–350 K/µL', unit: 'K/µL' },
+  { id: 'rdw', name: 'RDW (Red Cell Distribution Width)', cat: 'blood', short: 'The variability in red blood cell size — higher values suggest anemia or inflammation.', why: 'Elevated RDW is a subtle early marker of nutritional deficiency, inflammation, or bone marrow stress.', std: '11–15%', opt: '11–13%', unit: '%' },
+  { id: 'neutrophils', name: 'Neutrophils (Absolute)', cat: 'blood', short: 'The most abundant white blood cells — the infection-fighting front line.', why: 'Elevated neutrophils signal acute infection or inflammation. Persistently low counts indicate bone marrow suppression or immune disorder.', std: '2.0–7.5 K/µL', opt: '3.0–6.0 K/µL', unit: 'K/µL' },
+  { id: 'lymphocytes', name: 'Lymphocytes (Absolute)', cat: 'blood', short: 'The adaptive immune cells — T cells, B cells, and NK cells combined.', why: 'Elevated lymphocytes suggest viral infection or immune activation. Low counts (below 1.0) indicate immune suppression.', std: '1.0–4.8 K/µL', opt: '1.5–3.5 K/µL', unit: 'K/µL' },
+  { id: 'monocytes', name: 'Monocytes (Absolute)', cat: 'blood', short: 'The tissue-infiltrating immune cells that become macrophages.', why: 'Elevated monocytes indicate chronic infection or inflammation. High monocyte percentages predict cardiovascular risk.', std: '0.2–0.9 K/µL', opt: '0.3–0.6 K/µL', unit: 'K/µL' },
+  { id: 'eosinophils', name: 'Eosinophils (Absolute)', cat: 'blood', short: 'The parasite-fighting and allergy-response cells.', why: 'Elevated eosinophils indicate parasitic infection, allergy, or eosinophilic disorders.', std: '0.0–0.4 K/µL', opt: '0.0–0.2 K/µL', unit: 'K/µL' },
+  { id: 'basophils', name: 'Basophils (Absolute)', cat: 'blood', short: 'The mast cell counterparts in blood — involved in allergic and immune responses.', why: 'Elevated basophils are rare but can indicate allergic response or bone marrow disorder.', std: '0.0–0.1 K/µL', opt: '0.0–0.05 K/µL', unit: 'K/µL' },
 
   // ── ELECTROLYTES (6) ──
-  { id: 'sodium', name: 'Sodium', cat: 'electrolytes', short: 'The primary extracellular electrolyte — governs fluid balance, nerve function, and blood pressure.', why: 'Abnormal sodium levels cause neurological symptoms ranging from confusion to seizures. Both hypo- and hypernatremia require clinical investigation.', std: '136–145 mEq/L', opt: '138–142 mEq/L', unit: 'mEq/L' },
-  { id: 'potassium', name: 'Potassium', cat: 'electrolytes', short: 'Critical for cardiac rhythm, muscle contraction, and nerve signaling.', why: 'Even small potassium deviations can cause fatal cardiac arrhythmias. Medications (diuretics, ACE inhibitors) commonly disrupt potassium levels.', std: '3.5–5.0 mEq/L', opt: '4.0–4.5 mEq/L', unit: 'mEq/L' },
-  { id: 'chloride', name: 'Chloride', cat: 'electrolytes', short: 'Works with sodium and bicarbonate to maintain acid-base balance and fluid equilibrium.', why: 'Chloride abnormalities often accompany sodium disorders. The anion gap (sodium minus chloride and bicarb) helps diagnose metabolic acidosis.', std: '98–106 mEq/L', opt: '100–104 mEq/L', unit: 'mEq/L' },
-  { id: 'co2', name: 'CO2 (Bicarbonate)', cat: 'electrolytes', short: 'The primary blood buffer — reflects acid-base balance and respiratory/metabolic function.', why: 'Low bicarbonate indicates metabolic acidosis (diabetic ketoacidosis, kidney disease). High levels suggest metabolic alkalosis or compensation for respiratory acidosis.', std: '23–29 mEq/L', opt: '24–28 mEq/L', unit: 'mEq/L' },
-  { id: 'calcium', name: 'Calcium', cat: 'electrolytes', short: 'Essential for bone health, muscle function, and nerve signaling — tightly regulated by parathyroid hormone.', why: 'Elevated calcium can signal hyperparathyroidism or malignancy. Low calcium causes muscle cramps, numbness, and cardiac arrhythmias.', std: '8.5–10.5 mg/dL', opt: '9.0–10.0 mg/dL', unit: 'mg/dL' },
-  { id: 'phosphorus', name: 'Phosphorus', cat: 'electrolytes', short: 'Essential for ATP production, bone mineralization, and acid-base buffering.', why: 'Phosphorus works inversely with calcium. Abnormal levels can indicate kidney disease, parathyroid disorders, or vitamin D deficiency.', std: '2.5–4.5 mg/dL', opt: '3.0–4.0 mg/dL', unit: 'mg/dL' },
+  { id: 'sodium', name: 'Sodium (Na)', cat: 'electrolytes', short: 'The primary extracellular electrolyte governing fluid balance and blood pressure.', why: 'Sodium dysregulation causes muscle weakness, confusion, seizures, and death. Both extremes are dangerous.', std: '136–145 mEq/L', opt: '138–142 mEq/L', unit: 'mEq/L' },
+  { id: 'potassium', name: 'Potassium (K)', cat: 'electrolytes', short: 'The primary intracellular electrolyte critical for muscle and heart function.', why: 'Low potassium causes muscle weakness, palpitations, and arrhythmias. High potassium is immediately life-threatening.', std: '3.5–5.0 mEq/L', opt: '4.0–4.5 mEq/L', unit: 'mEq/L' },
+  { id: 'chloride', name: 'Chloride (Cl)', cat: 'electrolytes', short: 'An anion maintaining electrical neutrality and fluid balance.', why: 'Chloride follows sodium and reflects similar pathology. Abnormalities suggest acid-base disorders or dehydration.', std: '98–107 mEq/L', opt: '100–105 mEq/L', unit: 'mEq/L' },
+  { id: 'bicarb', name: 'Bicarbonate (HCO3)', cat: 'electrolytes', short: 'The buffer system\'s primary component — maintains blood pH.', why: 'Low bicarbonate indicates metabolic acidosis. High levels suggest metabolic alkalosis or chronic respiratory disease.', std: '23–29 mEq/L', opt: '24–27 mEq/L', unit: 'mEq/L' },
+  { id: 'calcium', name: 'Calcium (Total)', cat: 'electrolytes', short: 'The structural and signaling mineral — critical for bones, muscle, and nerve function.', why: 'Must be interpreted with albumin (calcium binds to protein) and vitamin D. Low calcium causes tetany and seizures.', std: '8.5–10.5 mg/dL', opt: '9.0–10.0 mg/dL', unit: 'mg/dL' },
+  { id: 'ionizedCa', name: 'Calcium (Ionized)', cat: 'electrolytes', short: 'The biologically active form of calcium unbound to protein — the true functional measure.', why: 'Ionized calcium is unaffected by albumin and better reflects true calcium status, especially in critical illness or liver disease.', std: '4.5–5.3 mg/dL', opt: '4.7–5.1 mg/dL', unit: 'mg/dL' },
 
   // ── AUTOIMMUNE (3) ──
-  { id: 'ana', name: 'ANA (Antinuclear Antibody)', cat: 'autoimmune', short: 'The primary screening test for systemic autoimmune disease — especially lupus, scleroderma, and Sjögren\'s.', why: 'A positive ANA doesn\'t confirm autoimmune disease (5–15% of healthy people are positive), but combined with symptoms and other markers, it guides diagnosis and monitoring.', std: 'Negative', opt: 'Negative', unit: 'Titer' },
-  { id: 'rf', name: 'Rheumatoid Factor (RF)', cat: 'autoimmune', short: 'An antibody associated with rheumatoid arthritis and other autoimmune conditions.', why: 'RF is present in 70–80% of rheumatoid arthritis patients but can also be elevated in other autoimmune diseases, chronic infections, and even healthy elderly individuals.', std: '< 14 IU/mL', opt: '< 14 IU/mL', unit: 'IU/mL' },
-  { id: 'antiCCP', name: 'Anti-CCP Antibodies', cat: 'autoimmune', short: 'Highly specific for rheumatoid arthritis — more diagnostic than RF and can appear years before symptoms.', why: 'Anti-CCP is 95% specific for RA (versus 85% for RF). Can predict disease development 5–10 years before joint symptoms appear.', std: '< 20 U/mL', opt: '< 20 U/mL', unit: 'U/mL' },
+  { id: 'ana', name: 'ANA (Antinuclear Antibody)', cat: 'autoimmune', short: 'The screening test for systemic autoimmune disease — positive in lupus, Sjögren\'s, and scleroderma.', why: 'ANA-negative effectively rules out lupus. ANA-positive requires reflex testing to specific autoantibodies for diagnosis.', std: 'Negative', opt: 'Negative', unit: 'titer' },
+  { id: 'rf', name: 'Rheumatoid Factor (RF)', cat: 'autoimmune', short: 'An autoantibody against the Fc region of IgG — present in rheumatoid arthritis and other autoimmune conditions.', why: 'RF is positive in RA but also common in other autoimmune diseases and chronic infections. Non-specific without clinical context.', std: '< 14 IU/mL', opt: 'Negative', unit: 'IU/mL' },
+  { id: 'ccp', name: 'Anti-CCP (Cyclic Citrullinated Peptide)', cat: 'autoimmune', short: 'A highly specific marker for rheumatoid arthritis — more predictive than RF alone.', why: 'Anti-CCP predicts RA development and progression. Can be positive years before RA symptoms appear.', std: '< 20 units/mL', opt: 'Negative', unit: 'units/mL' },
 
   // ── HEAVY METALS (2) ──
-  { id: 'mercury', name: 'Mercury', cat: 'metals', short: 'A neurotoxin from seafood, dental amalgams, and environmental exposure — causes cognitive and neurological damage.', why: 'Chronic low-level mercury exposure causes fatigue, brain fog, tremor, and kidney damage. High fish consumers and those with amalgam fillings are at greatest risk.', std: '< 10 µg/L', opt: '< 5 µg/L', unit: 'µg/L' },
-  { id: 'lead', name: 'Lead', cat: 'metals', short: 'A toxic heavy metal with no safe level — causes neurological, cardiovascular, and kidney damage.', why: 'Even low lead levels (< 5 µg/dL) are associated with cognitive impairment, hypertension, and kidney dysfunction. Older homes and occupational exposure are primary sources.', std: '< 5 µg/dL', opt: '< 2 µg/dL', unit: 'µg/dL' },
+  { id: 'mercury', name: 'Mercury (Serum)', cat: 'metals', short: 'A neurotoxic heavy metal from contaminated fish, dental amalgam, and environmental exposure.', why: 'Chronic low-level mercury exposure affects cognition and motor function. Hair mercury is often superior to serum for assessing body burden.', std: '< 10 ng/mL', opt: '< 5 ng/mL', unit: 'ng/mL' },
+  { id: 'lead', name: 'Lead (Blood)', cat: 'metals', short: 'A cumulative neurotoxin affecting cognition, blood pressure, and bone health — no truly safe level.', why: 'Lead exposure in childhood predicts lower IQ and adult cardiovascular disease. Chronic low-level exposure is common from old housing, contaminated water, and occupational sources.', std: '< 10 µg/dL', opt: '< 2 µg/dL', unit: 'µg/dL' },
 
   // ── CANCER MARKERS (2) ──
-  { id: 'afp', name: 'AFP (Alpha-Fetoprotein)', cat: 'cancer', short: 'A hepatocellular carcinoma and germ cell tumor marker.', why: 'Elevated AFP in adults signals hepatocellular carcinoma or testicular germ cell tumors. Important for those with liver disease.', std: '< 10 ng/mL', opt: '< 5 ng/mL', unit: 'ng/mL' },
-  { id: 'psa', name: 'PSA (Men)', cat: 'cancer', short: 'Prostate-specific antigen — the primary prostate cancer screening marker for men.', why: 'PSA trends over time are more meaningful than a single number. Velocity changes can signal early malignancy before absolute thresholds are reached.', std: '< 4.0 ng/mL', opt: '< 1.0 ng/mL', unit: 'ng/mL' },
+  { id: 'psa', name: 'PSA (Prostate-Specific Antigen)', cat: 'cancer', short: 'A prostate enzyme elevated in cancer, benign hyperplasia, and prostatitis.', why: 'PSA alone cannot distinguish cancer from benign disease. Context with DRE, age, family history, and PSA velocity is essential.', std: '< 4.0 ng/mL', opt: '< 2.5 ng/mL', unit: 'ng/mL' },
+  { id: 'cea', name: 'CEA (Carcinoembryonic Antigen)', cat: 'cancer', short: 'A tumor marker for colorectal, lung, and breast cancers — rarely negative in healthy individuals.', why: 'Elevated CEA warrants further investigation. Smoking raises baseline CEA.', std: '< 3.0 ng/mL', opt: '< 2.5 ng/mL', unit: 'ng/mL' },
 
   // ── PANCREAS (2) ──
-  { id: 'lipase', name: 'Lipase', cat: 'pancreas', short: 'The primary pancreatic enzyme marker — elevated in pancreatitis and pancreatic dysfunction.', why: 'Lipase is more specific and remains elevated longer than amylase in acute pancreatitis. Also useful for monitoring chronic pancreatic disease.', std: '0–160 U/L', opt: '< 60 U/L', unit: 'U/L' },
-  { id: 'amylase', name: 'Amylase', cat: 'pancreas', short: 'A digestive enzyme produced by the pancreas and salivary glands — elevated in pancreatic inflammation.', why: 'Amylase rises within hours of acute pancreatitis but returns to normal faster than lipase. Also elevated in salivary gland disease and renal failure.', std: '28–100 U/L', opt: '40–80 U/L', unit: 'U/L' },
+  { id: 'amylase', name: 'Amylase', cat: 'pancreas', short: 'An enzyme produced by the pancreas and salivary glands — elevated in acute pancreatitis.', why: 'Amylase rises rapidly in acute pancreatitis but returns to normal quickly. Lipase is more specific and stays elevated longer.', std: '30–110 U/L', opt: '30–80 U/L', unit: 'U/L' },
+  { id: 'lipase', name: 'Lipase', cat: 'pancreas', short: 'The pancreatic fat-digesting enzyme — more specific than amylase for pancreatitis.', why: 'Lipase is the gold-standard test for acute and chronic pancreatitis. Stays elevated longer than amylase.', std: '< 160 U/L', opt: '< 90 U/L', unit: 'U/L' },
 ];
 
-/* ─── Category Config ─── */
 const categories = [
-  { key: 'cardiovascular', label: 'Heart & Cardiovascular', icon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z', color: '#ef4444' },
-  { key: 'hormones', label: 'Hormones', icon: 'M13 2L3 14h9l-1 10 10-12h-9l1-10z', color: '#f59e0b' },
-  { key: 'metabolic', label: 'Metabolic', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z', color: '#f97316' },
-  { key: 'thyroid', label: 'Thyroid', icon: 'M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z', color: '#8b5cf6' },
-  { key: 'liver', label: 'Liver', icon: 'M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z', color: '#a855f7' },
-  { key: 'kidney', label: 'Kidney', icon: 'M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z', color: '#06b6d4' },
-  { key: 'immune', label: 'Iron & Inflammation', icon: 'M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z', color: '#10b981' },
-  { key: 'nutrients', label: 'Nutrients & Vitamins', icon: 'M17.73 12.02l3.98-3.98a.996.996 0 000-1.41l-4.34-4.34a.996.996 0 00-1.41 0l-3.98 3.98L8 2.29C7.8 2.1 7.55 2 7.29 2c-.25 0-.51.1-.7.29L2.25 6.63c-.39.39-.39 1.02 0 1.41l3.98 3.98L2.25 16a.996.996 0 000 1.41l4.34 4.34c.39.39 1.02.39 1.41 0l3.98-3.98 3.98 3.98c.2.2.45.29.71.29.26 0 .51-.1.71-.29l4.34-4.34c.39-.39.39-1.02 0-1.41l-3.99-3.98z', color: '#22c55e' },
-  { key: 'blood', label: 'Blood & Hematology', icon: 'M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z', color: '#dc2626' },
-  { key: 'electrolytes', label: 'Electrolytes', icon: 'M7 2v11h3v9l7-12h-4l4-8z', color: '#38bdf8' },
-  { key: 'autoimmune', label: 'Autoimmune', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z', color: '#e879f9' },
-  { key: 'metals', label: 'Heavy Metals', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z', color: '#fbbf24' },
-  { key: 'cancer', label: 'Cancer Markers', icon: 'M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5z', color: '#6366f1' },
-  { key: 'pancreas', label: 'Pancreas', icon: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z', color: '#fb923c' },
+  { id: 'cardiovascular', name: 'Heart & Cardiovascular', emoji: '❤️', count: 15 },
+  { id: 'hormones', name: 'Hormones', emoji: '⚖️', count: 12 },
+  { id: 'metabolic', name: 'Metabolic', emoji: '⚡', count: 6 },
+  { id: 'thyroid', name: 'Thyroid', emoji: '🦋', count: 8 },
+  { id: 'liver', name: 'Liver', emoji: '🧪', count: 8 },
+  { id: 'kidney', name: 'Kidney', emoji: '💧', count: 5 },
+  { id: 'immune', name: 'Immune & Inflammation', emoji: '🛡️', count: 6 },
+  { id: 'nutrients', name: 'Nutrients & Vitamins', emoji: '🌿', count: 12 },
+  { id: 'blood', name: 'Blood & Hematology', emoji: '🩸', count: 16 },
+  { id: 'electrolytes', name: 'Electrolytes', emoji: '⚛️', count: 6 },
+  { id: 'autoimmune', name: 'Autoimmune', emoji: '🔬', count: 3 },
+  { id: 'metals', name: 'Heavy Metals', emoji: '☠️', count: 2 },
+  { id: 'cancer', name: 'Cancer Markers', emoji: '🎯', count: 2 },
+  { id: 'pancreas', name: 'Pancreas', emoji: '🔥', count: 2 },
 ];
 
-const categoryLabels: Record<string, string> = {};
-const categoryColors: Record<string, string> = {};
-categories.forEach(c => {
-  categoryLabels[c.key] = c.label;
-  categoryColors[c.key] = c.color;
-});
-
-export default function WhatWeTest() {
-  useScrollReveal();
-
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+export default function WhatWeTestPage() {
+  const [activeCategory, setActiveCategory] = useState('cardiovascular');
   const [searchQuery, setSearchQuery] = useState('');
-  const [expandedCard, setExpandedCard] = useState<string | null>(null);
-  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
-  const [visibleSection, setVisibleSection] = useState<string>('cardiovascular');
 
-  // Intersection observer for sidebar active state
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
-    );
-
-    Object.values(sectionRefs.current).forEach(ref => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Filter biomarkers
-  const filteredByCategory = useMemo(() => {
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
-      return biomarkersData.filter(b =>
-        b.name.toLowerCase().includes(q) ||
-        b.short.toLowerCase().includes(q) ||
-        b.cat.toLowerCase().includes(q)
+  const filteredMarkers = useMemo(() => {
+    let filtered = biomarkersData;
+    if (activeCategory) {
+      filtered = filtered.filter(m => m.cat === activeCategory);
+    }
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(m =>
+        m.name.toLowerCase().includes(query) || m.short.toLowerCase().includes(query)
       );
     }
-    if (activeCategory) {
-      return biomarkersData.filter(b => b.cat === activeCategory);
-    }
-    return biomarkersData;
+    return filtered;
   }, [activeCategory, searchQuery]);
 
-  // Group by category
-  const groupedMarkers = useMemo(() => {
-    const groups: Record<string, typeof biomarkersData> = {};
-    filteredByCategory.forEach(b => {
-      if (!groups[b.cat]) groups[b.cat] = [];
-      groups[b.cat].push(b);
-    });
-    return groups;
-  }, [filteredByCategory]);
-
-  const catCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    biomarkersData.forEach(b => {
-      counts[b.cat] = (counts[b.cat] || 0) + 1;
-    });
-    return counts;
-  }, []);
-
-  const handleCategoryClick = (key: string) => {
-    setSearchQuery('');
-    if (activeCategory === key) {
-      setActiveCategory(null);
-    } else {
-      setActiveCategory(key);
-      // Scroll to section
-      const el = sectionRefs.current[key];
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
   return (
-    <div className="bg-bg-dark min-h-screen">
+    <>
       <Nav />
-
-      {/* ─── Hero ─── */}
-      <section className="pt-28 pb-16 px-4 sm:px-6 lg:px-8 border-b border-border">
-        <div className="mx-auto max-w-6xl">
-          <div className="max-w-3xl fade-up">
-            <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-5">Biomarker Library</p>
-            <h1 className="font-heading font-extrabold text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-[1.08]">
-              What we test —{' '}
-              <span className="text-teal-light">and why it matters.</span>
-            </h1>
-            <p className="text-gray-400 text-lg leading-relaxed max-w-xl mb-8">
-              Standard physicals check 10–20 markers. Every Briella Health membership includes {biomarkersData.length}+ biomarkers across {categories.length} body systems — with functional optimal ranges, not just standard lab cutoffs.
+      <main className="bg-bg-dark">
+        {/* ═══ HERO SECTION ═══ */}
+        <section className="relative pt-32 pb-16 md:pt-48 md:pb-24 px-6 md:px-8">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">
+              Complete Panel
             </p>
-
-            {/* Stat pills */}
-            <div className="flex flex-wrap gap-3">
-              <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-teal/10 border border-teal/20">
-                <span className="text-teal font-heading font-extrabold text-lg">{biomarkersData.length}+</span>
-                <span className="text-gray-300 text-sm">biomarkers</span>
-              </div>
-              <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-gold/10 border border-gold/20">
-                <span className="text-gold font-heading font-extrabold text-lg">{categories.length}</span>
-                <span className="text-gray-300 text-sm">body systems</span>
-              </div>
-              <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/5 border border-white/10">
-                <span className="text-white font-heading font-extrabold text-lg">$365</span>
-                <span className="text-gray-300 text-sm">per year</span>
-              </div>
-            </div>
+            <h1 className="font-heading font-extrabold text-4xl md:text-5xl lg:text-6xl text-white mb-6">
+              100+ biomarkers.
+              <br />
+              One complete picture.
+            </h1>
+            <p className="text-white text-lg max-w-2xl mx-auto leading-relaxed">
+              Functional optimal ranges beyond population averages. Every biomarker tested has a reason — science-backed, clinically actionable.
+            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ─── Search + Category Bar (sticky) ─── */}
-      <section className="sticky top-[68px] z-30 bg-bg-dark/95 backdrop-blur-md border-b border-border">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-4">
-          {/* Search */}
-          <div className="relative mb-3">
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-            </svg>
-            <input
-              type="text"
-              placeholder="Search biomarkers — e.g. testosterone, vitamin D, ApoB..."
-              value={searchQuery}
-              onChange={(e) => { setSearchQuery(e.target.value); setActiveCategory(null); }}
-              className="w-full bg-bg-card border border-border rounded-xl py-3 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-teal/60 focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)] transition-all placeholder-gray-600"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
-              </button>
-            )}
-          </div>
-
-          {/* Category pills — horizontal scroll */}
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-            {categories.map(cat => {
-              const isActive = activeCategory === cat.key;
-              const count = catCounts[cat.key] || 0;
-              return (
+        {/* ═══ CATEGORY GRID ═══ */}
+        <section className="px-6 md:px-8 py-16">
+          <div className="max-w-6xl mx-auto">
+            <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-8">
+              By Category
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {categories.map((cat) => (
                 <button
-                  key={cat.key}
-                  onClick={() => handleCategoryClick(cat.key)}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap border transition-all shrink-0 ${
-                    isActive
-                      ? 'bg-teal/15 border-teal/40 text-teal-light shadow-[0_0_12px_rgba(107,139,111,0.15)]'
-                      : 'bg-bg-card border-border text-gray-400 hover:border-teal/30 hover:text-gray-200'
+                  key={cat.id}
+                  onClick={() => {
+                    setActiveCategory(cat.id);
+                    setSearchQuery('');
+                  }}
+                  className={`p-6 rounded-xl border transition-all ${
+                    activeCategory === cat.id
+                      ? 'bg-teal border-teal text-pure-white'
+                      : 'bg-bg-card border-border hover:border-teal-border hover:bg-bg-card-hover'
                   }`}
                 >
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: cat.color }} />
-                  {cat.label}
-                  <span className={`text-[0.65rem] ${isActive ? 'text-teal/60' : 'text-gray-600'}`}>{count}</span>
+                  <div className="text-3xl mb-2">{cat.emoji}</div>
+                  <p className={`font-heading font-bold text-sm leading-tight ${activeCategory === cat.id ? 'text-pure-white' : 'text-white'}`}>
+                    {cat.name}
+                  </p>
+                  <p className={`text-xs mt-2 ${activeCategory === cat.id ? 'text-pure-white opacity-90' : 'text-gray-400'}`}>
+                    {cat.count} markers
+                  </p>
                 </button>
-              );
-            })}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ─── Main Content ─── */}
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex gap-10">
+        {/* ═══ THE BRIELLA DIFFERENCE: RANGE VISUALIZATION ═══ */}
+        <section className="px-6 md:px-8 py-16 bg-bg-card">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-12">
+              <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">
+                Why It Matters
+              </p>
+              <h2 className="font-heading font-extrabold text-3xl md:text-4xl text-white mb-6">
+                The Briella Difference: Ranges That Matter
+              </h2>
+              <p className="text-white text-lg max-w-3xl">
+                Standard reference ranges are based on 95% of the population. But "normal" is not the same as "optimal" — and that gap is where most dysfunction hides.
+              </p>
+            </div>
 
-          {/* Sidebar — Desktop only */}
-          <aside className="hidden lg:block w-56 shrink-0">
-            <div className="sticky top-[220px]">
-              <p className="text-[0.65rem] uppercase tracking-[0.12em] font-bold text-gray-600 mb-4">Systems</p>
-              <nav className="flex flex-col gap-1">
-                {categories.map(cat => {
-                  const isVisible = visibleSection === cat.key;
-                  return (
-                    <button
-                      key={cat.key}
-                      onClick={() => handleCategoryClick(cat.key)}
-                      className={`flex items-center gap-3 px-3 py-2 rounded-lg text-left text-sm transition-all ${
-                        isVisible
-                          ? 'bg-teal/10 text-teal-light'
-                          : 'text-gray-500 hover:text-gray-300 hover:bg-white/[0.03]'
-                      }`}
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: isVisible ? cat.color : 'transparent' }} />
-                      <span className="truncate">{cat.label}</span>
-                      <span className={`text-[0.65rem] ml-auto ${isVisible ? 'text-teal/50' : 'text-gray-700'}`}>
-                        {catCounts[cat.key] || 0}
-                      </span>
-                    </button>
-                  );
-                })}
-              </nav>
+            <div className="space-y-8">
+              {/* Patient A */}
+              <div>
+                <p className="text-white font-bold mb-3">Patient A — LDL Cholesterol</p>
+                <div className="relative h-16 bg-bg-mid rounded-xl overflow-hidden border border-border-strong">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="absolute left-0 right-0 h-full bg-gradient-to-r from-gold-dim via-transparent to-transparent opacity-30" />
+                  </div>
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2">
+                    <div className="w-3 h-3 bg-gold rounded-full mr-2 inline-block" />
+                    <span className="text-white font-bold text-sm">35 mg/dL</span>
+                  </div>
+                  <div className="absolute right-4 top-0 bottom-0 flex items-center text-xs text-gray-500">
+                    Standard range: &lt; 100
+                  </div>
+                </div>
+              </div>
 
-              {/* Quick Stats */}
-              <div className="mt-8 p-4 rounded-xl bg-bg-card border border-border">
-                <p className="text-[0.65rem] uppercase tracking-[0.12em] font-bold text-gray-600 mb-3">Coverage</p>
-                <div className="text-2xl font-heading font-extrabold text-white mb-1">{biomarkersData.length}+</div>
-                <p className="text-xs text-gray-500 mb-4">biomarkers tested annually</p>
-                <Link
-                  href="/membership"
-                  className="block text-center text-xs font-bold text-teal hover:text-teal-light transition-colors py-2 rounded-lg border border-teal/20 hover:border-teal/40"
-                >
-                  View Membership &rarr;
-                </Link>
+              {/* Patient B */}
+              <div>
+                <p className="text-white font-bold mb-3">Patient B — LDL Cholesterol</p>
+                <div className="relative h-16 bg-bg-mid rounded-xl overflow-hidden border border-border-strong">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="absolute left-0 right-0 h-full bg-gradient-to-r from-teal-dim via-transparent to-transparent opacity-30" />
+                  </div>
+                  <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2">
+                    <div className="w-3 h-3 bg-teal rounded-full mr-2 inline-block" />
+                    <span className="text-white font-bold text-sm">72 mg/dL</span>
+                  </div>
+                  <div className="absolute right-4 top-0 bottom-0 flex items-center text-xs text-gray-500">
+                    Functional optimal: &lt; 70
+                  </div>
+                </div>
               </div>
             </div>
-          </aside>
 
-          {/* Biomarker Grid */}
-          <main className="flex-1 min-w-0">
-            {searchQuery.trim() && (
-              <div className="mb-6">
-                <p className="text-sm text-gray-400">
-                  <span className="text-white font-semibold">{filteredByCategory.length}</span> result{filteredByCategory.length !== 1 ? 's' : ''} for &ldquo;<span className="text-teal-light">{searchQuery}</span>&rdquo;
-                </p>
+            <p className="text-white mt-8 text-sm leading-relaxed">
+              Both are "normal." Patient A is unnecessarily low. Patient B is borderline high from a functional perspective. The Briella panel catches these nuances.
+            </p>
+          </div>
+        </section>
+
+        {/* ═══ SEARCH & FILTER ═══ */}
+        <section className="sticky top-20 z-30 bg-bg-dark border-b border-border px-6 md:px-8 py-4 shadow-md">
+          <div className="max-w-6xl mx-auto space-y-4">
+            <input
+              type="text"
+              placeholder="Search biomarkers by name or function..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl bg-bg-card border border-border text-white placeholder-gray-400 focus:outline-none focus:border-teal"
+            />
+            {(activeCategory || searchQuery) && (
+              <div className="flex flex-wrap gap-2 items-center">
+                {activeCategory && (
+                  <button
+                    onClick={() => setActiveCategory('')}
+                    className="px-3 py-1 rounded-lg bg-teal text-pure-white text-sm font-medium hover:bg-teal-light transition"
+                  >
+                    {categories.find(c => c.id === activeCategory)?.name}
+                    <span className="ml-2">×</span>
+                  </button>
+                )}
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="px-3 py-1 rounded-lg bg-gold text-white text-sm font-medium hover:bg-gold opacity-80 hover:opacity-100 transition"
+                  >
+                    {searchQuery}
+                    <span className="ml-2">×</span>
+                  </button>
+                )}
               </div>
             )}
+          </div>
+        </section>
 
-            {categories.map(cat => {
-              const markers = groupedMarkers[cat.key];
-              if (!markers || markers.length === 0) return null;
+        {/* ═══ BIOMARKER TABLE ═══ */}
+        <section className="px-6 md:px-8 py-16">
+          <div className="max-w-6xl mx-auto">
+            <p className="text-white text-sm font-bold mb-4">
+              {filteredMarkers.length} result{filteredMarkers.length !== 1 ? 's' : ''}
+            </p>
 
-              return (
-                <section
-                  key={cat.key}
-                  id={cat.key}
-                  ref={el => { sectionRefs.current[cat.key] = el; }}
-                  className="mb-14 scroll-mt-[240px]"
+            <div className="space-y-4">
+              {filteredMarkers.map((marker) => (
+                <div
+                  key={marker.id}
+                  className="bg-bg-card border border-border rounded-xl p-6 hover:border-teal-border hover:bg-bg-card-hover transition"
                 >
-                  {/* Category Header */}
-                  <div className="flex items-center gap-3 mb-5">
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: cat.color + '18' }}
-                    >
-                      <svg className="w-4 h-4" style={{ color: cat.color }} fill="currentColor" viewBox="0 0 24 24">
-                        <path d={cat.icon} />
-                      </svg>
-                    </div>
+                  <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h2 className="font-heading font-bold text-lg text-white leading-tight">{cat.label}</h2>
-                      <p className="text-xs text-gray-500">{markers.length} biomarker{markers.length !== 1 ? 's' : ''}</p>
+                      <h3 className="font-heading font-bold text-lg text-white mb-1">
+                        {marker.name}
+                      </h3>
+                      <p className="text-gray-400 text-sm mb-3">{marker.short}</p>
+                      <p className="text-gray-500 text-xs leading-relaxed">{marker.why}</p>
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="text-teal text-xs font-bold uppercase tracking-[0.08em] mb-1">
+                          Standard Range
+                        </p>
+                        <p className="text-white font-mono text-sm">{marker.std}</p>
+                      </div>
+                      <div>
+                        <p className="text-teal text-xs font-bold uppercase tracking-[0.08em] mb-1">
+                          Functional Optimal
+                        </p>
+                        <p className="text-white font-mono text-sm font-bold">{marker.opt}</p>
+                      </div>
+                      <div className="pt-2 border-t border-border">
+                        <p className="text-gray-500 text-xs">Unit: {marker.unit}</p>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Marker Cards */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {markers.map((marker) => {
-                      const isExpanded = expandedCard === marker.id;
-                      return (
-                        <div
-                          key={marker.id}
-                          onClick={() => setExpandedCard(isExpanded ? null : marker.id)}
-                          className={`group bg-bg-card border rounded-xl cursor-pointer transition-all duration-200 ${
-                            isExpanded
-                              ? 'border-teal/50 shadow-[0_0_20px_rgba(107,139,111,0.08)] md:col-span-2'
-                              : 'border-border hover:border-gray-700 hover:shadow-[0_2px_12px_rgba(0,0,0,0.3)]'
-                          }`}
-                        >
-                          <div className="p-5">
-                            {/* Card Header */}
-                            <div className="flex items-start justify-between gap-3 mb-2">
-                              <h3 className="text-sm font-bold text-white group-hover:text-teal-light transition-colors leading-snug">
-                                {marker.name}
-                              </h3>
-                              <svg
-                                className={`w-4 h-4 shrink-0 mt-0.5 transition-all duration-200 ${
-                                  isExpanded ? 'text-teal rotate-180' : 'text-gray-600 group-hover:text-gray-400'
-                                }`}
-                                fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
-                              >
-                                <polyline points="6 9 12 15 18 9"/>
-                              </svg>
-                            </div>
-
-                            {/* Short description */}
-                            <p className="text-xs text-gray-400 leading-relaxed mb-3">{marker.short}</p>
-
-                            {/* Range badges — always visible */}
-                            <div className="flex flex-wrap gap-2">
-                              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.06]">
-                                <span className="text-[0.6rem] uppercase tracking-wider text-gray-600 font-bold">Std</span>
-                                <span className="text-[0.7rem] text-gray-400">{marker.std}</span>
-                              </div>
-                              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-teal/[0.06] border border-teal/[0.12]">
-                                <span className="text-[0.6rem] uppercase tracking-wider text-teal/60 font-bold">Optimal</span>
-                                <span className="text-[0.7rem] text-teal-light font-semibold">{marker.opt}</span>
-                              </div>
-                            </div>
-
-                            {/* Expanded detail */}
-                            {isExpanded && (
-                              <div className="mt-4 pt-4 border-t border-border/60">
-                                <div className="flex gap-2 items-start mb-3">
-                                  <div className="w-5 h-5 rounded-full bg-teal/10 flex items-center justify-center shrink-0 mt-0.5">
-                                    <svg className="w-3 h-3 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                  </div>
-                                  <div>
-                                    <p className="text-[0.65rem] uppercase tracking-[0.1em] font-bold text-gray-600 mb-1">Why We Test This</p>
-                                    <p className="text-sm text-gray-300 leading-relaxed">{marker.why}</p>
-                                  </div>
-                                </div>
-
-                                <div className="grid grid-cols-3 gap-2 mt-4">
-                                  <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.04]">
-                                    <p className="text-[0.6rem] uppercase tracking-wider text-gray-600 font-bold mb-1">Standard Range</p>
-                                    <p className="text-sm text-gray-300">{marker.std}</p>
-                                  </div>
-                                  <div className="bg-teal/[0.04] rounded-lg p-3 border border-teal/[0.1]">
-                                    <p className="text-[0.6rem] uppercase tracking-wider text-teal/50 font-bold mb-1">Optimal Range</p>
-                                    <p className="text-sm text-teal-light font-semibold">{marker.opt}</p>
-                                  </div>
-                                  <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.04]">
-                                    <p className="text-[0.6rem] uppercase tracking-wider text-gray-600 font-bold mb-1">Unit</p>
-                                    <p className="text-sm text-gray-300">{marker.unit}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </section>
-              );
-            })}
-
-            {filteredByCategory.length === 0 && (
-              <div className="text-center py-20">
-                <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-7 h-7 text-gray-600" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                  </svg>
                 </div>
-                <p className="text-gray-400 text-sm mb-1">No biomarkers match &ldquo;{searchQuery}&rdquo;</p>
-                <button onClick={() => { setSearchQuery(''); setActiveCategory(null); }} className="text-teal text-sm hover:text-teal-light transition-colors">
-                  Clear search
+              ))}
+            </div>
+
+            {filteredMarkers.length === 0 && (
+              <div className="text-center py-16">
+                <p className="text-gray-400 text-lg">No biomarkers found.</p>
+                <button
+                  onClick={() => {
+                    setActiveCategory('cardiovascular');
+                    setSearchQuery('');
+                  }}
+                  className="text-teal hover:text-teal-light mt-4 text-sm font-medium"
+                >
+                  Reset filters
                 </button>
               </div>
             )}
-          </main>
-        </div>
-      </div>
+          </div>
+        </section>
 
-      {/* ─── Bottom CTA ─── */}
-      <section className="border-t border-border px-4 py-20 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center fade-up">
-          <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">Every marker. Every year.</p>
-          <h2 className="font-heading font-extrabold text-3xl md:text-4xl text-white mb-4">
-            {biomarkersData.length}+ biomarkers. One membership.
-          </h2>
-          <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-md mx-auto">
-            $365/year for the complete panel. All 50 states through Quest Diagnostics.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* ═══ BOTTOM CTA ═══ */}
+        <section className="dark-section px-6 md:px-8 py-16 md:py-24">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="font-heading font-extrabold text-3xl md:text-4xl text-white mb-4">
+              Ready to test smarter?
+            </h2>
+            <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+              Join members who've moved beyond guessing. Get your biomarker snapshot and the science behind every number.
+            </p>
             <Link
               href="/signup"
-              className="inline-block px-8 py-3.5 bg-teal text-pure-white font-heading font-bold rounded-xl hover:bg-teal-light transition-colors"
+              className="inline-block px-8 py-4 bg-teal text-pure-white font-bold rounded-xl hover:bg-teal-light transition"
             >
-              Start Your Membership
-            </Link>
-            <Link
-              href="/how-it-works"
-              className="inline-block px-8 py-3.5 border border-border text-gray-300 font-heading font-bold rounded-xl hover:border-teal/40 hover:text-white transition-all"
-            >
-              How It Works
+              Start Your Panel
             </Link>
           </div>
-        </div>
-      </section>
-
+        </section>
+      </main>
       <Footer />
-    </div>
+    </>
   );
 }

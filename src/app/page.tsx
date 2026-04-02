@@ -405,7 +405,68 @@ export default function Home() {
         {/* Divider */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
 
-        {/* ===== PLATFORM FEATURES ===== */}
+        {/* ===== THE BRIELLA DIFFERENCE — Range Visualization ===== */}
+        <section className="bg-bg-dark py-24">
+          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+              <div className="lg:col-span-5">
+                <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">The Methodology</p>
+                <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6 leading-tight">
+                  Standard ranges vs.<br /><em className="text-teal not-italic">functional optimal.</em>
+                </h2>
+                <p className="text-gray-400 text-lg leading-relaxed mb-4">
+                  Standard clinical ranges detect disease after it manifests. Briella uses <em>functional ranges</em> — tighter boundaries that represent peak physiological health.
+                </p>
+                <p className="text-gray-500 leading-relaxed italic">
+                  &ldquo;Standard labs mark both patients as normal. Briella shows you the difference between surviving and thriving.&rdquo;
+                </p>
+              </div>
+              <div className="lg:col-span-7 bg-bg-card border border-border p-8 md:p-12 rounded-xl">
+                <div className="flex justify-between items-end mb-6">
+                  <div>
+                    <h4 className="font-heading text-2xl font-bold text-white">Vitamin D, 25-OH</h4>
+                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">Example Biomarker</p>
+                  </div>
+                  <span className="text-xl font-heading text-teal font-bold">ng/mL</span>
+                </div>
+                {/* Range Visualization */}
+                <div className="relative h-20 w-full mb-10">
+                  {/* Gradient track */}
+                  <div className="absolute inset-0 rounded-full overflow-hidden" style={{ background: 'linear-gradient(90deg, rgba(184,115,65,0.3) 0%, rgba(107,139,111,0.6) 45%, rgba(107,139,111,0.6) 55%, rgba(184,115,65,0.3) 100%)' }} />
+                  {/* Standard Range indicator */}
+                  <div className="absolute top-1/2 -translate-y-1/2 h-12 border-x border-white/20" style={{ left: '20%', right: '0%' }}>
+                    <span className="absolute -top-8 left-0 text-[10px] uppercase tracking-wider text-gray-500 font-bold whitespace-nowrap">Standard Range (30–100)</span>
+                  </div>
+                  {/* Functional Optimal highlight */}
+                  <div className="absolute top-0 bottom-0 bg-teal/25 border-x-2 border-teal/40" style={{ left: '55%', width: '20%' }}>
+                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-wider text-teal font-bold whitespace-nowrap">Functional Optimal (60–80)</span>
+                  </div>
+                  {/* Patient A marker */}
+                  <div className="absolute top-0 bottom-0 flex flex-col items-center" style={{ left: '30%' }}>
+                    <div className="w-0.5 h-full bg-white relative z-10" />
+                    <div className="bg-bg-card shadow-md px-3 py-1.5 rounded border border-border text-[11px] absolute -bottom-12 whitespace-nowrap">
+                      <span className="font-bold text-white">Patient A: 35</span><br />
+                      <span className="text-gray-500">Standard says: </span><span className="text-white">Normal</span>
+                    </div>
+                  </div>
+                  {/* Patient B marker */}
+                  <div className="absolute top-0 bottom-0 flex flex-col items-center" style={{ left: '68%' }}>
+                    <div className="w-0.5 h-full bg-teal relative z-10" />
+                    <div className="bg-teal-dim shadow-md px-3 py-1.5 rounded border border-teal/20 text-[11px] absolute -bottom-12 whitespace-nowrap">
+                      <span className="font-bold text-white">Patient B: 72</span><br />
+                      <span className="text-gray-500">Functional says: </span><span className="text-teal font-bold">Optimal</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
+
+        {/* ===== PLATFORM FEATURES — Bento Grid ===== */}
         <section className="bg-bg-dark py-24">
           <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 max-w-3xl mx-auto">
@@ -417,9 +478,31 @@ export default function Home() {
                 Your membership includes the tools to understand, track, and act on your health data year after year.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {platformFeatures.map((feature, idx) => (
-                <div key={feature.title} className={`card-hover card-glow bg-bg-card border border-border rounded-xl p-8 text-center delay-${(idx % 3) + 1}`}>
+            {/* Bento Grid Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+              {/* Large card — Dashboard */}
+              <div className="md:col-span-8 card-hover card-glow bg-bg-card border border-border rounded-xl p-10 min-h-[280px] flex flex-col justify-end relative overflow-hidden delay-1">
+                <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-2 absolute top-8 right-8">Clinical Intelligence</p>
+                <div className="text-4xl mb-4">{platformFeatures[0].emoji}</div>
+                <h3 className="font-heading font-bold text-white text-2xl mb-3">{platformFeatures[0].title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed max-w-lg">{platformFeatures[0].description}</p>
+              </div>
+              {/* Stacked right cards */}
+              <div className="md:col-span-4 flex flex-col gap-6">
+                <div className="card-hover card-glow bg-teal-dim border border-teal-border rounded-xl p-8 flex-1 delay-2">
+                  <div className="text-3xl mb-4">{platformFeatures[1].emoji}</div>
+                  <h3 className="font-heading font-bold text-white text-lg mb-2">{platformFeatures[1].title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{platformFeatures[1].description}</p>
+                </div>
+                <div className="dark-section card-hover card-glow bg-bg-dark rounded-xl p-8 flex-1 delay-3">
+                  <div className="text-3xl mb-4">{platformFeatures[2].emoji}</div>
+                  <h3 className="font-heading font-bold text-white text-lg mb-2">{platformFeatures[2].title}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{platformFeatures[2].description}</p>
+                </div>
+              </div>
+              {/* Bottom row — 3 equal cards */}
+              {platformFeatures.slice(3).map((feature, idx) => (
+                <div key={feature.title} className={`md:col-span-4 card-hover card-glow bg-bg-card border border-border rounded-xl p-8 delay-${idx + 4}`}>
                   <div className="text-3xl mb-4">{feature.emoji}</div>
                   <h3 className="font-heading font-bold text-white text-lg mb-3">{feature.title}</h3>
                   <p className="text-gray-500 text-sm leading-relaxed">{feature.description}</p>
