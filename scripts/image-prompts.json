@@ -1,0 +1,123 @@
+{
+  "images": [
+    {
+      "id": "persona-health-optimizers",
+      "filename": "persona-health-optimizers.png",
+      "placement": "Homepage — Who It's For card #1",
+      "dimensions": "600x400",
+      "prompt": "Photorealistic portrait of an athletic woman in her early 30s mid-stride on a morning run through a park, wearing sleek running gear, golden sunrise backlighting, shallow depth of field with soft bokeh, warm confident expression, teal and navy color grading, clean modern wellness aesthetic, landscape orientation 600x400"
+    },
+    {
+      "id": "persona-family-focused",
+      "filename": "persona-family-focused.png",
+      "placement": "Homepage — Who It's For card #2",
+      "dimensions": "600x400",
+      "prompt": "Photorealistic portrait of a father in his late 30s carrying his young daughter on his shoulders outdoors, both laughing naturally, soft golden hour lighting, casual weekend clothing, shallow depth of field, navy and warm teal color grading, authentic family wellness moment, landscape orientation 600x400"
+    },
+    {
+      "id": "persona-longevity",
+      "filename": "persona-longevity.png",
+      "placement": "Homepage — Who It's For card #3",
+      "dimensions": "600x400",
+      "prompt": "Photorealistic portrait of a fit man in his early 60s doing a morning yoga stretch on a patio overlooking nature, silver hair, calm and vital expression, soft diffused morning light, earth tones with subtle teal accent lighting, shallow depth of field, wellness longevity aesthetic, landscape orientation 600x400"
+    },
+    {
+      "id": "persona-busy-professional",
+      "filename": "persona-busy-professional.png",
+      "placement": "Homepage — Who It's For card #4",
+      "dimensions": "600x400",
+      "prompt": "Photorealistic portrait of a sharp Black male executive in his 40s at a standing desk in a modern minimalist office, sleeves slightly rolled, confident focused expression, soft overhead lighting with teal accent from monitor glow, deep navy tones in background, shallow depth of field, landscape orientation 600x400"
+    },
+    {
+      "id": "persona-frustrated-patient",
+      "filename": "persona-frustrated-patient.png",
+      "placement": "Homepage — Who It's For card #5",
+      "dimensions": "600x400",
+      "prompt": "Photorealistic portrait of a woman in her late 40s sitting in a bright waiting room looking thoughtfully out a window, slightly muted warm tones, expression of quiet determination rather than defeat, soft natural window light, shallow depth of field, subtle navy and teal color grading, landscape orientation 600x400"
+    },
+    {
+      "id": "persona-provider-partner",
+      "filename": "persona-provider-partner.png",
+      "placement": "Homepage — Who It's For card #6",
+      "dimensions": "600x400",
+      "prompt": "Photorealistic portrait of a female healthcare professional in a navy blazer with stethoscope, arms crossed confidently, warm smile, modern wellness clinic background with teal accent wall and leaf logo, soft studio lighting, shallow depth of field, professional medical aesthetic, landscape orientation 600x400"
+    },
+    {
+      "id": "hero-banner",
+      "filename": "hero-banner.png",
+      "placement": "Homepage — Hero section background",
+      "dimensions": "1920x800",
+      "prompt": "Wide cinematic shot of a modern clinical lab environment, deep navy blue ambient lighting with teal accent lights reflecting off glass and chrome surfaces, blood vials with subtle golden amber liquid in a rack in the foreground, blurred lab technician in background, ultra clean minimalist medical aesthetic, dramatic depth of field, wide format 1920x800"
+    },
+    {
+      "id": "hero-banner-alt",
+      "filename": "hero-banner-alt.png",
+      "placement": "Homepage — Hero section alternative",
+      "dimensions": "1920x800",
+      "prompt": "Abstract macro photograph of a single blood droplet on a glass slide with deep navy background, teal and gold light refracting through the droplet creating prismatic effects, extreme shallow depth of field, scientific beauty aesthetic, ultra high quality, wide format 1920x800"
+    },
+    {
+      "id": "trust-quest-partnership",
+      "filename": "trust-quest-partnership.png",
+      "placement": "Homepage — Social proof / trust section",
+      "dimensions": "800x500",
+      "prompt": "Photorealistic overhead shot of a clean modern phlebotomy station, organized lab supplies on a white counter, patient arm resting on a teal cushioned armrest, healthcare professional gloved hands visible preparing a draw, bright clinical lighting with navy and teal accents, trust and professionalism aesthetic, 800x500"
+    },
+    {
+      "id": "step-signup",
+      "filename": "step-signup.png",
+      "placement": "How It Works — Step 1",
+      "dimensions": "600x400",
+      "prompt": "Close-up photorealistic shot of hands holding a smartphone displaying a clean healthcare app signup screen, soft overhead lighting, blurred modern kitchen background, teal screen glow on fingers, navy and white color palette, landscape orientation 600x400"
+    },
+    {
+      "id": "step-lab-visit",
+      "filename": "step-lab-visit.png",
+      "placement": "How It Works — Step 2",
+      "dimensions": "600x400",
+      "prompt": "Photorealistic shot of a patient checking in at a modern lab reception desk, clean white and glass interior, friendly receptionist smiling, bright clinical lighting with subtle teal accent wall, welcoming healthcare environment, landscape orientation 600x400"
+    },
+    {
+      "id": "step-results",
+      "filename": "step-results.png",
+      "placement": "How It Works — Step 3",
+      "dimensions": "600x400",
+      "prompt": "Over-the-shoulder photorealistic shot of a person viewing biomarker results on a laptop, screen showing colorful data visualizations and charts in teal and gold on navy background, soft ambient lighting, modern home office, shallow depth of field focused on screen, landscape orientation 600x400"
+    },
+    {
+      "id": "membership-value",
+      "filename": "membership-value.png",
+      "placement": "Membership page — value visual",
+      "dimensions": "800x600",
+      "prompt": "Photorealistic flat lay of modern wellness lifestyle on white marble surface shot from directly above — smartwatch showing health metrics, glass of green juice, a lab requisition form, sleek laptop, soft natural window light, teal and gold accent objects scattered naturally, clean editorial aesthetic, 800x600"
+    },
+    {
+      "id": "provider-partnership",
+      "filename": "provider-partnership.png",
+      "placement": "For Providers page — partnership visual",
+      "dimensions": "800x500",
+      "prompt": "Photorealistic shot of two healthcare professionals in a modern office having a collaborative conversation over a tablet showing data, one in a white coat one in business casual, warm teal accent lighting from a window, navy tones in background, trust and partnership aesthetic, 800x500"
+    },
+    {
+      "id": "blog-biomarker-science",
+      "filename": "blog-biomarker-science.png",
+      "placement": "Blog — biomarker article header",
+      "dimensions": "1200x600",
+      "prompt": "Photorealistic macro shot of a centrifuge separating blood into layers — golden serum on top deep red cells below — in a clean modern lab, teal ambient lighting reflecting off the glass tube, extreme shallow depth of field, scientific beauty, wide format 1200x600"
+    },
+    {
+      "id": "blog-wellness",
+      "filename": "blog-wellness.png",
+      "placement": "Blog — wellness article header",
+      "dimensions": "1200x600",
+      "prompt": "Photorealistic shot of a diverse group of three adults doing a sunset hike on a scenic trail, natural golden hour lighting, active wellness clothing, candid and energetic, teal sky gradient at horizon, wide format 1200x600"
+    },
+    {
+      "id": "blog-understanding-results",
+      "filename": "blog-understanding-results.png",
+      "placement": "Blog — results article header",
+      "dimensions": "1200x600",
+      "prompt": "Photorealistic close-up of a physician hand pointing at a specific biomarker on a printed lab report, teal pen in hand, shallow depth of field, clean clinical desk background with navy undertones, educational and approachable, wide format 1200x600"
+    }
+  ]
+}

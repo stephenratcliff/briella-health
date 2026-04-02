@@ -36,7 +36,7 @@ export default function PatientPortalPage() {
           plugins: {
             legend: { display: false },
             tooltip: {
-              backgroundColor: '#111f2e',
+              backgroundColor: '#362E29',
               borderColor: 'rgba(255,255,255,0.1)',
               borderWidth: 1,
               titleColor: '#fff',
@@ -61,7 +61,7 @@ export default function PatientPortalPage() {
               labels: ['Mar 2023','Sep 2023','Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
               datasets: [
                 { label: 'Vitamin D (ng/mL)', data: [38, 42, 51, 58, 64, 68, 71], borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#22c55e', pointRadius: 4 },
-                { label: 'hs-CRP (mg/L)', data: [2.8, 2.4, 2.0, 1.6, 1.4, 1.7, 2.1], borderColor: '#0d9488', backgroundColor: 'rgba(13,148,136,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#0d9488', pointRadius: 4 },
+                { label: 'hs-CRP (mg/L)', data: [2.8, 2.4, 2.0, 1.6, 1.4, 1.7, 2.1], borderColor: '#6B8B6F', backgroundColor: 'rgba(107,139,111,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#6B8B6F', pointRadius: 4 },
                 { label: 'Ferritin (ng/mL)', data: [45, 38, 32, 28, 22, 20, 18], borderColor: '#d4a853', backgroundColor: 'rgba(212,168,83,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#d4a853', pointRadius: 4 }
               ]
             },
@@ -77,7 +77,7 @@ export default function PatientPortalPage() {
             data: {
               labels: ['Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
               datasets: [
-                { label: 'TSH', data: [2.1, 1.9, 1.7, 1.8, 1.6], backgroundColor: 'rgba(13,148,136,0.6)', borderColor: '#0d9488', borderWidth: 1, borderRadius: 4 },
+                { label: 'TSH', data: [2.1, 1.9, 1.7, 1.8, 1.6], backgroundColor: 'rgba(107,139,111,0.6)', borderColor: '#6B8B6F', borderWidth: 1, borderRadius: 4 },
                 { label: 'Free T3', data: [3.2, 3.3, 3.5, 3.4, 3.6], backgroundColor: 'rgba(34,197,94,0.5)', borderColor: '#22c55e', borderWidth: 1, borderRadius: 4 },
                 { label: 'Free T4', data: [1.1, 1.2, 1.3, 1.2, 1.3], backgroundColor: 'rgba(212,168,83,0.5)', borderColor: '#d4a853', borderWidth: 1, borderRadius: 4 }
               ]
@@ -103,7 +103,7 @@ export default function PatientPortalPage() {
             data: {
               labels: ['Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
               datasets: [
-                { label: 'Fasting Glucose', data: [88, 85, 84, 83, 82], borderColor: '#0d9488', tension: 0.4, pointBackgroundColor: '#0d9488', pointRadius: 4 },
+                { label: 'Fasting Glucose', data: [88, 85, 84, 83, 82], borderColor: '#6B8B6F', tension: 0.4, pointBackgroundColor: '#6B8B6F', pointRadius: 4 },
                 { label: 'HbA1c ×10', data: [53, 52, 52, 51, 51], borderColor: '#22c55e', tension: 0.4, pointBackgroundColor: '#22c55e', pointRadius: 4 },
                 { label: 'Fasting Insulin', data: [9, 8, 7, 6, 7], borderColor: '#d4a853', tension: 0.4, pointBackgroundColor: '#d4a853', pointRadius: 4 }
               ]
@@ -485,7 +485,7 @@ export default function PatientPortalPage() {
           <div
             className="relative overflow-hidden rounded-xl p-8 mb-8 border border-teal/30 card-hover card-glow fade-up"
             style={{
-              background: 'linear-gradient(135deg, #0a1f2e 0%, #0d2a3a 60%, rgba(13,148,136,0.08) 100%)',
+              background: 'linear-gradient(135deg, #0a1f2e 0%, #0d2a3a 60%, rgba(107,139,111,0.08) 100%)',
             }}
             id="provider-cta"
           >
@@ -493,7 +493,7 @@ export default function PatientPortalPage() {
             <div
               className="absolute top-0 right-0 w-80 h-80 pointer-events-none"
               style={{
-                background: 'radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(107,139,111,0.08) 0%, transparent 70%)',
               }}
             />
 

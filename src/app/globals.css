@@ -1,31 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  --bg-dark: #0b1623;
-  --bg-card: #111f2e;
-  --bg-card-hover: #1a2d42;
-  --bg-mid: #0e1929;
-  --bg-light: #162438;
+  /* Sage Palette A — Earth-tone warm palette */
+  --bg-dark: #2C2420;
+  --bg-card: #362E29;
+  --bg-card-hover: #403830;
+  --bg-mid: #302924;
+  --bg-light: #3D3530;
 
-  --teal: #0d9488;
-  --teal-light: #14b8b3;
-  --teal-dim: rgba(13,148,136,0.12);
-  --teal-border: rgba(13,148,136,0.30);
+  --teal: #6B8B6F;
+  --teal-light: #7FA383;
+  --teal-dim: rgba(107,139,111,0.12);
+  --teal-border: rgba(107,139,111,0.30);
 
-  --gold: #f59e0b;
-  --gold-dim: rgba(245,158,11,0.12);
+  --gold: #C4A97D;
+  --gold-dim: rgba(196,169,125,0.12);
 
-  --white: #ffffff;
-  --gray-50: #f8fafc;
-  --gray-100: #f1f5f9;
-  --gray-300: #d1d5db;
-  --gray-400: #9ca3af;
-  --gray-500: #6b7280;
-  --gray-600: #4b5563;
+  --warm: #B87341;
 
-  --border: rgba(255,255,255,0.07);
-  --border-strong: rgba(255,255,255,0.12);
-  --border-teal: rgba(13,148,136,0.30);
+  --white: #F5EDE3;
+  --gray-50: #EDE5DB;
+  --gray-100: #E2D8CC;
+  --gray-300: #C2B5A5;
+  --gray-400: #A69888;
+  --gray-500: #8A7D6E;
+  --gray-600: #6E6358;
+
+  --border: rgba(245,237,227,0.07);
+  --border-strong: rgba(245,237,227,0.12);
+  --border-teal: rgba(107,139,111,0.30);
 
   --radius-sm: 6px;
   --radius: 12px;
@@ -33,7 +36,7 @@
   --radius-xl: 28px;
 
   --shadow-card: 0 2px 4px rgba(0,0,0,0.5), 0 12px 40px rgba(0,0,0,0.35);
-  --shadow-glow: 0 0 80px rgba(13,148,136,0.12);
+  --shadow-glow: 0 0 80px rgba(107,139,111,0.12);
 }
 
 @theme inline {
@@ -51,6 +54,8 @@
   --color-gold: var(--gold);
   --color-gold-dim: var(--gold-dim);
 
+  --color-warm: var(--warm);
+
   --color-white: var(--white);
   --color-gray-50: var(--gray-50);
   --color-gray-100: var(--gray-100);
@@ -63,7 +68,7 @@
   --color-border-strong: var(--border-strong);
   --color-border-teal: var(--border-teal);
 
-  --font-heading: "Montserrat", system-ui, sans-serif;
+  --font-heading: "Source Serif 4", "Georgia", serif;
   --font-body: "Inter", system-ui, sans-serif;
 }
 
@@ -155,7 +160,7 @@ html {
   opacity: 0;
   background: radial-gradient(
     600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(13, 148, 136, 0.06),
+    rgba(107, 139, 111, 0.06),
     transparent 40%
   );
   transition: opacity 0.3s;
@@ -176,7 +181,7 @@ html {
   transform: translateY(-4px);
   border-color: var(--teal-border);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
-              0 0 40px rgba(13, 148, 136, 0.08);
+              0 0 40px rgba(107, 139, 111, 0.08);
 }
 
 /* ============================================================================
@@ -191,8 +196,8 @@ html {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(13, 148, 136, 0.3),
-              0 0 0 1px rgba(13, 148, 136, 0.2);
+  box-shadow: 0 8px 30px rgba(107, 139, 111, 0.3),
+              0 0 0 1px rgba(107, 139, 111, 0.2);
 }
 
 .btn-primary:active {

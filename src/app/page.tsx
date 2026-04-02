@@ -73,8 +73,8 @@ export default function Home() {
       caption: 'Tracking performance, inside and out.',
     },
     {
-      src: 'https://images.unsplash.com/photo-1534438327431-68e574578cfc?w=500&h=620&fit=crop&q=80',
-      alt: 'Man wellness lifestyle',
+      src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=620&fit=crop&q=80',
+      alt: 'Man focused on health and longevity',
       label: 'Longevity-Focused',
       caption: 'Building a foundation for the long game.',
     },
@@ -321,7 +321,7 @@ export default function Home() {
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
-                      target.parentElement!.style.background = 'linear-gradient(135deg, #0b1e30 0%, #0d9488 100%)';
+                      target.parentElement!.style.background = 'linear-gradient(135deg, #2C2420 0%, #6B8B6F 100%)';
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -476,7 +476,7 @@ export default function Home() {
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
-                        target.parentElement!.style.background = 'linear-gradient(135deg, #0b1e30 0%, #0d9488 100%)';
+                        target.parentElement!.style.background = 'linear-gradient(135deg, #2C2420 0%, #6B8B6F 100%)';
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />

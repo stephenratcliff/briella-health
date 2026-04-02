@@ -36,7 +36,7 @@ export default function TrendsPage() {
           plugins: {
             legend: { display: false },
             tooltip: {
-              backgroundColor: '#111f2e',
+              backgroundColor: '#362E29',
               borderColor: 'rgba(255,255,255,0.1)',
               borderWidth: 1,
               titleColor: '#fff',
@@ -61,7 +61,7 @@ export default function TrendsPage() {
               labels: ['Mar 2023','Sep 2023','Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
               datasets: [
                 { label: 'Vitamin D (ng/mL)', data: [38, 42, 51, 58, 64, 68, 71], borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#22c55e', pointRadius: 4 },
-                { label: 'hs-CRP (mg/L)', data: [2.8, 2.4, 2.0, 1.6, 1.4, 1.7, 2.1], borderColor: '#0d9488', backgroundColor: 'rgba(13,148,136,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#0d9488', pointRadius: 4 },
+                { label: 'hs-CRP (mg/L)', data: [2.8, 2.4, 2.0, 1.6, 1.4, 1.7, 2.1], borderColor: '#6B8B6F', backgroundColor: 'rgba(107,139,111,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#6B8B6F', pointRadius: 4 },
                 { label: 'Ferritin (ng/mL)', data: [45, 38, 32, 28, 22, 20, 18], borderColor: '#d4a853', backgroundColor: 'rgba(212,168,83,0.08)', tension: 0.4, fill: true, pointBackgroundColor: '#d4a853', pointRadius: 4 }
               ]
             },
@@ -86,7 +86,7 @@ export default function TrendsPage() {
             data: {
               labels: ['Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
               datasets: [
-                { label: 'ApoB (mg/dL)', data: [95, 92, 88, 85, 82], borderColor: '#0d9488', tension: 0.4, fill: false, pointBackgroundColor: '#0d9488', pointRadius: 4 },
+                { label: 'ApoB (mg/dL)', data: [95, 92, 88, 85, 82], borderColor: '#6B8B6F', tension: 0.4, fill: false, pointBackgroundColor: '#6B8B6F', pointRadius: 4 },
                 { label: 'hs-CRP (mg/L)', data: [2.8, 2.0, 1.4, 1.7, 2.1], borderColor: '#d4a853', tension: 0.4, fill: false, pointBackgroundColor: '#d4a853', pointRadius: 4 },
                 { label: 'Homocysteine (µmol/L)', data: [11, 10.2, 9.8, 9.5, 9.2], borderColor: '#22c55e', tension: 0.4, fill: false, pointBackgroundColor: '#22c55e', pointRadius: 4 }
               ]
@@ -112,7 +112,7 @@ export default function TrendsPage() {
             data: {
               labels: ['Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
               datasets: [
-                { label: 'Testosterone Total (ng/dL)', data: [580, 610, 630, 645, 650], borderColor: '#0d9488', tension: 0.4, fill: false, pointBackgroundColor: '#0d9488', pointRadius: 4 },
+                { label: 'Testosterone Total (ng/dL)', data: [580, 610, 630, 645, 650], borderColor: '#6B8B6F', tension: 0.4, fill: false, pointBackgroundColor: '#6B8B6F', pointRadius: 4 },
                 { label: 'DHEA-S (µg/dL)', data: [280, 295, 310, 318, 320], borderColor: '#d4a853', tension: 0.4, fill: false, pointBackgroundColor: '#d4a853', pointRadius: 4 }
               ]
             },
@@ -137,7 +137,7 @@ export default function TrendsPage() {
             data: {
               labels: ['Mar 2024','Sep 2024','Mar 2025','Sep 2025','Mar 2026'],
               datasets: [
-                { label: 'Fasting Glucose (mg/dL)', data: [88, 85, 84, 83, 82], borderColor: '#0d9488', tension: 0.4, fill: false, pointBackgroundColor: '#0d9488', pointRadius: 4 },
+                { label: 'Fasting Glucose (mg/dL)', data: [88, 85, 84, 83, 82], borderColor: '#6B8B6F', tension: 0.4, fill: false, pointBackgroundColor: '#6B8B6F', pointRadius: 4 },
                 { label: 'HbA1c ×10', data: [53, 52, 52, 51, 51], borderColor: '#22c55e', tension: 0.4, fill: false, pointBackgroundColor: '#22c55e', pointRadius: 4 },
                 { label: 'Fasting Insulin (µIU/mL)', data: [9, 8, 7, 6, 4.8], borderColor: '#d4a853', tension: 0.4, fill: false, pointBackgroundColor: '#d4a853', pointRadius: 4 }
               ]

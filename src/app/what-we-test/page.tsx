@@ -289,7 +289,7 @@ export default function WhatWeTest() {
               placeholder="Search biomarkers — e.g. testosterone, vitamin D, ApoB..."
               value={searchQuery}
               onChange={(e) => { setSearchQuery(e.target.value); setActiveCategory(null); }}
-              className="w-full bg-bg-card border border-border rounded-xl py-3 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-teal/60 focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)] transition-all placeholder-gray-600"
+              className="w-full bg-bg-card border border-border rounded-xl py-3 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-teal/60 focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)] transition-all placeholder-gray-600"
             />
             {searchQuery && (
               <button
@@ -312,7 +312,7 @@ export default function WhatWeTest() {
                   onClick={() => handleCategoryClick(cat.key)}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap border transition-all shrink-0 ${
                     isActive
-                      ? 'bg-teal/15 border-teal/40 text-teal-light shadow-[0_0_12px_rgba(13,148,136,0.15)]'
+                      ? 'bg-teal/15 border-teal/40 text-teal-light shadow-[0_0_12px_rgba(107,139,111,0.15)]'
                       : 'bg-bg-card border-border text-gray-400 hover:border-teal/30 hover:text-gray-200'
                   }`}
                 >
@@ -419,7 +419,7 @@ export default function WhatWeTest() {
                           onClick={() => setExpandedCard(isExpanded ? null : marker.id)}
                           className={`group bg-bg-card border rounded-xl cursor-pointer transition-all duration-200 ${
                             isExpanded
-                              ? 'border-teal/50 shadow-[0_0_20px_rgba(13,148,136,0.08)] md:col-span-2'
+                              ? 'border-teal/50 shadow-[0_0_20px_rgba(107,139,111,0.08)] md:col-span-2'
                               : 'border-border hover:border-gray-700 hover:shadow-[0_2px_12px_rgba(0,0,0,0.3)]'
                           }`}
                         >

@@ -109,7 +109,7 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                  className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
@@ -123,7 +123,7 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                  className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                 />
               </div>
               <button
@@ -149,7 +149,7 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                  className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
@@ -163,7 +163,7 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                  className="bg-white/4% border border-border rounded-2xl px-4 py-3.5 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                 />
               </div>
               <button

@@ -195,7 +195,7 @@ export default function SignupPage() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                  className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                 />
               </div>
 
@@ -213,7 +213,7 @@ export default function SignupPage() {
                     required
                     value={formData.firstName}
                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                    className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                    className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
@@ -228,7 +228,7 @@ export default function SignupPage() {
                     required
                     value={formData.lastName}
                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                    className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                    className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                   />
                 </div>
               </div>
@@ -247,7 +247,7 @@ export default function SignupPage() {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                    className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
@@ -261,7 +261,7 @@ export default function SignupPage() {
                     required
                     value={formData.dob}
                     onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
-                    className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                    className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                   />
                 </div>
               </div>
@@ -311,7 +311,7 @@ export default function SignupPage() {
                   required
                   value={formData.state}
                   onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                  className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)] appearance-none bg-[image:url('data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2712%27%20height=%2712%27%20fill=%27none%27%20stroke=%27%236b7280%27%20stroke-width=%272%27%20viewBox=%270%200%2024%2024%27%3E%3Cpolyline%20points=%276%209%2012%2015%2018%209%27/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] pr-9"
+                  className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)] appearance-none bg-[image:url('data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20width=%2712%27%20height=%2712%27%20fill=%27none%27%20stroke=%27%236b7280%27%20stroke-width=%272%27%20viewBox=%270%200%2024%2024%27%3E%3Cpolyline%20points=%276%209%2012%2015%2018%209%27/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] pr-9"
                 >
                   <option value="" disabled selected>Select your state</option>
                   {stateOptions.map((state) => (
@@ -334,7 +334,7 @@ export default function SignupPage() {
                   minLength={8}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(13,148,136,0.12)]"
+                  className="bg-white/4% border border-border rounded-2xl px-4 py-3 text-white font-body text-sm outline-none transition focus:border-teal focus:shadow-[0_0_0_3px_rgba(107,139,111,0.12)]"
                 />
               </div>
 
