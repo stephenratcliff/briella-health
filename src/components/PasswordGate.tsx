@@ -12,7 +12,6 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    // Check if already authenticated this session
     try {
       if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
         setAuthenticated(true);
@@ -39,10 +38,9 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
     }
   };
 
-  // Don't flash anything while checking session
   if (checking) {
     return (
-      <div style={{ minHeight: '100vh', background: '#2C2420' }} />
+      <div style={{ minHeight: '100vh', background: '#F5EDE3' }} />
     );
   }
 
@@ -54,7 +52,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
     <div
       style={{
         minHeight: '100vh',
-        background: '#2C2420',
+        background: '#F5EDE3',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -63,15 +61,15 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
     >
       <div
         style={{
-          background: '#362E29',
-          border: '1px solid rgba(245,237,227,0.08)',
+          background: '#FFFFFF',
+          border: '1px solid rgba(44,36,32,0.08)',
           borderRadius: '20px',
           padding: '48px 40px',
           maxWidth: '420px',
           width: '100%',
           margin: '0 20px',
           textAlign: 'center',
-          boxShadow: '0 12px 40px rgba(0,0,0,0.35)',
+          boxShadow: '0 2px 8px rgba(44,36,32,0.06), 0 12px 40px rgba(44,36,32,0.08)',
         }}
       >
         {/* Logo */}
@@ -93,18 +91,18 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
           >
             B
           </div>
-          <span style={{ color: '#F5EDE3', fontFamily: '"Source Serif 4", Georgia, serif', fontWeight: 800, fontSize: '20px' }}>
+          <span style={{ color: '#2C2420', fontFamily: '"Source Serif 4", Georgia, serif', fontWeight: 800, fontSize: '20px' }}>
             Briella <span style={{ color: '#6B8B6F' }}>Health</span>
           </span>
         </div>
 
-        <p style={{ color: '#A69888', fontSize: '14px', marginBottom: '8px', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700 }}>
+        <p style={{ color: '#6B8B6F', fontSize: '14px', marginBottom: '8px', letterSpacing: '0.16em', textTransform: 'uppercase', fontWeight: 700 }}>
           Preview Access
         </p>
-        <h2 style={{ color: '#F5EDE3', fontFamily: '"Source Serif 4", Georgia, serif', fontWeight: 800, fontSize: '24px', marginBottom: '12px' }}>
+        <h2 style={{ color: '#2C2420', fontFamily: '"Source Serif 4", Georgia, serif', fontWeight: 800, fontSize: '24px', marginBottom: '12px' }}>
           This site is in development
         </h2>
-        <p style={{ color: '#A69888', fontSize: '14px', lineHeight: '1.6', marginBottom: '32px' }}>
+        <p style={{ color: '#7A6F65', fontSize: '14px', lineHeight: '1.6', marginBottom: '32px' }}>
           Enter the access code to preview the Briella Health platform.
         </p>
 
@@ -118,10 +116,10 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
             style={{
               width: '100%',
               padding: '14px 18px',
-              background: '#2C2420',
-              border: error ? '1px solid #ef4444' : '1px solid rgba(245,237,227,0.12)',
+              background: '#F5EDE3',
+              border: error ? '1px solid #ef4444' : '1px solid rgba(44,36,32,0.12)',
               borderRadius: '10px',
-              color: '#F5EDE3',
+              color: '#2C2420',
               fontSize: '15px',
               outline: 'none',
               marginBottom: '8px',
@@ -129,7 +127,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
               transition: 'border-color 0.2s',
             }}
             onFocus={(e) => { e.target.style.borderColor = '#6B8B6F'; }}
-            onBlur={(e) => { e.target.style.borderColor = error ? '#ef4444' : 'rgba(245,237,227,0.12)'; }}
+            onBlur={(e) => { e.target.style.borderColor = error ? '#ef4444' : 'rgba(44,36,32,0.12)'; }}
           />
           {error && (
             <p style={{ color: '#ef4444', fontSize: '13px', marginBottom: '8px', textAlign: 'left' }}>
@@ -160,7 +158,7 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
           </button>
         </form>
 
-        <p style={{ color: '#6E6358', fontSize: '12px', marginTop: '24px' }}>
+        <p style={{ color: '#A69888', fontSize: '12px', marginTop: '24px' }}>
           Need access? Contact <span style={{ color: '#6B8B6F' }}>hello@briellahealth.com</span>
         </p>
       </div>

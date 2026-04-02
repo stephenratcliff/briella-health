@@ -522,7 +522,7 @@ export default function WhatWeTest() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/signup"
-              className="inline-block px-8 py-3.5 bg-teal text-white font-heading font-bold rounded-xl hover:bg-teal-light transition-colors"
+              className="inline-block px-8 py-3.5 bg-teal text-pure-white font-heading font-bold rounded-xl hover:bg-teal-light transition-colors"
             >
               Start Your Membership
             </Link>

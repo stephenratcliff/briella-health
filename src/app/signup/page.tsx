@@ -120,7 +120,7 @@ export default function SignupPage() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 mb-14 relative z-10">
-          <div className="w-9 h-9 bg-teal rounded flex items-center justify-center text-white font-heading font-bold text-sm">
+          <div className="w-9 h-9 bg-teal rounded flex items-center justify-center text-pure-white font-heading font-bold text-sm">
             B
           </div>
           <span className="font-heading font-bold text-xl text-white">
@@ -382,7 +382,7 @@ export default function SignupPage() {
               <button
                 type="submit"
                 id="submitBtn"
-                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mb-4 btn-primary"
+                className="w-full bg-teal text-pure-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mb-4 btn-primary"
               >
                 Create My Account →
               </button>
@@ -408,7 +408,7 @@ export default function SignupPage() {
               <p className="text-gray-500 text-xs mb-7">
                 Email: <strong className="text-gray-300">{formData.email}</strong>
               </p>
-              <Link href="/login" className="inline-block bg-teal text-white px-8 py-3 rounded-2xl font-heading font-bold text-sm hover:bg-teal-light transition mb-4 btn-primary">
+              <Link href="/login" className="inline-block bg-teal text-pure-white px-8 py-3 rounded-2xl font-heading font-bold text-sm hover:bg-teal-light transition mb-4 btn-primary">
                 Go to Login →
               </Link>
               <br />

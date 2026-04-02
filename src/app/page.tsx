@@ -1,17 +1,54 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useMouseGlow } from '@/hooks/useMouseGlow';
 
+/* ── Animated Counter Hook ── */
+function useCountUp(end: number, duration = 2000, startOnView = true) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    if (!startOnView || !ref.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          const startTime = performance.now();
+          const tick = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+            setCount(Math.round(eased * end));
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [end, duration, startOnView]);
+
+  return { count, ref };
+}
+
 export default function Home() {
   useScrollReveal();
   useMouseGlow();
 
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  // Animated counters for hero stats
+  const biomarkerCount = useCountUp(100, 2000);
+  const labCount = useCountUp(2000, 2500);
+  const costCount = useCountUp(365, 1800);
 
   const biomarkerCategories = [
     { emoji: '❤️', name: 'Heart & Cardiovascular', count: 18 },
@@ -20,13 +57,6 @@ export default function Home() {
     { emoji: '🦋', name: 'Thyroid Function', count: 8 },
     { emoji: '✨', name: 'Nutrients & Vitamins', count: 16 },
     { emoji: '📊', name: '6 more categories', count: '25+' },
-  ];
-
-  const stats = [
-    { number: '100+', label: 'Biomarkers tested annually' },
-    { number: '$365', label: 'Per year — all-inclusive' },
-    { number: '2,000+', label: 'Quest lab locations nationwide' },
-    { number: '11', label: 'Organ systems covered' },
   ];
 
   const problemCards = [
@@ -48,48 +78,16 @@ export default function Home() {
   ];
 
   const steps = [
-    {
-      number: '1',
-      title: 'Join & Schedule',
-      description: 'Create your membership and book a visit at any of 2,000+ Quest Diagnostics locations nationwide — at a time that fits your schedule.',
-    },
-    {
-      number: '2',
-      title: 'Get Tested',
-      description: 'A simple blood draw at your local Quest lab. Most visits take 15–20 minutes. Samples are processed by CLIA-certified labs.',
-    },
-    {
-      number: '3',
-      title: 'Review Your Results',
-      description: 'Results delivered to your dashboard in 3–5 days — organized by organ system, explained in plain language, with clear next-step guidance.',
-    },
+    { number: '1', title: 'Join & Schedule', description: 'Create your membership and book a visit at any of 2,000+ Quest Diagnostics locations nationwide — at a time that fits your schedule.' },
+    { number: '2', title: 'Get Tested', description: 'A simple blood draw at your local Quest lab. Most visits take 15–20 minutes. Samples are processed by CLIA-certified labs.' },
+    { number: '3', title: 'Review Your Results', description: 'Results delivered to your dashboard in 3–5 days — organized by organ system, explained in plain language, with clear next-step guidance.' },
   ];
 
   const photoStrip = [
-    {
-      src: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&h=620&fit=crop&q=80',
-      alt: 'Health-focused woman',
-      label: 'Health Optimizer',
-      caption: 'Tracking performance, inside and out.',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=620&fit=crop&q=80',
-      alt: 'Man focused on health and longevity',
-      label: 'Longevity-Focused',
-      caption: 'Building a foundation for the long game.',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=500&h=620&fit=crop&q=80',
-      alt: 'Professional woman',
-      label: 'Busy Professional',
-      caption: 'One blood draw. Complete picture.',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=500&h=620&fit=crop&q=80',
-      alt: 'Active lifestyle',
-      label: 'Active & Aware',
-      caption: "Know what's driving your results.",
-    },
+    { src: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&h=620&fit=crop&q=80', alt: 'Health-focused woman', label: 'Health Optimizer', caption: 'Tracking performance, inside and out.' },
+    { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=620&fit=crop&q=80', alt: 'Man focused on health and longevity', label: 'Longevity-Focused', caption: 'Building a foundation for the long game.' },
+    { src: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=500&h=620&fit=crop&q=80', alt: 'Professional woman', label: 'Busy Professional', caption: 'One blood draw. Complete picture.' },
+    { src: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=500&h=620&fit=crop&q=80', alt: 'Active lifestyle', label: 'Active & Aware', caption: "Know what's driving your results." },
   ];
 
   const fullBiomarkerCategories = [
@@ -151,7 +149,7 @@ export default function Home() {
             <div key={i} className="flex items-center gap-6 shrink-0 pr-6">
               {['100+ Biomarkers Tested', 'Quest Diagnostics Network', '$365/Year — All Inclusive', 'No Insurance Required', 'Results in 3–5 Days', '2,000+ Lab Locations'].map((text) => (
                 <span key={`${i}-${text}`} className="flex items-center gap-6">
-                  <span className="text-white text-xs font-bold uppercase tracking-wider">{text}</span>
+                  <span className="text-pure-white text-xs font-bold uppercase tracking-wider">{text}</span>
                   <span className="w-1 h-1 bg-white/40 rounded-full shrink-0" />
                 </span>
               ))}
@@ -161,83 +159,62 @@ export default function Home() {
       </div>
 
       <main className="flex-1">
-        {/* ===== HERO ===== */}
-        <section className="bg-bg-dark relative pt-20 pb-24">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-teal/5 rounded-full blur-[120px] pointer-events-none" />
-          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start lg:items-center">
-              {/* Left */}
-              <div className="flex flex-col gap-8">
-                <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold">Comprehensive Health Testing</p>
-                <h1 className="font-heading font-extrabold text-fluid-hero tracking-tight leading-[1.08]">
-                  <span className="text-white">Know every number</span><br />
-                  <em className="text-teal not-italic">that matters.</em>
-                </h1>
-                <p className="text-gray-300 text-lg max-w-xl leading-relaxed">
-                  100+ biomarkers tested annually through Quest Diagnostics. Clear results. Actionable insights. One membership covers everything — for less than $1 a day.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                  <Link href="/signup" className="btn-primary bg-teal text-white uppercase font-bold px-8 py-4 rounded-md hover:bg-teal-light text-center text-sm tracking-wide">
-                    Join the Waitlist
-                  </Link>
-                  <Link href="/how-it-works" className="btn-secondary border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal text-center text-sm tracking-wide">
-                    How It Works
-                  </Link>
-                </div>
-                <div className="flex flex-wrap gap-x-8 gap-y-4 pt-7 border-t border-border">
-                  {[
-                    { bold: '100+', sub: 'biomarkers' },
-                    { bold: 'Quest', sub: 'Diagnostics labs' },
-                    { bold: '$365', sub: '/year' },
-                    { bold: 'All 50', sub: 'states*' },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <span className="text-white font-bold text-sm">{item.bold}</span>
-                      <span className="text-gray-400 text-xs">{item.sub}</span>
-                    </div>
-                  ))}
-                </div>
+        {/* ===== FULL-BLEED HERO ===== */}
+        <section className="hero-image-section relative min-h-[85vh] flex items-end">
+          {/* Background Image */}
+          <img
+            src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1920&h=1080&fit=crop&q=80&crop=center"
+            alt="Active healthy lifestyle"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Dark overlay for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#2C2420]/90 via-[#2C2420]/40 to-transparent" />
+
+          {/* Hero Content — positioned at bottom like Function Health */}
+          <div className="relative z-10 w-full pb-16 pt-40">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {/* HSA Badge */}
+              <div className="mb-6">
+                <span className="inline-flex items-center bg-white/15 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-xs font-bold text-white/90 uppercase tracking-wider">
+                  HSA/FSA Eligible
+                </span>
               </div>
 
-              {/* Right — Biomarker Card */}
-              <div className="lg:sticky lg:top-32 h-fit">
-                <div className="card-hover card-glow bg-bg-card border border-border-strong rounded-[20px] p-7 shadow-[0_2px_4px_rgba(0,0,0,0.5),0_12px_40px_rgba(0,0,0,0.35)]">
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-gray-400 text-xs font-bold uppercase">Your Annual Panel</span>
-                    <span className="bg-teal-dim border border-border-teal rounded-full px-3 py-1 text-xs font-bold text-teal">100+ tests</span>
-                  </div>
-                  <div className="space-y-2 mb-6">
-                    {biomarkerCategories.map((cat) => (
-                      <div key={cat.name} className="bg-bg-dark border border-border rounded-md px-3.5 py-2.5 hover:border-teal transition-colors flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-7 h-7 rounded flex items-center justify-center bg-teal-dim">
-                            <span className="text-sm">{cat.emoji}</span>
-                          </div>
-                          <span className="text-white text-sm font-medium">{cat.name}</span>
-                        </div>
-                        <span className="bg-teal-dim border border-border-teal text-teal rounded-full px-2 py-0.5 text-xs font-bold">{cat.count}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="pt-4 border-t border-border">
-                    <p className="text-gray-400 text-xs text-center">Includes metabolic panels, lipids, hormones, nutrients, immune markers, and more</p>
-                  </div>
+              {/* Main Headline */}
+              <h1 className="font-heading font-extrabold text-[clamp(2.5rem,6vw+1rem,4.5rem)] leading-[1.05] tracking-tight text-[#F5EDE3] max-w-3xl mb-6">
+                Check your health.<br />
+                <em className="not-italic" style={{ fontStyle: 'italic' }}>Every year.</em>
+              </h1>
+
+              <p className="text-[#F5EDE3]/80 text-lg max-w-xl leading-relaxed mb-8">
+                Starting with 100+ lab tests detecting 1000+ conditions. Just $365 per year — $1 per day.
+              </p>
+
+              <Link href="/signup" className="btn-primary inline-flex bg-teal text-pure-white uppercase font-bold px-8 py-4 rounded-lg hover:bg-teal-light text-sm tracking-wide">
+                Start testing
+              </Link>
+
+              {/* Animated Stats Bar */}
+              <div className="flex flex-wrap gap-0 mt-14 border-t border-white/15 pt-8">
+                <div className="pr-8 mr-8 border-r border-white/15">
+                  <p className="font-heading font-extrabold text-3xl md:text-4xl text-[#F5EDE3]">
+                    <span ref={biomarkerCount.ref}>{biomarkerCount.count}</span>+
+                  </p>
+                  <p className="text-[#F5EDE3]/60 text-sm mt-1">lab tests</p>
+                  <p className="text-[#F5EDE3]/40 text-xs">Total each year</p>
+                </div>
+                <div className="pr-8 mr-8 border-r border-white/15">
+                  <p className="font-heading font-extrabold text-3xl md:text-4xl text-[#F5EDE3]">Whole body</p>
+                  <p className="text-[#F5EDE3]/60 text-sm mt-1">Tested 2x per year</p>
+                </div>
+                <div>
+                  <p className="font-heading font-extrabold text-3xl md:text-4xl text-[#F5EDE3]">
+                    $<span ref={costCount.ref}>{costCount.count}</span>
+                  </p>
+                  <p className="text-[#F5EDE3]/60 text-sm mt-1">per year</p>
+                  <p className="text-[#F5EDE3]/40 text-xs">$1 per day</p>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ===== STAT BAR ===== */}
-        <section className="bg-bg-card border-y border-border py-10">
-          <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-border">
-              {stats.map((stat) => (
-                <div key={stat.label} className="text-center py-4 px-4">
-                  <p className="font-heading text-3xl md:text-4xl font-extrabold text-white">{stat.number}</p>
-                  <p className="text-gray-400 text-sm mt-2">{stat.label}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
@@ -250,7 +227,7 @@ export default function Home() {
               <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 Your annual physical<br /><em className="text-teal not-italic">isn&apos;t enough.</em>
               </h2>
-              <p className="text-gray-300 text-lg leading-relaxed">
+              <p className="text-gray-400 text-lg leading-relaxed">
                 Most annual physicals check 10–20 biomarkers — limited to what insurance approves, not what matters. By the time something shows up, the window for early action may have already closed.
               </p>
             </div>
@@ -259,7 +236,7 @@ export default function Home() {
                 <div key={card.title} className={`card-hover card-glow bg-bg-card border border-border rounded-xl p-8 text-center delay-${idx + 1}`}>
                   <div className="text-4xl mb-4">{card.emoji}</div>
                   <h3 className="font-heading font-bold text-white text-lg mb-3">{card.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{card.description}</p>
+                  <p className="text-gray-500 text-sm leading-relaxed">{card.description}</p>
                 </div>
               ))}
             </div>
@@ -277,7 +254,7 @@ export default function Home() {
               <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 From sign-up to insights<br /><em className="text-teal not-italic">in three steps.</em>
               </h2>
-              <p className="text-gray-300 text-lg">We handle the complexity. You get clarity.</p>
+              <p className="text-gray-400 text-lg">We handle the complexity. You get clarity.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               {steps.map((step, idx) => (
@@ -286,7 +263,7 @@ export default function Home() {
                     {step.number}
                   </div>
                   <h3 className="font-heading font-bold text-white text-lg mb-3">{step.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{step.description}</p>
+                  <p className="text-gray-500 text-sm leading-relaxed">{step.description}</p>
                 </div>
               ))}
             </div>
@@ -326,8 +303,8 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <p className="text-white font-heading font-bold text-sm mb-1">{photo.label}</p>
-                    <p className="text-gray-300 text-xs">{photo.caption}</p>
+                    <p className="text-[#F5EDE3] font-heading font-bold text-sm mb-1">{photo.label}</p>
+                    <p className="text-[#F5EDE3]/70 text-xs">{photo.caption}</p>
                   </div>
                 </div>
               ))}
@@ -338,7 +315,7 @@ export default function Home() {
         {/* Divider */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><hr className="divider-gradient" /></div>
 
-        {/* ===== BIOMARKER CATEGORIES (Full 8-card grid) ===== */}
+        {/* ===== BIOMARKER CATEGORIES ===== */}
         <section className="bg-bg-dark py-24">
           <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16 max-w-3xl">
@@ -346,7 +323,7 @@ export default function Home() {
               <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 What others skip,<br /><em className="text-teal not-italic">we test.</em>
               </h2>
-              <p className="text-gray-300 text-lg leading-relaxed">
+              <p className="text-gray-400 text-lg leading-relaxed">
                 Your panel covers 11 organ systems and 100+ biomarkers — including advanced markers most annual physicals never check.
               </p>
             </div>
@@ -356,7 +333,7 @@ export default function Home() {
                   <div className="text-3xl mb-4">{cat.emoji}</div>
                   <h4 className="font-heading font-bold text-white text-base mb-2">{cat.name}</h4>
                   <p className="bg-teal-dim border border-border-teal text-teal rounded-full px-2.5 py-0.5 text-xs font-bold inline-block mb-3">{cat.count}</p>
-                  <p className="text-gray-400 text-sm leading-relaxed">{cat.description}</p>
+                  <p className="text-gray-500 text-sm leading-relaxed">{cat.description}</p>
                 </div>
               ))}
             </div>
@@ -379,7 +356,7 @@ export default function Home() {
               <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 $365/year for what would cost<br /><em className="text-teal not-italic">$1,500–$3,000+ elsewhere.</em>
               </h2>
-              <p className="text-gray-300 text-lg leading-relaxed">
+              <p className="text-gray-400 text-lg leading-relaxed">
                 We partner directly with Quest Diagnostics at volume rates. One membership. No hidden fees. No insurance required.
               </p>
             </div>
@@ -387,15 +364,15 @@ export default function Home() {
             {/* Savings Visual */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-16">
               <div className="card-hover card-glow bg-bg-card border border-border rounded-xl p-8 text-center">
-                <h4 className="text-gray-400 text-sm font-bold uppercase mb-4">Ordering through your doctor</h4>
-                <div className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">$1,500–$3,000<span className="text-xl text-gray-400">+</span></div>
-                <p className="text-gray-400 text-sm leading-relaxed">Multiple office visits, insurance pre-approvals, copays, limited biomarker coverage, and weeks of waiting.</p>
+                <h4 className="text-gray-500 text-sm font-bold uppercase mb-4">Ordering through your doctor</h4>
+                <div className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">$1,500–$3,000<span className="text-xl text-gray-500">+</span></div>
+                <p className="text-gray-500 text-sm leading-relaxed">Multiple office visits, insurance pre-approvals, copays, limited biomarker coverage, and weeks of waiting.</p>
               </div>
               <div className="card-hover card-glow bg-bg-card border-2 border-teal rounded-xl p-8 text-center relative">
-                <span className="bg-teal text-white text-xs font-bold uppercase tracking-wider rounded-full px-3 py-1 absolute -top-3 left-1/2 -translate-x-1/2">Briella Health</span>
+                <span className="bg-teal text-pure-white text-xs font-bold uppercase tracking-wider rounded-full px-3 py-1 absolute -top-3 left-1/2 -translate-x-1/2">Briella Health</span>
                 <h4 className="text-teal text-sm font-bold uppercase mb-4 mt-2">All-inclusive membership</h4>
-                <div className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">$365<span className="text-xl text-gray-400">/yr</span></div>
-                <p className="text-gray-400 text-sm leading-relaxed">100+ biomarkers, Quest Diagnostics, results in days, dashboard access, year-over-year tracking — everything included.</p>
+                <div className="font-heading font-extrabold text-4xl md:text-5xl text-white mb-4">$365<span className="text-xl text-gray-500">/yr</span></div>
+                <p className="text-gray-500 text-sm leading-relaxed">100+ biomarkers, Quest Diagnostics, results in days, dashboard access, year-over-year tracking — everything included.</p>
               </div>
             </div>
 
@@ -404,10 +381,10 @@ export default function Home() {
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-border bg-bg-card">
-                    <th className="px-6 py-4 text-gray-400 text-xs font-bold uppercase">Feature</th>
+                    <th className="px-6 py-4 text-gray-500 text-xs font-bold uppercase">Feature</th>
                     <th className="px-6 py-4 text-teal text-xs font-bold uppercase">Briella Health</th>
-                    <th className="px-6 py-4 text-gray-400 text-xs font-bold uppercase">Typical Annual Physical</th>
-                    <th className="px-6 py-4 text-gray-400 text-xs font-bold uppercase">Other DTC Platforms</th>
+                    <th className="px-6 py-4 text-gray-500 text-xs font-bold uppercase">Typical Annual Physical</th>
+                    <th className="px-6 py-4 text-gray-500 text-xs font-bold uppercase">Other DTC Platforms</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -415,8 +392,8 @@ export default function Home() {
                     <tr key={i} className="border-b border-border last:border-b-0 hover:bg-bg-card/50 transition-colors">
                       <td className="px-6 py-4 text-white text-sm font-medium">{row.feature}</td>
                       <td className="px-6 py-4 text-teal text-sm font-semibold">{row.briella}</td>
-                      <td className="px-6 py-4 text-gray-400 text-sm">{row.typical}</td>
-                      <td className="px-6 py-4 text-gray-400 text-sm">{row.dtc}</td>
+                      <td className="px-6 py-4 text-gray-500 text-sm">{row.typical}</td>
+                      <td className="px-6 py-4 text-gray-500 text-sm">{row.dtc}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -436,7 +413,7 @@ export default function Home() {
               <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 More than lab results.<br /><em className="text-teal not-italic">A complete health system.</em>
               </h2>
-              <p className="text-gray-300 text-lg leading-relaxed">
+              <p className="text-gray-400 text-lg leading-relaxed">
                 Your membership includes the tools to understand, track, and act on your health data year after year.
               </p>
             </div>
@@ -445,7 +422,7 @@ export default function Home() {
                 <div key={feature.title} className={`card-hover card-glow bg-bg-card border border-border rounded-xl p-8 text-center delay-${(idx % 3) + 1}`}>
                   <div className="text-3xl mb-4">{feature.emoji}</div>
                   <h3 className="font-heading font-bold text-white text-lg mb-3">{feature.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{feature.description}</p>
+                  <p className="text-gray-500 text-sm leading-relaxed">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -483,7 +460,7 @@ export default function Home() {
                   </div>
                   <div className="p-6">
                     <h4 className="font-heading font-bold text-white text-base mb-2">{person.title}</h4>
-                    <p className="text-gray-400 text-sm leading-relaxed">{person.description}</p>
+                    <p className="text-gray-500 text-sm leading-relaxed">{person.description}</p>
                   </div>
                 </div>
               ))}
@@ -512,7 +489,7 @@ export default function Home() {
                     <span className={`text-teal text-xl shrink-0 transition-transform duration-300 ${openFaq === i ? 'rotate-45' : ''}`}>+</span>
                   </button>
                   <div className={`overflow-hidden transition-all duration-500 ${openFaq === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                    <p className="px-6 pb-5 text-gray-400 text-sm leading-relaxed">{item.answer}</p>
+                    <p className="px-6 pb-5 text-gray-500 text-sm leading-relaxed">{item.answer}</p>
                   </div>
                 </div>
               ))}
@@ -525,11 +502,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ===== B2B SPLIT SECTION ===== */}
-        <section className="bg-bg-card border-y border-border py-24">
+        {/* ===== B2B SPLIT — DARK SECTION ===== */}
+        <section className="dark-section bg-bg-dark border-y border-border py-24">
           <div className="fade-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16 max-w-3xl mx-auto">
-              <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-3">Two Ways to Access Briella Health</p>
+              <p className="text-gold uppercase tracking-[0.16em] text-xs font-bold mb-3">Two Ways to Access Briella Health</p>
               <h2 className="font-heading font-extrabold text-fluid-section text-white mb-6">
                 Built for patients.<br /><em className="text-teal not-italic">Designed for providers.</em>
               </h2>
@@ -539,26 +516,26 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {/* For Patients */}
-              <div className="card-hover card-glow bg-bg-dark border border-border rounded-xl p-9 delay-1">
+              <div className="card-hover card-glow bg-bg-card border border-border rounded-xl p-9 delay-1">
                 <div className="text-3xl mb-4">🧬</div>
                 <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-2">For Patients</p>
                 <h3 className="font-heading font-bold text-white text-xl mb-3">Own your biology</h3>
                 <p className="text-gray-400 text-sm leading-relaxed mb-6">
                   Order your comprehensive panel, visit any Quest location nationwide, and log in to see your results, track trends over time, and understand what every number means — in plain language.
                 </p>
-                <Link href="/membership" className="btn-primary inline-flex bg-teal text-white uppercase font-bold px-6 py-3 rounded-md hover:bg-teal-light text-sm tracking-wide">
+                <Link href="/membership" className="btn-primary inline-flex bg-teal text-pure-white uppercase font-bold px-6 py-3 rounded-md hover:bg-teal-light text-sm tracking-wide">
                   See Membership Plans
                 </Link>
               </div>
               {/* For Providers */}
-              <div className="card-hover card-glow bg-bg-dark border border-teal-border rounded-xl p-9 delay-2">
+              <div className="card-hover card-glow bg-bg-card border border-teal-border rounded-xl p-9 delay-2">
                 <div className="text-3xl mb-4">🏥</div>
                 <p className="text-gold uppercase tracking-[0.16em] text-xs font-bold mb-2">For Providers & Practices</p>
                 <h3 className="font-heading font-bold text-white text-xl mb-3">Elevate your practice</h3>
                 <p className="text-gray-400 text-sm leading-relaxed mb-6">
                   Offer physician-ordered comprehensive lab testing under your brand. Your clients get Briella Health&apos;s full platform — you get a branded dashboard, lab visibility for every patient, and a new revenue stream.
                 </p>
-                <Link href="/for-providers" className="btn-secondary inline-flex border border-teal text-teal uppercase font-bold px-6 py-3 rounded-md hover:bg-teal hover:text-white text-sm tracking-wide">
+                <Link href="/for-providers" className="btn-secondary inline-flex border border-teal text-teal uppercase font-bold px-6 py-3 rounded-md hover:bg-teal hover:text-pure-white text-sm tracking-wide">
                   Learn About Partnership
                 </Link>
               </div>
@@ -566,11 +543,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ===== SIGNUP CTA ===== */}
-        <section className="bg-bg-dark py-24">
+        {/* ===== SIGNUP CTA — DARK SECTION ===== */}
+        <section className="dark-section bg-bg-dark py-24">
           <div className="fade-up max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-gradient-to-br from-teal/10 via-bg-card to-bg-card border border-teal-border rounded-2xl p-12 md:p-16 text-center">
-              <p className="text-teal uppercase tracking-[0.16em] text-xs font-bold mb-4">Now Enrolling</p>
+              <p className="text-gold uppercase tracking-[0.16em] text-xs font-bold mb-4">Now Enrolling</p>
               <h2 className="font-heading font-extrabold text-fluid-hero text-white mb-6">
                 Be among the first<br />to know your numbers.
               </h2>
@@ -578,14 +555,14 @@ export default function Home() {
                 Join as a founding member — early access, priority scheduling, and exclusive founding pricing when we launch in Texas.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-                <Link href="/signup" className="btn-primary bg-teal text-white uppercase font-bold px-8 py-4 rounded-md hover:bg-teal-light text-sm tracking-wide">
+                <Link href="/signup" className="btn-primary bg-teal text-pure-white uppercase font-bold px-8 py-4 rounded-md hover:bg-teal-light text-sm tracking-wide">
                   Create My Account
                 </Link>
                 <Link href="/what-we-test" className="btn-secondary border border-border-strong text-white uppercase font-bold px-8 py-4 rounded-md hover:border-teal hover:text-teal text-sm tracking-wide">
                   See What We Test
                 </Link>
               </div>
-              <p className="text-gray-400 text-xs">$365/year · 100+ biomarkers · HSA/FSA eligible · No insurance required</p>
+              <p className="text-gray-500 text-xs">$365/year · 100+ biomarkers · HSA/FSA eligible · No insurance required</p>
             </div>
           </div>
         </section>

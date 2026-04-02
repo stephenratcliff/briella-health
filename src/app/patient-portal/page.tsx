@@ -36,11 +36,11 @@ export default function PatientPortalPage() {
           plugins: {
             legend: { display: false },
             tooltip: {
-              backgroundColor: '#362E29',
-              borderColor: 'rgba(255,255,255,0.1)',
+              backgroundColor: '#FFFFFF',
+              borderColor: 'rgba(0,0,0,0.1)',
               borderWidth: 1,
-              titleColor: '#fff',
-              bodyColor: '#9ca3af',
+              titleColor: '#2C2420',
+              bodyColor: '#666666',
               padding: 12
             }
           },

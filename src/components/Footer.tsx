@@ -22,14 +22,14 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-bg-card border-t border-border">
+    <footer className="dark-section bg-bg-dark border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           {/* Brand Column */}
           <div className="flex flex-col gap-3">
             <Link href="/" className="flex items-center gap-2 w-fit">
-              <div className="bg-teal text-white w-[34px] h-[34px] rounded-[7px] font-heading font-black text-sm flex items-center justify-center">
+              <div className="bg-teal text-pure-white w-[34px] h-[34px] rounded-[7px] font-heading font-black text-sm flex items-center justify-center">
                 B
               </div>
               <div>

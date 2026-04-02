@@ -82,7 +82,7 @@ export default function MembershipPage() {
             {/* DTC Annual - Featured */}
             <div className="bg-bg-card border-2 border-teal-border rounded-xl p-8 flex flex-col card-hover card-glow delay-1">
               <div className="mb-6">
-                <span className="inline-block bg-teal text-white text-xs font-bold rounded-full px-3 py-1">
+                <span className="inline-block bg-teal text-pure-white text-xs font-bold rounded-full px-3 py-1">
                   Most Popular
                 </span>
               </div>
@@ -156,7 +156,7 @@ export default function MembershipPage() {
 
               <Link
                 href="/signup"
-                className="bg-teal hover:border-teal-border text-white w-full py-3 rounded-xl font-semibold text-center transition btn-primary"
+                className="bg-teal hover:border-teal-border text-pure-white w-full py-3 rounded-xl font-semibold text-center transition btn-primary"
               >
                 Join the Waitlist
               </Link>
@@ -436,7 +436,7 @@ export default function MembershipPage() {
               />
               <button
                 type="submit"
-                className="bg-teal hover:bg-teal-light text-white px-6 py-3 rounded-xl font-semibold transition whitespace-nowrap btn-primary"
+                className="bg-teal hover:bg-teal-light text-pure-white px-6 py-3 rounded-xl font-semibold transition whitespace-nowrap btn-primary"
               >
                 Join the Waitlist
               </button>
@@ -458,7 +458,7 @@ export default function MembershipPage() {
       {/* ===== FLOATING HELP BUTTON ===== */}
       <button
         onClick={() => setHelpPanelOpen(!helpPanelOpen)}
-        className="fixed bottom-7 right-7 w-14 h-14 rounded-full bg-teal hover:bg-teal-light text-white flex items-center justify-center shadow-lg transition z-50"
+        className="fixed bottom-7 right-7 w-14 h-14 rounded-full bg-teal hover:bg-teal-light text-pure-white flex items-center justify-center shadow-lg transition z-50"
         aria-label="Chat with us"
       >
         <svg
@@ -528,7 +528,7 @@ export default function MembershipPage() {
           </p>
           <a
             href="mailto:hello@briellahealth.com"
-            className="block w-full bg-teal hover:bg-teal-light text-white text-center text-sm font-semibold py-2 rounded-lg transition"
+            className="block w-full bg-teal hover:bg-teal-light text-pure-white text-center text-sm font-semibold py-2 rounded-lg transition"
           >
             Email Us
           </a>

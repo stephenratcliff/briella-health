@@ -1,23 +1,65 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   LIGHT SAGE PALETTE — Briella Health Design System
+   ========================================================================== */
+
 :root {
-  /* Sage Palette A — Earth-tone warm palette */
+  /* Backgrounds — light cream base */
+  --bg-dark: #F5EDE3;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FAFAF7;
+  --bg-mid: #EDE5DB;
+  --bg-light: #E8DFD4;
+
+  /* Accent — sage green */
+  --teal: #6B8B6F;
+  --teal-light: #7FA383;
+  --teal-dim: rgba(107,139,111,0.08);
+  --teal-border: rgba(107,139,111,0.20);
+
+  /* Secondary — warm gold */
+  --gold: #C4A97D;
+  --gold-dim: rgba(196,169,125,0.10);
+
+  /* Warm accent */
+  --warm: #B87341;
+
+  /* Text colors — dark on light */
+  --white: #2C2420;
+  --gray-50: #362E29;
+  --gray-100: #403830;
+  --gray-300: #5C524A;
+  --gray-400: #7A6F65;
+  --gray-500: #8A7D6E;
+  --gray-600: #A69888;
+
+  /* Pure white for use on colored/dark backgrounds */
+  --pure-white: #ffffff;
+
+  /* Borders — dark-tinted for light backgrounds */
+  --border: rgba(44,36,32,0.07);
+  --border-strong: rgba(44,36,32,0.12);
+  --border-teal: rgba(107,139,111,0.25);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(44,36,32,0.06), 0 12px 40px rgba(44,36,32,0.08);
+  --shadow-glow: 0 0 80px rgba(107,139,111,0.08);
+}
+
+/* Dark section override — restores dark theme for footer, CTA bands, etc. */
+.dark-section {
   --bg-dark: #2C2420;
   --bg-card: #362E29;
   --bg-card-hover: #403830;
   --bg-mid: #302924;
   --bg-light: #3D3530;
-
-  --teal: #6B8B6F;
-  --teal-light: #7FA383;
-  --teal-dim: rgba(107,139,111,0.12);
-  --teal-border: rgba(107,139,111,0.30);
-
-  --gold: #C4A97D;
-  --gold-dim: rgba(196,169,125,0.12);
-
-  --warm: #B87341;
-
   --white: #F5EDE3;
   --gray-50: #EDE5DB;
   --gray-100: #E2D8CC;
@@ -25,18 +67,10 @@
   --gray-400: #A69888;
   --gray-500: #8A7D6E;
   --gray-600: #6E6358;
-
   --border: rgba(245,237,227,0.07);
   --border-strong: rgba(245,237,227,0.12);
   --border-teal: rgba(107,139,111,0.30);
-
-  --radius-sm: 6px;
-  --radius: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
-
   --shadow-card: 0 2px 4px rgba(0,0,0,0.5), 0 12px 40px rgba(0,0,0,0.35);
-  --shadow-glow: 0 0 80px rgba(107,139,111,0.12);
 }
 
 @theme inline {
@@ -57,6 +91,7 @@
   --color-warm: var(--warm);
 
   --color-white: var(--white);
+  --color-pure-white: var(--pure-white);
   --color-gray-50: var(--gray-50);
   --color-gray-100: var(--gray-100);
   --color-gray-300: var(--gray-300);
@@ -86,23 +121,16 @@ html {
 
 ::selection {
   background: var(--teal);
-  color: white;
+  color: #ffffff;
 }
 
 /* ============================================================================
    ANIMATION & MOTION SYSTEM
    ========================================================================== */
 
-/* Scroll-triggered fade-up animation system */
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .fade-up {
@@ -117,7 +145,7 @@ html {
   transform: translateY(0);
 }
 
-/* Stagger delay utilities (100ms increments) */
+/* Stagger delay utilities */
 .delay-1 { transition-delay: 0.1s; }
 .delay-2 { transition-delay: 0.2s; }
 .delay-3 { transition-delay: 0.3s; }
@@ -125,14 +153,10 @@ html {
 .delay-5 { transition-delay: 0.5s; }
 .delay-6 { transition-delay: 0.6s; }
 
-/* Ticker animation (infinite scroll) */
+/* Ticker animation */
 @keyframes ticker-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .ticker-track {
@@ -143,11 +167,16 @@ html {
   animation-play-state: paused;
 }
 
+/* Count-up animation */
+@keyframes count-up-fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ============================================================================
    CARD & HOVER EFFECTS
    ========================================================================== */
 
-/* Card glow effect with mouse tracking */
 .card-glow {
   position: relative;
   overflow: hidden;
@@ -172,7 +201,6 @@ html {
   opacity: 1;
 }
 
-/* Enhanced card hover transitions */
 .card-hover {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -180,15 +208,14 @@ html {
 .card-hover:hover {
   transform: translateY(-4px);
   border-color: var(--teal-border);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
-              0 0 40px rgba(107, 139, 111, 0.08);
+  box-shadow: 0 16px 48px rgba(44, 36, 32, 0.08),
+              0 0 0 1px rgba(107, 139, 111, 0.12);
 }
 
 /* ============================================================================
    BUTTON EFFECTS
    ========================================================================== */
 
-/* Primary button - lift + glow on hover */
 .btn-primary {
   position: relative;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -196,26 +223,25 @@ html {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(107, 139, 111, 0.3),
-              0 0 0 1px rgba(107, 139, 111, 0.2);
+  box-shadow: 0 8px 30px rgba(107, 139, 111, 0.25),
+              0 0 0 1px rgba(107, 139, 111, 0.15);
 }
 
 .btn-primary:active {
   transform: translateY(0);
 }
 
-/* Secondary button - subtle lift */
 .btn-secondary {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-secondary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(44, 36, 32, 0.08);
 }
 
 /* ============================================================================
-   TYPOGRAPHY - FLUID & RESPONSIVE
+   TYPOGRAPHY
    ========================================================================== */
 
 .text-fluid-hero {
@@ -230,7 +256,6 @@ html {
   font-size: clamp(1rem, 1.2vw + 0.5rem, 1.25rem);
 }
 
-/* Gradient text utility */
 .text-gradient {
   background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
   -webkit-background-clip: text;
@@ -239,31 +264,22 @@ html {
 }
 
 /* ============================================================================
-   DIVIDERS & VISUAL SEPARATORS
+   DIVIDERS
    ========================================================================== */
 
 .divider-gradient {
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--teal-border),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, var(--teal-border), transparent);
   border: none;
 }
 
 /* ============================================================================
-   STATUS INDICATORS & PULSE EFFECTS
+   STATUS & PULSE
    ========================================================================== */
 
 @keyframes pulse-dot {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
 .pulse-dot {
@@ -271,7 +287,27 @@ html {
 }
 
 /* ============================================================================
-   ACCESSIBILITY & FOCUS STATES
+   HERO — FULL BLEED WITH OVERLAY
+   ========================================================================== */
+
+.hero-image-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(transparent, var(--bg-dark));
+  pointer-events: none;
+}
+
+/* ============================================================================
+   ACCESSIBILITY
    ========================================================================== */
 
 .focus-ring:focus-visible {

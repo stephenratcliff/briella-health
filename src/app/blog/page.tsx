@@ -123,8 +123,8 @@ export default function BlogPage() {
                   onClick={() => setActiveCategory(category)}
                   className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[0.1em] transition ${
                     activeCategory === category
-                      ? 'bg-teal text-white border border-teal'
-                      : 'bg-bg-card text-gray-400 border border-border hover:bg-teal hover:border-teal hover:text-white'
+                      ? 'bg-teal text-pure-white border border-teal'
+                      : 'bg-bg-card text-gray-400 border border-border hover:bg-teal hover:border-teal hover:text-pure-white'
                   }`}
                 >
                   {category}
@@ -274,7 +274,7 @@ export default function BlogPage() {
                   />
                   <button
                     type="submit"
-                    className="bg-teal text-white px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition hover:bg-teal-light btn-primary"
+                    className="bg-teal text-pure-white px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition hover:bg-teal-light btn-primary"
                   >
                     Subscribe
                   </button>

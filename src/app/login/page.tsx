@@ -47,7 +47,7 @@ export default function LoginPage() {
       <div className="w-full max-w-lg fade-up">
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center gap-2.5 mb-11">
-          <div className="w-9 h-9 bg-teal rounded flex items-center justify-center text-white font-heading font-bold text-sm">
+          <div className="w-9 h-9 bg-teal rounded flex items-center justify-center text-pure-white font-heading font-bold text-sm">
             B
           </div>
           <span className="font-heading font-bold text-xl text-white">
@@ -128,7 +128,7 @@ export default function LoginPage() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2 btn-primary"
+                className="w-full bg-teal text-pure-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2 btn-primary"
               >
                 Log In
               </button>
@@ -168,7 +168,7 @@ export default function LoginPage() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-teal text-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2 btn-primary"
+                className="w-full bg-teal text-pure-white py-3.5 rounded-2xl font-heading font-bold text-sm transition hover:bg-teal-light mt-2 btn-primary"
               >
                 Log In to Provider Portal
               </button>

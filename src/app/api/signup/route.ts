@@ -23,22 +23,22 @@ export async function POST(request: Request) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="margin:0;padding:0;background-color:#2C2420;font-family:'Inter',system-ui,sans-serif;">
+<body style="margin:0;padding:0;background-color:#F5EDE3;font-family:'Inter',system-ui,sans-serif;">
   <div style="max-width:600px;margin:0 auto;padding:40px 24px;">
 
     <!-- Header -->
     <div style="text-align:center;margin-bottom:40px;">
       <div style="display:inline-block;background-color:#6B8B6F;color:#ffffff;width:40px;height:40px;border-radius:8px;font-weight:900;font-size:18px;line-height:40px;text-align:center;">B</div>
-      <span style="font-size:20px;font-weight:800;color:#F5EDE3;margin-left:8px;vertical-align:middle;">Briella</span>
+      <span style="font-size:20px;font-weight:800;color:#2C2420;margin-left:8px;vertical-align:middle;">Briella</span>
       <span style="font-size:20px;font-weight:800;color:#6B8B6F;vertical-align:middle;"> Health</span>
     </div>
 
     <!-- Main Card -->
-    <div style="background-color:#362E29;border:1px solid rgba(245,237,227,0.07);border-radius:16px;padding:40px 32px;">
+    <div style="background-color:#FFFFFF;border:1px solid rgba(0,0,0,0.1);border-radius:16px;padding:40px 32px;">
 
       <p style="color:#6B8B6F;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin:0 0 16px 0;">Welcome</p>
 
-      <h1 style="color:#F5EDE3;font-size:28px;font-weight:800;margin:0 0 8px 0;line-height:1.2;">
+      <h1 style="color:#2C2420;font-size:28px;font-weight:800;margin:0 0 8px 0;line-height:1.2;">
         You're in, ${firstName}.
       </h1>
 
@@ -47,29 +47,29 @@ export async function POST(request: Request) {
       </p>
 
       <!-- Member ID -->
-      <div style="background-color:#2C2420;border:1px solid rgba(107,139,111,0.3);border-radius:10px;padding:16px 20px;margin-bottom:32px;">
+      <div style="background-color:#F5EDE3;border:1px solid rgba(107,139,111,0.3);border-radius:10px;padding:16px 20px;margin-bottom:32px;">
         <p style="color:#A69888;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin:0 0 6px 0;">Your Member ID</p>
         <p style="color:#6B8B6F;font-size:20px;font-weight:800;margin:0;font-family:monospace;">${memberId || 'Pending'}</p>
       </div>
 
       <!-- What's Included -->
-      <p style="color:#F5EDE3;font-size:14px;font-weight:700;margin:0 0 16px 0;">Your membership includes:</p>
+      <p style="color:#2C2420;font-size:14px;font-weight:700;margin:0 0 16px 0;">Your membership includes:</p>
 
       <table style="width:100%;border-collapse:collapse;margin-bottom:32px;">
         <tr>
-          <td style="padding:8px 0;color:#A69888;font-size:13px;border-bottom:1px solid rgba(245,237,227,0.07);">✓ &nbsp; 100+ biomarkers tested annually</td>
+          <td style="padding:8px 0;color:#666666;font-size:13px;border-bottom:1px solid rgba(0,0,0,0.1);">✓ &nbsp; 100+ biomarkers tested annually</td>
         </tr>
         <tr>
-          <td style="padding:8px 0;color:#A69888;font-size:13px;border-bottom:1px solid rgba(245,237,227,0.07);">✓ &nbsp; Quest Diagnostics — 2,000+ locations</td>
+          <td style="padding:8px 0;color:#666666;font-size:13px;border-bottom:1px solid rgba(0,0,0,0.1);">✓ &nbsp; Quest Diagnostics — 2,000+ locations</td>
         </tr>
         <tr>
-          <td style="padding:8px 0;color:#A69888;font-size:13px;border-bottom:1px solid rgba(245,237,227,0.07);">✓ &nbsp; Personal health dashboard with insights</td>
+          <td style="padding:8px 0;color:#666666;font-size:13px;border-bottom:1px solid rgba(0,0,0,0.1);">✓ &nbsp; Personal health dashboard with insights</td>
         </tr>
         <tr>
-          <td style="padding:8px 0;color:#A69888;font-size:13px;border-bottom:1px solid rgba(245,237,227,0.07);">✓ &nbsp; Year-over-year longitudinal tracking</td>
+          <td style="padding:8px 0;color:#666666;font-size:13px;border-bottom:1px solid rgba(0,0,0,0.1);">✓ &nbsp; Year-over-year longitudinal tracking</td>
         </tr>
         <tr>
-          <td style="padding:8px 0;color:#A69888;font-size:13px;">✓ &nbsp; Physician authorization included</td>
+          <td style="padding:8px 0;color:#666666;font-size:13px;">✓ &nbsp; Physician authorization included</td>
         </tr>
       </table>
 
@@ -83,11 +83,11 @@ export async function POST(request: Request) {
 
     <!-- Footer -->
     <div style="text-align:center;margin-top:32px;">
-      <p style="color:#8A7D6E;font-size:12px;line-height:1.6;margin:0 0 16px 0;">
+      <p style="color:#999999;font-size:12px;line-height:1.6;margin:0 0 16px 0;">
         Questions? Reply to this email or contact us at<br>
         <a href="mailto:hello@briellahealth.com" style="color:#6B8B6F;text-decoration:none;">hello@briellahealth.com</a>
       </p>
-      <p style="color:#6E6358;font-size:11px;margin:0;">
+      <p style="color:#888888;font-size:11px;margin:0;">
         © ${new Date().getFullYear()} Briella Health LLC. All rights reserved.<br>
         This email was sent to ${email} because you created an account.
       </p>

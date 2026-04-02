@@ -346,7 +346,7 @@ export default function HowItWorks() {
           </p>
           <Link
             href="/signup"
-            className="mt-8 inline-block rounded-lg bg-teal px-8 py-3 font-heading font-bold text-white transition-colors hover:bg-teal-light btn-primary"
+            className="mt-8 inline-block rounded-lg bg-teal px-8 py-3 font-heading font-bold text-pure-white transition-colors hover:bg-teal-light btn-primary"
           >
             Join the Waitlist
           </Link>
